@@ -24,7 +24,10 @@ export default class IndexPage extends React.Component {
                 </Link>
                 <span> &bull; </span>
                 <small>
-                  {post.date} - posted by{' '}
+                  {post.date}
+                  {' '}
+- posted by
+                  {' '}
                   <Link to={`/author/${post.author.slug}`}>
                     {post.author.name}
                   </Link>
@@ -61,9 +64,6 @@ export const pageQuery = graphql`
     author {
       name
       slug
-      avatar_urls {
-        wordpress_48
-      }
     }
     date(formatString: "MMMM DD, YYYY")
     slug

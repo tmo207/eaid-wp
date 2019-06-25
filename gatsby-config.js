@@ -1,10 +1,17 @@
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby + WordPress Starter',
+    title: 'Gatsby + WordPress Starter'
   },
   plugins: [
     'gatsby-plugin-react-helmet',
-    'gatsby-plugin-sass',
+    'gatsby-plugin-styled-components',
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'images',
+        path: `${__dirname}/src/img`
+      }
+    },
     {
       resolve: 'gatsby-source-wordpress',
       options: {
@@ -18,21 +25,10 @@ module.exports = {
         useACF: false,
         auth: {},
         // Set to true to debug endpoints on 'gatsby build'
-        verboseOutput: false,
-      },
+        verboseOutput: true
+      }
     },
     'gatsby-plugin-sharp',
-    'gatsby-transformer-sharp',
-    {
-      // Removes unused css rules
-      resolve:'gatsby-plugin-purgecss',
-      options: {
-        // Activates purging in gatsby develop
-        develop: true,
-        // Purge only the main css file
-        purgeOnly: ['/all.sass'],
-      },
-    }, // must be after other CSS plugins
-    'gatsby-plugin-netlify', // make sure to keep it last in the array
-  ],
-}
+    'gatsby-transformer-sharp'
+  ]
+};

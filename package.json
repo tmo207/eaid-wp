@@ -21,6 +21,7 @@
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",
     "react-intl": "^2.9.0",
+    "react-loader-spinner": "^2.3.0",
     "styled-components": "^4.3.2",
     "uuid": "^3.2.1"
   },

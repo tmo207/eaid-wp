@@ -2,7 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
 import Layout from '../components/Layout';
-import PostList from '../components/PostList';
+import PostList from '../components/Blog/PostList';
 
 const Tag = props => {
   const { data, pageContext } = props;

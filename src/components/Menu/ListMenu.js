@@ -6,7 +6,8 @@ import { Link } from 'gatsby';
 import {
   LIGHTBLUE_BG,
   LIGHTBLUE_HOVER,
-  DARKBLUE_FONT
+  DARKBLUE_FONT,
+  ROUNDED_CORNERS
 } from '../../_common/config';
 
 const ListWrapper = styled.ul`
@@ -17,6 +18,7 @@ const ListWrapper = styled.ul`
 `;
 
 const ListItem = styled.li`
+  border-radius: ${ROUNDED_CORNERS};
   margin: 0;
   padding: 1rem 2rem;
   background-color: ${LIGHTBLUE_BG};
@@ -39,34 +41,22 @@ const ListMenu = mobile => {
         </Link>
       </div>
       <div>
-        <Link
-          activeClassName={mobile.mobile ? 'activeMobile' : 'active'}
-          to="a"
-        >
+        <Link activeClassName={mobile.mobile ? 'activeMobile' : 'active'} to="">
           <ListItem>Der Verein</ListItem>
         </Link>
       </div>
       <div>
-        <Link
-          activeClassName={mobile.mobile ? 'activeMobile' : 'active'}
-          to="v"
-        >
+        <Link activeClassName={mobile.mobile ? 'activeMobile' : 'active'} to="">
           <ListItem>Blog</ListItem>
         </Link>
       </div>
       <div>
-        <Link
-          activeClassName={mobile.mobile ? 'activeMobile' : 'active'}
-          to="s"
-        >
+        <Link activeClassName={mobile.mobile ? 'activeMobile' : 'active'} to="">
           <ListItem>Veranstaltungen</ListItem>
         </Link>
       </div>
       <div>
-        <Link
-          activeClassName={mobile.mobile ? 'activeMobile' : 'active'}
-          to="d"
-        >
+        <Link activeClassName={mobile.mobile ? 'activeMobile' : 'active'} to="">
           <ListItem>Publikationen</ListItem>
         </Link>
       </div>

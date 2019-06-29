@@ -35,6 +35,10 @@ const Input = styled.input`
     color: ${DARKBLUE_FONT};
     text-align: center;
   }
+
+  @media (max-width: 650px) {
+    width: 100%;
+  }
 `
 
 const Headline = styled.h1`

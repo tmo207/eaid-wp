@@ -6,10 +6,12 @@ import {
   DARKBLUE_BG,
   LIGHTBLUE_BG,
   WHITE,
-  ROUNDED_CORNERS
+  ROUNDED_CORNERS,
+  HANDHELD_MQ
 } from '../../_common/config';
 
 const Wrapper = styled.div`
+  overflow: hidden;
   border-radius: ${ROUNDED_CORNERS};
   background: ${props => (props.lightBG ? LIGHTBLUE_BG : DARKBLUE_BG)};
   padding: ${props => (props.noPadding ? '0' : '2rem')};
@@ -18,6 +20,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-wrap: ${props => (props.wrap ? 'wrap' : 'nowrap')};
   color: ${props => (props.lightBG ? '#000000' : WHITE)};
+
+  @${HANDHELD_MQ} {
+    padding: ${props => (props.noPadding ? '0' : '1rem')};
+  }
 `;
 
 const BoxElement = ({

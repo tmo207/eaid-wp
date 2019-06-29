@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { HANDHELD_MQ } from '../_common/config';
 
 const HeadStyle = styled.h1`
   margin: ${props => (props.margin ? props.margin : '0 0 1rem')};
@@ -13,6 +14,10 @@ const Primary = styled(HeadStyle)`
 
 const Secondary = styled(HeadStyle)`
   font-size: 1.75rem;
+
+  @${HANDHELD_MQ} {
+    font-size: 1.25rem;
+  }
 `;
 
 const selectHeadline = type => {

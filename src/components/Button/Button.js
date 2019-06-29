@@ -10,7 +10,9 @@ import {
   LIGHTBLUE_BG,
   LIGHTBLUE_HOVER,
   DARKBLUE_FONT,
-  ROUNDED_CORNERS
+  ROUNDED_CORNERS,
+  HANDHELD_MQ,
+  MOBILE_TEXT
 } from '../../_common/config';
 
 const ButtonStyle = styled.button`
@@ -23,6 +25,10 @@ const ButtonStyle = styled.button`
   border: none;
   cursor: pointer;
   transition: background 0.2s;
+
+  @${HANDHELD_MQ} {
+    font-size: ${MOBILE_TEXT};
+  }
 `;
 const YellowButton = styled(ButtonStyle)`
   background: ${YELLOW};

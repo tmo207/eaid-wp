@@ -9,10 +9,12 @@ import {
   YELLOW,
   LIGHTBLUE_BG,
   LIGHTBLUE_HOVER,
-  DARKBLUE_FONT
+  DARKBLUE_FONT,
+  ROUNDED_CORNERS
 } from '../../_common/config';
 
 const ButtonStyle = styled.button`
+  border-radius: ${ROUNDED_CORNERS};
   ${props => props.flexGrow && `display: flex; flex-grow: ${props.flexGrow};`}
   padding: 0;
   font-weight: bold;
@@ -59,7 +61,7 @@ const Button = ({ type, children, flexGrow, to }) => {
 
   if (to) {
     return (
-      <RenderButton flexGrow={flexGrow}>
+      <RenderButton tabIndex="-1" flexGrow={flexGrow}>
         <StyledLink
           to={to}
           dangerouslySetInnerHTML={{

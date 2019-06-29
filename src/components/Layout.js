@@ -16,15 +16,9 @@ import {
 import './Layout.css';
 
 const GlobalStyle = createGlobalStyle`
-  html {
-    min-height: 100vh;
-  }
   body {
-    font-family: Asap;
-    color: ${WHITE};
-    font-size: 1.3rem;
     padding-top: 0;
-    background: linear-gradient(#799AD6, #4469B1);
+    color: ${WHITE};
     @${MOBILE_MQ} {
       padding-top: ${NAVBAR_HEIGHT};
     }

@@ -14,3 +14,5 @@ export const YELLOW = 'rgba(253, 216, 65, 1)';
 export const DARKBLUE_FONT = '#677a9d';
 
 export const LIGHTBLUE_HOVER = 'rgba(255, 255, 255, 1)';
+
+export const ROUNDED_CORNERS = '4px';

@@ -2,9 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { DARKBLUE_BG, LIGHTBLUE_BG, WHITE } from '../../_common/config';
+import {
+  DARKBLUE_BG,
+  LIGHTBLUE_BG,
+  WHITE,
+  ROUNDED_CORNERS
+} from '../../_common/config';
 
 const Wrapper = styled.div`
+  border-radius: ${ROUNDED_CORNERS};
   background: ${props => (props.lightBG ? LIGHTBLUE_BG : DARKBLUE_BG)};
   padding: ${props => (props.noPadding ? '0' : '2rem')};
   margin-bottom: ${props => (props.noBorder ? '0' : '0.06rem')};

@@ -9,10 +9,15 @@
   font-weight: bold;
 }
 html {
+  position: relative;
+  min-height: 100vh;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
 body {
+  font-family: Asap;
+  font-size: 1.3rem;
+  background: linear-gradient(#799ad6, #4469b1);
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -218,6 +223,7 @@ html {
   box-sizing: inherit;
 }
 body {
+  height: 100%;
   font-weight: normal;
   word-wrap: break-word;
   font-kerning: normal;

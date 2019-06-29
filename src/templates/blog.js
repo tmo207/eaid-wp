@@ -37,6 +37,10 @@ const Input = styled.input`
   }
 `
 
+const Headline = styled.h1`
+  text-align: center;
+`
+
 class IndexPage extends React.Component {
   state = { value: '' }
 
@@ -49,15 +53,19 @@ class IndexPage extends React.Component {
     const { data, pageContext } = this.props
     const { edges: posts } = data.allWordpressPost
 
+    const hasValue = value === ''
+
     return (
       <Layout>
+        <Headline>{!hasValue ? 'Suchergebnisse' : 'Neuste Artikel'}</Headline>
+
         <Input
           type="search"
           placeholder="Durchsuche Artikel..."
           value={value}
           onChange={this.onChange}
         />
-        {value === '' ? (
+        {hasValue ? (
           <>
             <PostList posts={posts} />
             <Pagination pageContext={pageContext} pathPrefix="/" />

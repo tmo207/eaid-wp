@@ -31,5 +31,25 @@ export const pageQuery = graphql`
     }
     date(formatString: "DD.MM.YYYY")
     slug
+    featured_media {
+      localFile {
+        childImageSharp {
+          fluid(maxWidth: 960, maxHeight: 600) {
+            base64
+            tracedSVG
+            aspectRatio
+            src
+            srcSet
+            srcWebp
+            srcSetWebp
+            sizes
+            originalImg
+            originalName
+            presentationWidth
+            presentationHeight
+          }
+        }
+      }
+    }
   }
 `;

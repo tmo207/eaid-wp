@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
+import Img from 'gatsby-image';
+import styled from 'styled-components';
 
 import Headline from '../Headline';
 import Text from '../Text';
@@ -10,9 +12,20 @@ import DateAndAuthor from '../DateAndAuthor';
 import Button from '../Button/Button';
 import ButtonContainer from '../Button/ButtonContainer';
 
+import { ROUNDED_CORNERS } from '../../_common/config';
+
+const StyledImg = styled(Img)`
+  border-radius: ${ROUNDED_CORNERS};
+`;
+
 const PostPreview = ({ post }) => {
   return (
     <BoxContainer>
+      {post.featured_media && (
+        <StyledImg
+          fluid={post.featured_media.localFile.childImageSharp.fluid}
+        />
+      )}
       <BoxElement>
         <Link to={`/${post.slug}`}>
           <Headline margin={'0'}>{post.title}</Headline>

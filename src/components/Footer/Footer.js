@@ -4,8 +4,6 @@ import styled from 'styled-components'
 import { Link, graphql, StaticQuery } from 'gatsby'
 import Img from 'gatsby-image'
 
-import Text from '../Text'
-
 import { WHITE, DARKBLUE_FONT } from '../../_common/config'
 
 const FooterContainer = styled.footer`

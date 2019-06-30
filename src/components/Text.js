@@ -10,6 +10,7 @@ const TextWrap = styled.p`
   margin: ${props => (props.margin ? props.margin : '0 0 1rem')};
   padding: ${props => (props.padding ? props.padding : '0')};
   font-weight: ${props => (props.bold ? 'bold' : 'normal')};
+  text-align: ${props => (props.center ? 'center' : 'start')};
   color: ${props =>
     !props.secondary ? 'inherit' : 'rgba(255, 255, 255, 0.5)'};
 
@@ -18,13 +19,14 @@ const TextWrap = styled.p`
   }
 `;
 
-const Text = ({ children, margin, padding, bold, secondary }) => {
+const Text = ({ children, margin, padding, bold, secondary, center }) => {
   return (
     <TextWrap
       padding={padding}
       margin={margin}
       bold={bold}
       secondary={secondary}
+      center={center}
       dangerouslySetInnerHTML={{
         __html: children
       }}
@@ -37,7 +39,8 @@ Text.propTypes = {
   margin: PropTypes.string,
   padding: PropTypes.string,
   bold: PropTypes.bool,
-  secondary: PropTypes.bool
+  secondary: PropTypes.bool,
+  center: PropTypes.bool
 };
 
 export default Text;

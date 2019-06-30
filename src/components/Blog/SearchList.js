@@ -4,6 +4,7 @@ import { StaticQuery, graphql } from 'gatsby';
 
 import PostPreview from './PostPreview';
 import LoadingSpinner from './LoadingSpinner';
+import Text from '../Text';
 
 const SearchList = value => {
   const loadPostAmount = 10;
@@ -74,9 +75,15 @@ const SearchList = value => {
           <LoadingSpinner />
         ) : (
           <>
-            {filteredPosts.map(post => (
-              <PostPreview post={post.node} key={post.node.id} />
-            ))}
+            {resultsTotalLength > 0 ? (
+              filteredPosts.map(post => (
+                <PostPreview post={post.node} key={post.node.id} />
+              ))
+            ) : (
+              <Text center margin={'2rem 0'}>
+                Keine passenden Ergebnisse.
+              </Text>
+            )}
             {isFetching && resultsTotalLength > numberOfResultsShowing && (
               <LoadingSpinner />
             )}

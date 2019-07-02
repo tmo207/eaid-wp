@@ -89,6 +89,7 @@ exports.createPages = ({ actions, graphql }) => {
           path: `/${post.slug}/`,
           component: postTemplate,
           context: {
+            postId: post.wordpress_id,
             id: post.id
           }
         });

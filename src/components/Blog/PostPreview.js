@@ -27,12 +27,15 @@ const PostPreview = ({ post }) => {
         />
       )}
       <BoxElement>
-        <Link to={`/${post.slug}`}>
+        <Link to={`/${post.slug}`} className="noLine">
           <Headline margin={'0'}>{post.title}</Headline>
         </Link>
       </BoxElement>
       <BoxElement>
-        <Text>{`${post.excerpt.replace(/<(.|\n)*?>/g, '')}...`}</Text>
+        <Text margin={'0'}>{`${post.excerpt.replace(
+          /<(.|\n)*?>/g,
+          ''
+        )}...`}</Text>
       </BoxElement>
       <BoxElement noPadding>
         <ButtonContainer>

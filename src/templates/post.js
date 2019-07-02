@@ -1,8 +1,37 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Helmet from 'react-helmet'
-import { graphql, Link } from 'gatsby'
-import Layout from '../components/Layout'
+import React from 'react';
+import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
+import { graphql, Link } from 'gatsby';
+import styled from 'styled-components';
+import Img from 'gatsby-image';
+
+import Layout from '../components/Layout';
+import BoxContainer from '../components/ContentBox/BoxContainer';
+
+import {
+  ROUNDED_CORNERS,
+  HANDHELD_MQ,
+  SMALL_MOBILE_TEXT
+} from '../_common/config';
+import BoxElement from '../components/ContentBox/BoxElement';
+import Headline from '../components/Headline';
+import Text from '../components/Text';
+import DateAndAuthor from '../components/DateAndAuthor';
+import CommentsForm from '../components/Form/CommentsForm';
+import PostComments from '../components/Blog/PostComments';
+
+const StyledImg = styled(Img)`
+  border-radius: ${ROUNDED_CORNERS};
+`;
+
+const Meta = styled.span`
+  padding: 0.5rem 0.25rem;
+
+  @${HANDHELD_MQ} {
+    font-size: ${SMALL_MOBILE_TEXT};
+    padding: 0.25rem;
+  }
+`;
 
 export const BlogPostTemplate = ({
   content,
@@ -11,62 +40,60 @@ export const BlogPostTemplate = ({
   title,
   date,
   author,
+  img
 }) => {
   return (
-    <section className="section">
-      <div className="container content">
-        <div className="columns">
-          <div className="column is-10 is-offset-1">
-            <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
-              {title}
-            </h1>
-            <div dangerouslySetInnerHTML={{ __html: content }} />
-            <div style={{ marginTop: `4rem` }}>
-              <p>
-                {date} - posted by{' '}
-                <Link to={`/author/${author.slug}`}>{author.name}</Link>
-              </p>
-              {categories && categories.length ? (
-                <div>
-                  <h4>Categories</h4>
-                  <ul className="taglist">
-                    {categories.map(category => (
-                      <li key={`${category.slug}cat`}>
-                        <Link to={`/categories/${category.slug}/`}>
-                          {category.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-              {tags && tags.length ? (
-                <div>
-                  <h4>Tags</h4>
-                  <ul className="taglist">
-                    {tags.map(tag => (
-                      <li key={`${tag.slug}tag`}>
-                        <Link to={`/tags/${tag.slug}/`}>{tag.name}</Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
+    <>
+      <BoxContainer margin={'2rem 0 0'}>
+        {img && <StyledImg fluid={img} />}
+        <BoxElement wrap lightBG>
+          <Headline>{title}</Headline>
+          <Text>{content}</Text>
+        </BoxElement>
+        {categories && categories.length && (
+          <BoxElement wrap>
+            <Meta>Posted in:</Meta>
+            {categories.map(category => (
+              <Meta key={`${category.slug}cat`}>
+                <Link to={`/categories/${category.slug}/`}>
+                  {category.name}
+                </Link>
+              </Meta>
+            ))}
+          </BoxElement>
+        )}
+        {tags && tags.length && (
+          <BoxElement wrap>
+            <Meta>Tagged mit:</Meta>
+            {tags.map(tag => (
+              <Meta key={`${tag.slug}tag`}>
+                <Link to={`/tags/${tag.slug}/`}>{tag.name}</Link>
+              </Meta>
+            ))}
+          </BoxElement>
+        )}
+      </BoxContainer>
+      <BoxElement inline>
+        <DateAndAuthor padding="0" fullWidth inline noCenter>
+          <Link to={`/author/${author.slug}`}>
+            {date} @{author.name}
+          </Link>
+        </DateAndAuthor>
+      </BoxElement>
+    </>
+  );
+};
 
 BlogPostTemplate.propTypes = {
   content: PropTypes.node.isRequired,
-  title: PropTypes.string,
-}
+  title: PropTypes.string
+};
 
 const BlogPost = ({ data }) => {
-  const { wordpressPost: post } = data
+  const { wordpressPost: post } = data;
+  const img = post.featured_media
+    ? post.featured_media.localFile.childImageSharp.fluid
+    : null;
 
   return (
     <Layout>
@@ -78,34 +105,31 @@ const BlogPost = ({ data }) => {
         title={post.title}
         date={post.date}
         author={post.author}
+        img={img}
       />
+      <PostComments postId={post.wordpress_id} />
+      <CommentsForm />
     </Layout>
-  )
-}
+  );
+};
 
 BlogPost.propTypes = {
   data: PropTypes.shape({
-    markdownRemark: PropTypes.object,
-  }),
-}
+    markdownRemark: PropTypes.object
+  })
+};
 
-export default BlogPost
+export default BlogPost;
 
 export const pageQuery = graphql`
-  fragment PostFields on wordpress__POST {
-    id
-    slug
-    content
-    date(formatString: "MMMM DD, YYYY")
-    title
-  }
-  query BlogPostByID($id: String!) {
+  query BlogPostByID($id: String!, $postId: Int) {
     wordpressPost(id: { eq: $id }) {
       id
-      title
       slug
       content
       date(formatString: "MMMM DD, YYYY")
+      title
+      wordpress_id
       categories {
         name
         slug
@@ -118,6 +142,39 @@ export const pageQuery = graphql`
         name
         slug
       }
+      featured_media {
+        localFile {
+          childImageSharp {
+            fluid(maxWidth: 960, maxHeight: 600) {
+              base64
+              tracedSVG
+              aspectRatio
+              src
+              srcSet
+              srcWebp
+              srcSetWebp
+              sizes
+              originalImg
+              originalName
+              presentationWidth
+              presentationHeight
+            }
+          }
+        }
+      }
+    }
+    allWordpressWpComments(filter: { post: { eq: $postId } }) {
+      edges {
+        node {
+          id
+          wordpress_id
+          post
+          author_name
+          author_url
+          date(formatString: "DD.MM.YYYY")
+          content
+        }
+      }
     }
   }
-`
+`;

@@ -3,17 +3,18 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  margin: 2rem 0;
+  margin: ${props => (props.margin ? props.margin : '2rem 0')};
   display: flex;
   flex-direction: column;
 `;
 
-const BoxContainer = ({ children }) => {
-  return <Container>{children}</Container>;
+const BoxContainer = ({ children, margin }) => {
+  return <Container margin={margin}>{children}</Container>;
 };
 
 BoxContainer.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  margin: PropTypes.string
 };
 
 export default BoxContainer;

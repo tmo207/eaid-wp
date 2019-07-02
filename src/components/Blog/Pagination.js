@@ -35,6 +35,7 @@ const Wrapper = styled.button`
 const StyledLink = styled(Link)`
   display: block;
   padding: 1rem;
+  text-decoration: none;
 `;
 
 const ElementWrapper = styled.div`

@@ -11,22 +11,30 @@ import {
 const Text = styled.p`
   color: rgba(255, 255, 255, 0.5);
   font-size: 1rem;
-  padding: ${PADDING_SMALL};
+  padding: ${props => (props.padding ? props.padding : PADDING_SMALL)};
   margin: 0;
-  width: 35%;
-  text-align: center;
+  width: ${props => (props.fullWidth ? '100%' : '35%')};
+  text-align: ${props => (props.noCenter ? 'start' : 'center')};
 
   @${HANDHELD_MQ} {
     font-size: ${SMALL_MOBILE_TEXT};
   }
 `;
 
-const DateAndAuthor = ({ children }) => {
-  return <Text>{children}</Text>;
+const DateAndAuthor = ({ children, padding, noCenter, fullWidth }) => {
+  return (
+    <Text padding={padding} noCenter={noCenter} fullWidth={fullWidth}>
+      {children}
+    </Text>
+  );
 };
 
 DateAndAuthor.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  margin: PropTypes.string,
+  padding: PropTypes.string,
+  noCenter: PropTypes.bool,
+  fullWidth: PropTypes.bool
 };
 
 export default DateAndAuthor;

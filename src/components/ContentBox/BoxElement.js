@@ -17,9 +17,10 @@ const Wrapper = styled.div`
   padding: ${props => (props.noPadding ? '0' : '2rem')};
   margin-bottom: ${props => (props.noBorder ? '0' : '0.06rem')};
   flex-grow: ${props => (props.flexGrow ? props.flexGrow : '1')};
-  display: flex;
+  display: ${props => (props.inline ? 'inline-block' : 'flex')};
   flex-wrap: ${props => (props.wrap ? 'wrap' : 'nowrap')};
   color: ${props => (props.lightBG ? '#000000' : WHITE)};
+  justify-content: ${props => props.justify};
 
   @${HANDHELD_MQ} {
     padding: ${props => (props.noPadding ? '0' : '1rem')};
@@ -32,15 +33,21 @@ const BoxElement = ({
   flexGrow,
   wrap,
   noPadding,
-  lightBG
+  lightBG,
+  justify,
+  inline,
+  id
 }) => {
   return (
     <Wrapper
+      id={id}
       noPadding={noPadding}
       noBorder={noBorder}
       flexGrow={flexGrow}
       wrap={wrap}
       lightBG={lightBG}
+      justify={justify}
+      inline={inline}
     >
       {children}
     </Wrapper>
@@ -53,7 +60,10 @@ BoxElement.propTypes = {
   flexGrow: PropTypes.number,
   wrap: PropTypes.bool,
   noPadding: PropTypes.bool,
-  lightBG: PropTypes.bool
+  lightBG: PropTypes.bool,
+  justify: PropTypes.string,
+  inline: PropTypes.bool,
+  id: PropTypes.string
 };
 
 export default BoxElement;

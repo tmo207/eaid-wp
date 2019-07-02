@@ -4,12 +4,17 @@ import styled from 'styled-components';
 
 import Error from './Error';
 
-import { DARK_BG, WHITE } from '../../_common/config';
+import {
+  WHITE,
+  DARKBLUE_BG,
+  HANDHELD_MQ,
+  MOBILE_TEXT
+} from '../../_common/config';
 
 const CommentInput = styled.textarea`
   width: 100%;
   padding: 1rem;
-  background: ${DARK_BG};
+  background: ${DARKBLUE_BG};
   border: none;
   color: ${WHITE};
   margin: 0;
@@ -20,6 +25,10 @@ const CommentInput = styled.textarea`
   &::placeholder {
     color: #799ad6;
     font-size: 1rem;
+  }
+
+  @${HANDHELD_MQ} {
+    font-size: ${MOBILE_TEXT};
   }
 `;
 

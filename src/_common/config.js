@@ -3,7 +3,7 @@ export const PADDING_SMALL = '1rem';
 export const DESKTOP_SIZE = 1500;
 export const DESKTOP_MQ = `media (min-width: ${DESKTOP_SIZE}px)`;
 export const MOBILE_MQ = 'media (max-width: 1499px)';
-export const HANDHELD_MQ = 'media (max-width: 450px)';
+export const HANDHELD_MQ = 'media (max-width: 520px)';
 
 export const NAVBAR_HEIGHT = '5rem';
 export const MAX_CONTENT_WIDTH = '1700px';

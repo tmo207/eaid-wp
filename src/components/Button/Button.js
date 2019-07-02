@@ -49,6 +49,7 @@ const GreyButton = styled(ButtonStyle)`
 const StyledLink = styled(Link)`
   padding: ${PADDING_SMALL};
   display: block;
+  text-decoration: none;
 `;
 
 const selectButton = type => {

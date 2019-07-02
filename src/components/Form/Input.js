@@ -4,13 +4,18 @@ import styled from 'styled-components';
 
 import Error from './Error';
 
-import { DARK_BG, WHITE } from '../../_common/config';
+import {
+  WHITE,
+  DARKBLUE_BG,
+  MOBILE_TEXT,
+  HANDHELD_MQ
+} from '../../_common/config';
 
 const InputField = styled.input`
   width: 100%;
   padding: 1rem;
   height: 2.5rem;
-  background: ${DARK_BG};
+  background: ${DARKBLUE_BG};
   border: none;
   color: ${WHITE};
   outline: ${props => (props.outline ? '1px solid red' : 'none')};
@@ -18,6 +23,10 @@ const InputField = styled.input`
   &::placeholder {
     color: #799ad6;
     font-size: 1rem;
+  }
+
+  @${HANDHELD_MQ} {
+    font-size: ${MOBILE_TEXT};
   }
 `;
 

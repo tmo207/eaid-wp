@@ -25,7 +25,25 @@ module.exports = {
         useACF: false,
         auth: {},
         // Set to true to debug endpoints on 'gatsby build'
-        verboseOutput: true
+        verboseOutput: true,
+        includedRoutes: [
+          '**/categories',
+          '**/comments',
+          '**/posts',
+          '**/pages',
+          '**/media',
+          '**/tags',
+          '**/taxonomies',
+          '**/users',
+          '**/menus',
+          '**/blocks',
+          '**/types',
+          '**/statuses',
+          '**/search',
+          '**/block-renderer',
+          '**/settings',
+          '**/themes'
+        ]
       }
     },
     'gatsby-plugin-sharp',

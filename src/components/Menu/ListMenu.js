@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Link } from 'gatsby';
+import { Link, graphql, StaticQuery } from 'gatsby';
 
 import {
   LIGHTBLUE_BG,
@@ -9,6 +9,7 @@ import {
   DARKBLUE_FONT,
   ROUNDED_CORNERS
 } from '../../_common/config';
+import { useStateValue } from '../../_common/state';
 
 const ListWrapper = styled.ul`
   color: ${DARKBLUE_FONT};
@@ -30,37 +31,37 @@ const ListItem = styled.li`
 `;
 
 const ListMenu = mobile => {
+  const [{ menu }, dispatch] = useStateValue();
+  const { open } = menu;
+
   return (
-    <ListWrapper role="navigation">
-      <div>
-        <Link
-          activeClassName={mobile.mobile ? 'activeMobile' : 'active'}
-          to="/"
-        >
-          <ListItem>Start</ListItem>
-        </Link>
-      </div>
-      <div>
-        <Link activeClassName={mobile.mobile ? 'activeMobile' : 'active'} to="">
-          <ListItem>Der Verein</ListItem>
-        </Link>
-      </div>
-      <div>
-        <Link activeClassName={mobile.mobile ? 'activeMobile' : 'active'} to="">
-          <ListItem>Blog</ListItem>
-        </Link>
-      </div>
-      <div>
-        <Link activeClassName={mobile.mobile ? 'activeMobile' : 'active'} to="">
-          <ListItem>Veranstaltungen</ListItem>
-        </Link>
-      </div>
-      <div>
-        <Link activeClassName={mobile.mobile ? 'activeMobile' : 'active'} to="">
-          <ListItem>Publikationen</ListItem>
-        </Link>
-      </div>
-    </ListWrapper>
+    <StaticQuery
+      query={menuQuery}
+      render={items => {
+        return (
+          <ListWrapper role="navigation">
+            {items.wordpressWpApiMenusMenusItems.items.map(item => {
+              return (
+                <div key={item.object_id}>
+                  <Link
+                    activeClassName={mobile.mobile ? 'activeMobile' : 'active'}
+                    to={item.url.replace('https://www.eaid-berlin.de', '')}
+                    onClick={() =>
+                      dispatch({
+                        type: 'toggleMenu',
+                        toggleMenuState: { open: !open }
+                      })
+                    }
+                  >
+                    <ListItem>{item.title}</ListItem>
+                  </Link>
+                </div>
+              );
+            })}
+          </ListWrapper>
+        );
+      }}
+    />
   );
 };
 
@@ -71,5 +72,17 @@ ListMenu.propTypes = {
 ListMenu.propTypes = {
   mobile: PropTypes.bool
 };
+
+const menuQuery = graphql`
+  query MenuItems {
+    wordpressWpApiMenusMenusItems {
+      items {
+        title
+        url
+        object_id
+      }
+    }
+  }
+`;
 
 export default ListMenu;

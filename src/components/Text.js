@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { HANDHELD_MQ, SMALL_MOBILE_TEXT, MOBILE_TEXT } from '../_common/config';
 
 const TextWrap = styled.p`
+  display: ${props => (props.inline ? 'inline' : 'block')};
   font-size: ${props => (!props.secondary ? '1.4rem' : '1rem')};
   width: 100%;
   margin: ${props => (props.margin ? props.margin : '0 0 1rem')};
@@ -19,7 +20,15 @@ const TextWrap = styled.p`
   }
 `;
 
-const Text = ({ children, margin, padding, bold, secondary, center }) => {
+const Text = ({
+  children,
+  margin,
+  padding,
+  bold,
+  secondary,
+  center,
+  inline
+}) => {
   return (
     <TextWrap
       padding={padding}
@@ -27,6 +36,7 @@ const Text = ({ children, margin, padding, bold, secondary, center }) => {
       bold={bold}
       secondary={secondary}
       center={center}
+      inline={inline}
       dangerouslySetInnerHTML={{
         __html: children
       }}
@@ -40,7 +50,8 @@ Text.propTypes = {
   padding: PropTypes.string,
   bold: PropTypes.bool,
   secondary: PropTypes.bool,
-  center: PropTypes.bool
+  center: PropTypes.bool,
+  inline: PropTypes.bool
 };
 
 export default Text;

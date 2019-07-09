@@ -406,6 +406,10 @@ p {
   padding-top: 0;
   margin-bottom: 1.45rem;
 }
+p img {
+  display: block;
+  height: auto;
+}
 figure {
   margin-left: 0;
   margin-right: 0;

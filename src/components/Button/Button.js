@@ -38,6 +38,9 @@ const YellowButton = styled(ButtonStyle)`
 `;
 const WhiteButton = styled(ButtonStyle)`
   background: ${WHITE};
+  &:hover {
+    background: ${YELLOW};
+  }
 `;
 const GreyButton = styled(ButtonStyle)`
   background: ${LIGHTBLUE_BG};

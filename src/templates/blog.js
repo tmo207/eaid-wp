@@ -5,8 +5,9 @@ import styled from 'styled-components'
 
 import Layout from '../components/Layout'
 import PostList from '../components/Blog/PostList'
-import Pagination from '../components/Blog/Pagination'
 import SearchList from '../components/Blog/SearchList'
+import PaginationButton from '../components/Pagination/PaginationButton'
+import PaginationContainer from '../components/Pagination/PaginationContainer'
 
 import {
   DARKBLUE_BG,
@@ -56,6 +57,7 @@ class IndexPage extends React.Component {
     const { value } = this.state
     const { data, pageContext } = this.props
     const { edges: posts } = data.allWordpressPost
+    const { previousPagePath, nextPagePath } = pageContext
 
     const hasValue = value === ''
 
@@ -72,7 +74,21 @@ class IndexPage extends React.Component {
         {hasValue ? (
           <>
             <PostList posts={posts} />
-            <Pagination pageContext={pageContext} pathPrefix="/" />
+            <PaginationContainer>
+              {nextPagePath && (
+                <PaginationButton
+                  isLeft
+                  link={nextPagePath}
+                  text="Ältere Beiträge"
+                />
+              )}
+              {previousPagePath && (
+                <PaginationButton
+                  link={previousPagePath}
+                  text="Neuere Beiträge"
+                />
+              )}
+            </PaginationContainer>
           </>
         ) : (
           <SearchList value={value} />

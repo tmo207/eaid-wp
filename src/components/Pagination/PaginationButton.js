@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 
 import logo from '../../img/arrow.png';
@@ -9,13 +10,6 @@ import {
   LIGHTBLUE_BG,
   ROUNDED_CORNERS
 } from '../../_common/config';
-
-const Container = styled.nav`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: center;
-`;
 
 const Wrapper = styled.button`
   border-radius: ${ROUNDED_CORNERS};
@@ -62,33 +56,24 @@ const Text = styled.p`
   margin: 0;
 `;
 
-const Pagination = ({ pageContext, pathPrefix }) => {
-  const { previousPagePath, nextPagePath } = pageContext;
-
+const PaginationButton = ({ isLeft, link, text }) => {
   return (
-    <Container role="navigation">
-      {nextPagePath && (
-        <Wrapper>
-          <StyledLink to={nextPagePath} rel="next">
-            <ElementWrapper>
-              <ArrowLeft src={logo} />
-              <Text>Ältere Beiträge</Text>
-            </ElementWrapper>
-          </StyledLink>
-        </Wrapper>
-      )}
-      {previousPagePath && (
-        <Wrapper>
-          <StyledLink to={previousPagePath} rel="prev">
-            <ElementWrapper>
-              <Text>Neuere Beiträge</Text>
-              <ArrowRight src={logo} />
-            </ElementWrapper>
-          </StyledLink>
-        </Wrapper>
-      )}
-    </Container>
+    <Wrapper>
+      <StyledLink to={`/${link}`} rel={isLeft ? 'next' : 'prev'}>
+        <ElementWrapper>
+          {isLeft && <ArrowLeft src={logo} />}
+          <Text>{text}</Text>
+          {!isLeft && <ArrowRight src={logo} />}
+        </ElementWrapper>
+      </StyledLink>
+    </Wrapper>
   );
 };
 
-export default Pagination;
+PaginationButton.propTypes = {
+  link: PropTypes.string,
+  text: PropTypes.string,
+  isLeft: PropTypes.bool
+};
+
+export default PaginationButton;

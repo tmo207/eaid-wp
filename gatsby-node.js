@@ -221,3 +221,34 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     });
   }
 };
+
+exports.sourceNodes = ({ actions }) => {
+  const { createTypes } = actions;
+  const typeDefs = `
+    type wordpress__PAGE implements Node {
+      acf: wordpress__AcfFields
+    }
+    type wordpress__AcfFields implements Node {
+      person: wordpress__AcfPerson
+      standort: wordpress__AcfStandort
+    }
+    type wordpress__AcfPerson implements Node {
+      biografie: String
+      email_adresse: String
+      name: String
+      tatigkeit: String
+      website: String
+      id: String
+      bild: wordpress__AcfImage
+    }
+    type wordpress__AcfStandort implements Node {
+      uberschrift: String
+      foto: wordpress__AcfImage
+      beschreibung: String
+    }
+    type wordpress__AcfImage implements Node {
+      source_url: String
+    }
+  `;
+  createTypes(typeDefs);
+};

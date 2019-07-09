@@ -20,3 +20,14 @@ export const ROUNDED_CORNERS = '4px';
 
 export const SMALL_MOBILE_TEXT = '0.8rem';
 export const MOBILE_TEXT = '1rem';
+
+export const SEARCH_RESULTS_DELAY = 1500;
+export const FETCH_MORE_ITEMS_DELAY = 1000;
+
+export const PUBLIKATIONEN_ID = 958;
+export const STARTSEITE_ID = 96;
+export const VERANSTALTUNGEN_ID = 156;
+export const VERANSTALTUNGEN_ARCHIV_ID = 14;
+export const VEREIN_ID = 31;
+export const MAIN_MENU_ID = 6;
+export const FOOTER_MENU_ID = 729;

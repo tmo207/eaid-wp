@@ -6,6 +6,11 @@ import PostPreview from './PostPreview';
 import LoadingSpinner from './LoadingSpinner';
 import Text from '../Text';
 
+import {
+  SEARCH_RESULTS_DELAY,
+  FETCH_MORE_ITEMS_DELAY
+} from '../../_common/config';
+
 const SearchList = value => {
   const loadPostAmount = 10;
   const [numberOfResultsShowing, setResults] = useState(loadPostAmount);
@@ -37,7 +42,7 @@ const SearchList = value => {
     setIsLoading(true);
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+    }, SEARCH_RESULTS_DELAY);
     return () => clearTimeout(timer);
   }, [value]);
 
@@ -45,7 +50,7 @@ const SearchList = value => {
     setTimeout(() => {
       setResults(results => results + loadPostAmount);
       setIsFetching(false);
-    }, 1000);
+    }, FETCH_MORE_ITEMS_DELAY);
   };
 
   const filterPosts = (value, posts) => {

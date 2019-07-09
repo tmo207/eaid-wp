@@ -13,6 +13,7 @@ import Button from '../Button/Button';
 import ButtonContainer from '../Button/ButtonContainer';
 
 import { ROUNDED_CORNERS } from '../../_common/config';
+import { getExcerpt } from '../../_common/func';
 
 const StyledImg = styled(Img)`
   border-radius: ${ROUNDED_CORNERS};
@@ -21,21 +22,18 @@ const StyledImg = styled(Img)`
 const PostPreview = ({ post }) => {
   return (
     <BoxContainer>
-      {post.featured_media && (
+      {post.featured_media && post.featured_media.localFile && (
         <StyledImg
           fluid={post.featured_media.localFile.childImageSharp.fluid}
         />
       )}
       <BoxElement>
         <Link to={`/${post.slug}`} className="noLine">
-          <Headline margin={'0'}>{post.title}</Headline>
+          <Headline margin="0">{post.title}</Headline>
         </Link>
       </BoxElement>
       <BoxElement>
-        <Text margin={'0'}>{`${post.excerpt.replace(
-          /<(.|\n)*?>/g,
-          ''
-        )}...`}</Text>
+        <Text margin="0">{getExcerpt(post.excerpt, true)}</Text>
       </BoxElement>
       <BoxElement noPadding>
         <ButtonContainer>

@@ -243,10 +243,13 @@ exports.sourceNodes = ({ actions }) => {
     }
     type wordpress__AcfStandort implements Node {
       uberschrift: String
-      foto: wordpress__AcfImage
+      foto: wordpress__AcfImg
       beschreibung: String
     }
     type wordpress__AcfImage implements Node {
+      source_url: String
+    }
+    type wordpress__AcfImg implements Node {
       source_url: String
     }
   `;

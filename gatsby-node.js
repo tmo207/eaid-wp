@@ -229,7 +229,6 @@ exports.sourceNodes = ({ actions }) => {
       acf: wordpress__AcfFields
     }
     type wordpress__AcfFields implements Node {
-      person: wordpress__AcfPerson
       standort: wordpress__AcfStandort
     }
     type wordpress__AcfPerson implements Node {
@@ -238,19 +237,15 @@ exports.sourceNodes = ({ actions }) => {
       name: String
       tatigkeit: String
       website: String
-      id: String
-      bild: wordpress__AcfImage
     }
     type wordpress__AcfStandort implements Node {
       uberschrift: String
-      foto: wordpress__AcfImg
+      foto: String
       beschreibung: String
     }
-    type wordpress__AcfImage implements Node {
-      source_url: String
-    }
-    type wordpress__AcfImg implements Node {
-      source_url: String
+    type wordpress__AcfContentbox implements Node {
+      uberschrift: String
+      content: String
     }
   `;
   createTypes(typeDefs);

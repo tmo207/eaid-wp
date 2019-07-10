@@ -46,9 +46,7 @@ const VereinTemplate = ({ title, content }) => {
                     }
                     standort {
                       beschreibung
-                      foto {
-                        source_url
-                      }
+                      foto
                       uberschrift
                     }
                   }
@@ -60,6 +58,7 @@ const VereinTemplate = ({ title, content }) => {
         render={data => {
           const personen = data.allWordpressPage.edges[0].node.acf.personen_page;
           const standort = data.allWordpressPage.edges[0].node.acf.standort;
+          console.log(standort);
 
           return (
             <>

@@ -35,8 +35,6 @@ export const getExcerpt = (content, isExcerpt) => {
 
 export const selectTemplate = id => {
   switch (id) {
-    case PUBLIKATIONEN_ID:
-      return Publikationen;
     case STARTSEITE_ID:
       return Startseite;
     case VERANSTALTUNGEN_ID:

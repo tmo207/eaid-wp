@@ -101,6 +101,15 @@ export const pageQuery = graphql`
       title
       content
       wordpress_id
+      acf {
+        contentboxen_page {
+          __typename
+          ... on WordPressAcf_contentbox {
+            uberschrift
+            content
+          }
+        }
+      }
     }
   }
 `;

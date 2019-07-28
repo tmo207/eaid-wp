@@ -8,11 +8,23 @@ const HeadStyle = styled.h1`
   padding: ${props => (props.padding ? props.padding : '0')};
 `;
 
-const Primary = styled(HeadStyle)`
+const Large = styled(HeadStyle)`
   font-size: 4rem;
+
+  @${HANDHELD_MQ} {
+    font-size: 2.85rem;
+  }
 `;
 
-const Secondary = styled(HeadStyle)`
+const Medium = styled(HeadStyle)`
+  font-size: 2.5rem;
+
+  @${HANDHELD_MQ} {
+    font-size: 1.78rem;
+  }
+`;
+
+const Small = styled(HeadStyle)`
   font-size: 1.75rem;
 
   @${HANDHELD_MQ} {
@@ -22,10 +34,12 @@ const Secondary = styled(HeadStyle)`
 
 const selectHeadline = type => {
   switch (type) {
-    case 'Primary':
-      return Primary;
-    case 'Secondary':
-      return Secondary;
+    case 'Large':
+      return Large;
+    case 'Medium':
+      return Medium;
+    case 'Small':
+      return Small;
   }
 };
 
@@ -44,11 +58,11 @@ const Headline = ({ type, children, margin, padding }) => {
 };
 
 Headline.defaultProps = {
-  type: 'Secondary'
+  type: 'Small'
 };
 
 Headline.propTypes = {
-  type: PropTypes.oneOf(['Primary', 'Secondary']),
+  type: PropTypes.oneOf(['Large', 'Medium', 'Small']),
   children: PropTypes.node,
   margin: PropTypes.string,
   padding: PropTypes.string

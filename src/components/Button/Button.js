@@ -26,27 +26,22 @@ const ButtonStyle = styled.button`
   cursor: pointer;
   transition: background 0.2s;
 
+  &:hover {
+    background: ${LIGHTBLUE_HOVER};
+  }
+
   @${HANDHELD_MQ} {
     font-size: ${MOBILE_TEXT};
   }
 `;
 const YellowButton = styled(ButtonStyle)`
   background: ${YELLOW};
-  &:hover {
-    background: rgba(255, 255, 255, 0.7);
-  }
 `;
 const WhiteButton = styled(ButtonStyle)`
   background: ${WHITE};
-  &:hover {
-    background: ${YELLOW};
-  }
 `;
 const GreyButton = styled(ButtonStyle)`
   background: ${LIGHTBLUE_BG};
-  &:hover {
-    background: ${LIGHTBLUE_HOVER};
-  }
 `;
 
 const StyledLink = styled(Link)`

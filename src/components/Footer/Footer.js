@@ -1,10 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import styled from 'styled-components'
-import { Link, graphql, StaticQuery } from 'gatsby'
+import { graphql, StaticQuery } from 'gatsby'
 import Img from 'gatsby-image'
 
-import { WHITE, DARKBLUE_FONT } from '../../_common/config'
+import FooterItems from './FooterItems'
+
+import { DARKBLUE_FONT } from '../../_common/config'
 
 const FooterContainer = styled.footer`
   font-family: Asap;
@@ -38,19 +40,6 @@ const FooterChild = styled.div`
   margin-right: 2rem;
 `
 
-const LinksWrapper = styled.div`
-  margin-bottom: 2.5rem;
-`
-
-const StyledLink = styled(Link)`
-  display: block;
-  margin-bottom: 0.5rem;
-  transition: 0.15s;
-  &:hover {
-    color: ${WHITE};
-  }
-`
-
 const StyledText = styled.p`
   color: inherit;
   margin: 0 0 1rem;
@@ -79,7 +68,7 @@ export default class Footer extends React.Component {
             <FooterChild logos>
               <StyledText secondary>In Kooperation mit</StyledText>
               <StaticQuery
-                query={footerQuery}
+                query={footerImageQuery}
                 render={logos => {
                   return logos.allWordpressWpMedia.edges.map(logo => (
                     <StyledImage
@@ -91,17 +80,7 @@ export default class Footer extends React.Component {
               />
             </FooterChild>
             <FooterChild>
-              <LinksWrapper>
-                <StyledLink to="">Der Verein</StyledLink>
-                <StyledLink to="">Blog</StyledLink>
-                <StyledLink to="">Veranstaltungen</StyledLink>
-                <StyledLink to="">Publikationen</StyledLink>
-                <StyledLink to="">Beitragsordnung & Satzung</StyledLink>
-              </LinksWrapper>
-              <LinksWrapper>
-                <StyledLink to="">Impressum</StyledLink>
-                <StyledLink to="">Datenschutz</StyledLink>
-              </LinksWrapper>
+              <FooterItems />
             </FooterChild>
           </ElementWrapper>
         </FooterContainer>
@@ -111,7 +90,7 @@ export default class Footer extends React.Component {
   }
 }
 
-const footerQuery = graphql`
+const footerImageQuery = graphql`
   query footerImageQuery {
     allWordpressWpMedia(filter: { alt_text: { eq: "footer_logo" } }) {
       edges {

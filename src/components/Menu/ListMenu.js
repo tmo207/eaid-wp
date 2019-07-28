@@ -53,7 +53,11 @@ const ListMenu = mobile => {
                       })
                     }
                   >
-                    <ListItem>{item.title}</ListItem>
+                    <ListItem
+                      dangerouslySetInnerHTML={{
+                        __html: item.title
+                      }}
+                    />
                   </Link>
                 </div>
               );
@@ -75,7 +79,7 @@ ListMenu.propTypes = {
 
 const menuQuery = graphql`
   query MenuItems {
-    wordpressWpApiMenusMenusItems {
+    wordpressWpApiMenusMenusItems(wordpress_id: { eq: 6 }) {
       items {
         title
         url

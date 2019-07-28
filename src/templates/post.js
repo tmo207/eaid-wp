@@ -107,7 +107,9 @@ const BlogPost = ({ data }) => {
         author={post.author}
         img={img}
       />
-      <PostComments postId={post.wordpress_id} />
+      {data.allWordpressWpComments.edges.length > 0 && (
+        <PostComments postId={post.wordpress_id} />
+      )}
       <CommentsForm />
     </Layout>
   );

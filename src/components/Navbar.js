@@ -5,7 +5,7 @@ import Logo from './Logo';
 import BurgerMenu from './Menu/BurgerMenu';
 import ListMenu from './Menu/ListMenu';
 
-import { MAX_CONTENT_WIDTH } from '../_common/config';
+import { MAX_CONTENT_WIDTH, MAX_MOBILE_SIZE } from '../_common/config';
 
 const Wrapper = styled.div`
   z-index: 10000;
@@ -33,7 +33,7 @@ const Navbar = () => {
 
   const checkWindowSize = () => {
     const width = window.innerWidth;
-    const mobileWidth = 1499;
+    const mobileWidth = MAX_MOBILE_SIZE;
     if (width < mobileWidth) {
       getIsMobile(true);
     } else {

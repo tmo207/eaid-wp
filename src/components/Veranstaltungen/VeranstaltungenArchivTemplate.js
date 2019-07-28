@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
 
-import VeranstaltungenPreview from './VeranstaltungenPreview';
+import VeranstaltungsPreview from './VeranstaltungsPreview';
 import Text from '../Text';
 import {
   VERANSTALTUNGEN_ID,
@@ -45,7 +45,7 @@ const VeranstaltungenArchivTemplate = ({ content, id }) => {
             <>
               {archivVeranstaltungen.map(item => {
                 const { object_id } = item;
-                return <VeranstaltungenPreview key={object_id} id={object_id} />;
+                return <VeranstaltungsPreview key={object_id} id={object_id} />;
               })}
             </>
           );

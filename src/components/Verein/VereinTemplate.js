@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql, StaticQuery } from 'gatsby';
+import Img from 'gatsby-image';
 import styled from 'styled-components';
 
 import Text from '../Text';
@@ -11,7 +12,7 @@ import BoxElement from '../ContentBox/BoxElement';
 
 import { ROUNDED_CORNERS } from '../../_common/config';
 
-const StyledImg = styled.img`
+const StyledImg = styled(Img)`
   border-radius: ${ROUNDED_CORNERS};
 `;
 
@@ -46,7 +47,15 @@ const VereinTemplate = ({ title, content }) => {
                     }
                     standort {
                       beschreibung
-                      foto
+                      foto {
+                        localFile {
+                          childImageSharp {
+                            fluid(maxWidth: 960) {
+                              ...GatsbyImageSharpFluid
+                            }
+                          }
+                        }
+                      }
                       uberschrift
                     }
                   }
@@ -58,7 +67,6 @@ const VereinTemplate = ({ title, content }) => {
         render={data => {
           const personen = data.allWordpressPage.edges[0].node.acf.personen_page;
           const standort = data.allWordpressPage.edges[0].node.acf.standort;
-          console.log(standort);
 
           return (
             <>
@@ -70,7 +78,11 @@ const VereinTemplate = ({ title, content }) => {
                   <BoxElement>
                     <Headline margin="0">{standort.uberschrift}</Headline>
                   </BoxElement>
-                  {standort.foto && <StyledImg src={standort.foto} />}
+                  {standort.foto && (
+                    <StyledImg
+                      fluid={standort.foto.localFile.childImageSharp.fluid}
+                    />
+                  )}
                   <BoxElement>
                     <Text margin="0">{standort.beschreibung}</Text>
                   </BoxElement>

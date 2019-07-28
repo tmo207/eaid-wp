@@ -2,49 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
 
-import VeranstaltungenPreview from './VeranstaltungenPreview';
+import VeranstaltungsPreview from './VeranstaltungsPreview';
 import Text from '../Text';
 import PaginationButton from '../Pagination/PaginationButton';
 import PaginationContainer from '../Pagination/PaginationContainer';
+import BoxContainer from '../ContentBox/BoxContainer';
 
-import {
-  VERANSTALTUNGEN_ARCHIV_ID,
-  VERANSTALTUNGEN_ID
-} from '../../_common/config';
-import { getMainMenu, getSubPages } from '../../_common/func';
+import { VERANSTALTUNGEN_ARCHIV_ID } from '../../_common/config';
+import { getVeranstaltungen } from '../../_common/func';
 
-const VeranstaltungenTemplate = ({ content, id }) => {
+const VeranstaltungenTemplate = ({ content }) => {
   return (
     <>
       {content && <Text>{content}</Text>}
       <StaticQuery
-        query={graphql`
-          query Veranstaltungen {
-            allWordpressWpApiMenusMenusItems {
-              edges {
-                node {
-                  wordpress_id
-                  items {
-                    object_id
-                    wordpress_children {
-                      title
-                      object_id
-                      object_slug
-                    }
-                  }
-                }
-              }
-            }
-          }
-        `}
+        query={MenuItemsQuery}
         render={data => {
-          const mainMenu = getMainMenu(
+          const veranstaltungenAll = getVeranstaltungen(
             data.allWordpressWpApiMenusMenusItems.edges
-          );
-
-          const veranstaltungenAll = getSubPages(
-            mainMenu.items,
-            VERANSTALTUNGEN_ID
           );
 
           const archiv = veranstaltungenAll.filter(
@@ -59,7 +34,11 @@ const VeranstaltungenTemplate = ({ content, id }) => {
             <>
               {veranstaltungen.map(item => {
                 const { object_id } = item;
-                return <VeranstaltungenPreview key={object_id} id={object_id} />;
+                return (
+                  <BoxContainer key={object_id}>
+                    <VeranstaltungsPreview id={object_id} />
+                  </BoxContainer>
+                );
               })}
               <PaginationContainer>
                 <PaginationButton
@@ -81,5 +60,25 @@ VeranstaltungenTemplate.propTypes = {
   content: PropTypes.string,
   id: PropTypes.number
 };
+
+const MenuItemsQuery = graphql`
+  query Veranstaltungen {
+    allWordpressWpApiMenusMenusItems {
+      edges {
+        node {
+          wordpress_id
+          items {
+            object_id
+            wordpress_children {
+              title
+              object_id
+              object_slug
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 export default VeranstaltungenTemplate;

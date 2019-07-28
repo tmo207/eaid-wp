@@ -1,8 +1,9 @@
 export const PADDING_SMALL = '1rem';
 
-export const DESKTOP_SIZE = 1500;
+export const DESKTOP_SIZE = 1600;
+export const MAX_MOBILE_SIZE = DESKTOP_SIZE - 1;
 export const DESKTOP_MQ = `media (min-width: ${DESKTOP_SIZE}px)`;
-export const MOBILE_MQ = 'media (max-width: 1499px)';
+export const MOBILE_MQ = `media (max-width: ${MAX_MOBILE_SIZE}px)`;
 export const HANDHELD_MQ = 'media (max-width: 520px)';
 
 export const NAVBAR_HEIGHT = '5rem';
@@ -24,10 +25,12 @@ export const MOBILE_TEXT = '1rem';
 export const SEARCH_RESULTS_DELAY = 1500;
 export const FETCH_MORE_ITEMS_DELAY = 1000;
 
-export const PUBLIKATIONEN_ID = 958;
+export const PUBLIKATIONEN_ID = 947;
 export const STARTSEITE_ID = 96;
 export const VERANSTALTUNGEN_ID = 156;
 export const VERANSTALTUNGEN_ARCHIV_ID = 14;
 export const VEREIN_ID = 31;
 export const MAIN_MENU_ID = 6;
 export const FOOTER_MENU_ID = 729;
+export const IMPRESSUM_ID = 2401;
+export const DATENSCHUTZ_ID = 2403;

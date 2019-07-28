@@ -1,38 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { StaticQuery, graphql, Link } from 'gatsby';
-import BoxContainer from '../ContentBox/BoxContainer';
+
 import BoxElement from '../ContentBox/BoxElement';
 import Headline from '../Headline';
 import Text from '../Text';
-import { getExcerpt } from '../../_common/func';
 import Button from '../Button/Button';
 
-const VeranstaltungenPreview = ({ id }) => {
+import { getExcerpt } from '../../_common/func';
+
+const VeranstaltungsPreview = ({ id }) => {
   return (
     <StaticQuery
-      query={graphql`
-        query VeranstaltungenChildrenPages {
-          allWordpressPage {
-            edges {
-              node {
-                title
-                wordpress_id
-                content
-                slug
-              }
-            }
-          }
-        }
-      `}
+      query={ChildPagesQuery}
       render={data => {
         const page = data.allWordpressPage.edges.filter(
           page => page.node.wordpress_id === id
         )[0].node;
 
         return (
-          <BoxContainer>
+          <>
             <BoxElement>
               <Link to={`/${page.slug}`} className="noLine">
                 <Headline margin={'0'}>{page.title}</Headline>
@@ -46,15 +33,30 @@ const VeranstaltungenPreview = ({ id }) => {
                 Zur Veranstaltung
               </Button>
             </BoxElement>
-          </BoxContainer>
+          </>
         );
       }}
     />
   );
 };
 
-VeranstaltungenPreview.propTypes = {
+VeranstaltungsPreview.propTypes = {
   id: PropTypes.number.isRequired
 };
 
-export default VeranstaltungenPreview;
+const ChildPagesQuery = graphql`
+  query ChildPagesQuery {
+    allWordpressPage {
+      edges {
+        node {
+          title
+          wordpress_id
+          content
+          slug
+        }
+      }
+    }
+  }
+`;
+
+export default VeranstaltungsPreview;

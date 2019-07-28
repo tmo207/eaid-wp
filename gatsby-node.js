@@ -100,7 +100,7 @@ exports.createPages = ({ actions, graphql }) => {
         createPage,
         items: posts,
         itemsPerPage: 10,
-        pathPrefix: ({ pageNumber }) => (pageNumber === 0 ? '/' : '/blog'),
+        pathPrefix: '/category/eaid-blog',
         component: blogTemplate
       });
     })
@@ -230,6 +230,8 @@ exports.sourceNodes = ({ actions }) => {
     }
     type wordpress__AcfFields implements Node {
       standort: wordpress__AcfStandort
+      kontakttext: String
+      email: String
     }
     type wordpress__AcfPerson implements Node {
       biografie: String
@@ -237,10 +239,11 @@ exports.sourceNodes = ({ actions }) => {
       name: String
       tatigkeit: String
       website: String
+      bild: String
     }
     type wordpress__AcfStandort implements Node {
       uberschrift: String
-      foto: String
+      foto: wordpress__wp_media @link(from: "foto___NODE")
       beschreibung: String
     }
     type wordpress__AcfContentbox implements Node {

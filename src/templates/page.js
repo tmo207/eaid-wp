@@ -28,54 +28,6 @@ PageTemplate.propTypes = {
   content: PropTypes.string
 };
 
-const Publikationen = ({ title, content }) => {
-  return (
-    <BoxContainer>
-      <BoxElement lightBG>
-        <Headline>{title}</Headline>
-      </BoxElement>
-      <BoxElement lightBG>{content}</BoxElement>
-    </BoxContainer>
-  );
-};
-
-Publikationen.propTypes = {
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string
-};
-
-const Startseite = ({ title, content }) => {
-  return (
-    <BoxContainer>
-      <BoxElement lightBG>
-        <Headline>{title}</Headline>
-      </BoxElement>
-      <BoxElement lightBG>{content}</BoxElement>
-    </BoxContainer>
-  );
-};
-
-Startseite.propTypes = {
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string
-};
-
-const Verein = ({ title, content }) => {
-  return (
-    <BoxContainer>
-      <BoxElement lightBG>
-        <Headline>{title}</Headline>
-      </BoxElement>
-      <BoxElement lightBg>{content}</BoxElement>
-    </BoxContainer>
-  );
-};
-
-Verein.propTypes = {
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string
-};
-
 const Page = ({ data }) => {
   const { wordpressPage: page } = data;
   const { wordpress_id: pageId } = page;
@@ -101,15 +53,6 @@ export const pageQuery = graphql`
       title
       content
       wordpress_id
-      acf {
-        contentboxen_page {
-          __typename
-          ... on WordPressAcf_contentbox {
-            uberschrift
-            content
-          }
-        }
-      }
     }
   }
 `;

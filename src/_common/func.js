@@ -3,16 +3,16 @@ import { useLayoutEffect } from 'react';
 import VeranstaltungenTemplate from '../components/Veranstaltungen/VeranstaltungenTemplate';
 import VeranstaltungenArchivTemplate from '../components/Veranstaltungen/VeranstaltungenArchivTemplate';
 import { PageTemplate } from '../templates/page';
+import VereinTemplate from '../components/Verein/VereinTemplate';
+import PublikationenTemplate from '../components/PublikationenTemplate';
 
 import {
-  PUBLIKATIONEN_ID,
-  STARTSEITE_ID,
   VERANSTALTUNGEN_ID,
   VERANSTALTUNGEN_ARCHIV_ID,
   VEREIN_ID,
-  MAIN_MENU_ID
+  MAIN_MENU_ID,
+  PUBLIKATIONEN_ID
 } from './config';
-import VereinTemplate from '../components/Verein/VereinTemplate';
 
 export const useLockBodyScroll = () => {
   useLayoutEffect(() => {
@@ -35,14 +35,14 @@ export const getExcerpt = (content, isExcerpt) => {
 
 export const selectTemplate = id => {
   switch (id) {
-    case STARTSEITE_ID:
-      return Startseite;
     case VERANSTALTUNGEN_ID:
       return VeranstaltungenTemplate;
     case VERANSTALTUNGEN_ARCHIV_ID:
       return VeranstaltungenArchivTemplate;
     case VEREIN_ID:
       return VereinTemplate;
+    case PUBLIKATIONEN_ID:
+      return PublikationenTemplate;
     default:
       return PageTemplate;
   }
@@ -58,3 +58,10 @@ export const getSubPages = (parentPages, targetParentId) =>
   parentPages.filter(
     page => page.wordpress_children && page.object_id === targetParentId
   )[0].wordpress_children;
+
+export const getVeranstaltungen = menus => {
+  const mainMenu = getMainMenu(menus);
+  const veranstaltungenAll = getSubPages(mainMenu.items, VERANSTALTUNGEN_ID);
+
+  return veranstaltungenAll;
+};

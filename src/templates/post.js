@@ -96,7 +96,7 @@ const BlogPost = ({ data }) => {
     : null;
 
   return (
-    <Layout>
+    <>
       <Helmet title={`${post.title} | Blog`} />
       <BlogPostTemplate
         content={post.content}
@@ -111,7 +111,7 @@ const BlogPost = ({ data }) => {
         <PostComments postId={post.wordpress_id} />
       )}
       <CommentsForm />
-    </Layout>
+    </>
   );
 };
 

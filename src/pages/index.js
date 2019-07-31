@@ -52,7 +52,7 @@ const Startseite = () => {
         )[0].object_id;
 
         return (
-          <Layout>
+          <>
             <Headline type="Large">{siteTitle}</Headline>
             <Text>{content}</Text>
             <BoxContainer>
@@ -124,7 +124,7 @@ const Startseite = () => {
                 </BoxElement>
               )}
             </BoxContainer>
-          </Layout>
+          </>
         );
       }}
     />

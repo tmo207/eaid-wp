@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import styled from 'styled-components'
 
-import Layout from '../components/Layout'
 import PostList from '../components/Blog/PostList'
 import SearchList from '../components/Blog/SearchList'
 import PaginationButton from '../components/Pagination/PaginationButton'
@@ -62,7 +61,7 @@ class IndexPage extends React.Component {
     const hasValue = value === ''
 
     return (
-      <Layout>
+      <>
         <Headline>{!hasValue ? 'Suchergebnisse' : 'Neuste Artikel'}</Headline>
 
         <Input
@@ -93,7 +92,7 @@ class IndexPage extends React.Component {
         ) : (
           <SearchList value={value} />
         )}
-      </Layout>
+      </>
     )
   }
 }

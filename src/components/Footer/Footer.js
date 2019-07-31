@@ -49,8 +49,6 @@ const StyledImage = styled(Img)`
   margin-bottom: 1rem;
 `
 
-const body = document.body
-
 export default class Footer extends React.Component {
   state = { height: 0 }
 
@@ -60,6 +58,7 @@ export default class Footer extends React.Component {
   }
 
   render() {
+    const body = document.body
     return ReactDOM.createPortal(
       <>
         <Spacer height={this.state.height} />

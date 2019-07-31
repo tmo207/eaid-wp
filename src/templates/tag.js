@@ -14,10 +14,10 @@ const Tag = props => {
   } with the tag ${tag}`;
 
   return (
-    <Layout>
+    <>
       <Helmet title={`${tag} | ${siteTitle}`} />
       <PostList posts={posts} title={title} />
-    </Layout>
+    </>
   );
 };
 

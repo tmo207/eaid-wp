@@ -14,10 +14,10 @@ const Category = props => {
   } in the “${category}” category`;
 
   return (
-    <Layout>
+    <>
       <Helmet title={`${category} | ${siteTitle}`} />
       <PostList posts={posts} title={title} />
-    </Layout>
+    </>
   );
 };
 

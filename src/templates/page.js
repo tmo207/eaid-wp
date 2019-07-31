@@ -34,11 +34,7 @@ const Page = ({ data }) => {
 
   const Template = selectTemplate(pageId);
 
-  return (
-    <Layout>
-      <Template title={page.title} content={page.content} id={pageId} />
-    </Layout>
-  );
+  return <Template title={page.title} content={page.content} id={pageId} />;
 };
 
 Page.propTypes = {

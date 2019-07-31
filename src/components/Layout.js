@@ -4,6 +4,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 import Navbar from './Navbar';
 import Footer from './Footer/Footer';
+import Transition from './Transition';
 
 import {
   DESKTOP_MQ,
@@ -40,22 +41,30 @@ const MainWrapper = styled.div`
   max-width: 960px;
 `;
 
-const Layout = ({ children }) => (
-  <>
-    <AllWrapper>
-      <Navbar />
-      <MainWrapper>
-        <GlobalStyle />
-
-        <main>{children}</main>
-      </MainWrapper>
-    </AllWrapper>
-    <Footer />
-  </>
-);
+const Layout = props => {
+  return (
+    <>
+      <AllWrapper>
+        <Navbar />
+        <MainWrapper>
+          <GlobalStyle />
+          {props.transitions ? (
+            <Transition {...props}>
+              <main>{props.children}</main>
+            </Transition>
+          ) : (
+            <main>{props.children}</main>
+          )}
+        </MainWrapper>
+      </AllWrapper>
+      <Footer />
+    </>
+  );
+};
 
 Layout.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  transitions: PropTypes.bool
 };
 
 export default Layout;

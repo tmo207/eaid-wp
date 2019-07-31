@@ -14,13 +14,13 @@ const Img = styled.div`
 
 const ImageCircle = ({ image }) => <Img src={image} className="circle" />;
 
-Image.defaultProps = {
+ImageCircle.defaultProps = {
   aspectRatio: '1:1',
   height: 150,
   width: 150
 };
 
-Image.propTypes = {
+ImageCircle.propTypes = {
   image: PropTypes.string.isRequired
 };
 

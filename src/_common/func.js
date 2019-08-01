@@ -65,3 +65,5 @@ export const getVeranstaltungen = menus => {
 
   return veranstaltungenAll;
 };
+
+export const toLowerCaseArray = value => value.toLowerCase().split(' ');

@@ -10,6 +10,7 @@ import {
   SEARCH_RESULTS_DELAY,
   FETCH_MORE_ITEMS_DELAY
 } from '../../_common/config';
+import { toLowerCaseArray } from '../../_common/func';
 
 const SearchList = value => {
   const loadPostAmount = 10;
@@ -53,16 +54,23 @@ const SearchList = value => {
     }, FETCH_MORE_ITEMS_DELAY);
   };
 
-  const filterPosts = (value, posts) => {
-    const insensitiveValue = value.value.toLowerCase();
+  const filterPosts = ({ value }, posts) => {
+    const searchValueArray = toLowerCaseArray(value).filter(el => el !== '');
 
-    const result = posts.filter(
-      post =>
-        post.node.title.toLowerCase().includes(insensitiveValue) ||
-        post.node.excerpt.toLowerCase().includes(insensitiveValue) ||
-        post.node.date.toLowerCase().includes(insensitiveValue) ||
-        post.node.author.name.toLowerCase().includes(insensitiveValue)
-    );
+    const result = posts.filter(post => {
+      const { title, excerpt, date, author } = post.node;
+
+      const contentArray = toLowerCaseArray(title).concat(
+        toLowerCaseArray(excerpt),
+        toLowerCaseArray(date),
+        toLowerCaseArray(author.name)
+      );
+
+      const isSubstringIncluded = string =>
+        contentArray.find(contentElement => contentElement.includes(string));
+
+      return searchValueArray.every(isSubstringIncluded);
+    });
     setResultLength(result.length);
     return result;
   };

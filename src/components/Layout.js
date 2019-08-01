@@ -19,11 +19,21 @@ import './Layout.css';
 const GlobalStyle = createGlobalStyle`
   body {
     padding-top: 0;
+    background: #799ad6;
     color: ${WHITE};
     @${MOBILE_MQ} {
       padding-top: ${NAVBAR_HEIGHT};
     }
   }
+`;
+
+const BgGradient = styled.div`
+  position: absolute;
+  background: linear-gradient(#799ad6, #4469b1);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 `;
 
 const AllWrapper = styled.div`
@@ -44,19 +54,24 @@ const MainWrapper = styled.div`
 const Layout = props => {
   return (
     <>
-      <AllWrapper>
-        <Navbar />
-        <MainWrapper>
-          <GlobalStyle />
-          {props.transitions ? (
-            <Transition {...props}>
+      <GlobalStyle />
+      <Navbar />
+      {props.transitions ? (
+        <Transition {...props}>
+          <BgGradient />
+          <AllWrapper>
+            <MainWrapper>
               <main>{props.children}</main>
-            </Transition>
-          ) : (
+            </MainWrapper>
+          </AllWrapper>
+        </Transition>
+      ) : (
+        <AllWrapper>
+          <MainWrapper>
             <main>{props.children}</main>
-          )}
-        </MainWrapper>
-      </AllWrapper>
+          </MainWrapper>
+        </AllWrapper>
+      )}
       <Footer />
     </>
   );

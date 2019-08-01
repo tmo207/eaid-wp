@@ -116,15 +116,7 @@ const allPostsQuery = graphql`
     allWordpressPost {
       edges {
         node {
-          title
-          excerpt
-          author {
-            name
-            slug
-          }
-          slug
-          date(formatString: "DD.MM.YYYY")
-          id
+          ...PostListFields
         }
       }
     }

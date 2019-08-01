@@ -17,7 +17,8 @@ const Bar = styled.div`
   max-width: 100%;
   height: 5rem;
   position: fixed;
-  background-color: ${props => (props.mobile ? '#799ad6' : '')};
+  background-color: ${props =>
+    props.mobile ? 'rgba(121, 154, 214, 0.9)' : ''};
   left: ${props => (props.mobile ? '0' : '50%')};
   transform: ${props => (props.mobile ? '' : 'translateX(-50%)')};
   top: ${props => (props.mobile ? '0' : '4rem')};

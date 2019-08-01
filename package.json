@@ -23,6 +23,7 @@
     "react-helmet": "^5.2.0",
     "react-intl": "^2.9.0",
     "react-loader-spinner": "^2.3.0",
+    "react-transition-group": "^4.2.1",
     "styled-components": "^4.3.2",
     "uuid": "^3.2.1"
   },

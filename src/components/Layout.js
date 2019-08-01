@@ -66,11 +66,14 @@ const Layout = props => {
           </AllWrapper>
         </Transition>
       ) : (
-        <AllWrapper>
-          <MainWrapper>
-            <main>{props.children}</main>
-          </MainWrapper>
-        </AllWrapper>
+        <>
+          <BgGradient />
+          <AllWrapper>
+            <MainWrapper>
+              <main>{props.children}</main>
+            </MainWrapper>
+          </AllWrapper>
+        </>
       )}
       <Footer />
     </>

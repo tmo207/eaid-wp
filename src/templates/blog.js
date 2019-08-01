@@ -1,113 +1,49 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { graphql } from 'gatsby'
-import styled from 'styled-components'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
 
-import PostList from '../components/Blog/PostList'
-import SearchList from '../components/Blog/SearchList'
-import PaginationButton from '../components/Pagination/PaginationButton'
-import PaginationContainer from '../components/Pagination/PaginationContainer'
-
-import {
-  DARKBLUE_BG,
-  WHITE,
-  DARKBLUE_FONT,
-  ROUNDED_CORNERS,
-} from '../_common/config'
-
-const Input = styled.input`
-  display: block;
-  border: none;
-  border-radius: ${ROUNDED_CORNERS};
-  background: ${DARKBLUE_BG};
-  color: ${WHITE};
-  padding: 0.5rem 1rem;
-  width: 70%;
-  margin: 0 auto;
-  transition: width 0.2s;
-
-  &:focus {
-    width: 100%;
-  }
-
-  &::placeholder {
-    font-weight: bold;
-    color: ${DARKBLUE_FONT};
-    text-align: center;
-  }
-
-  @media (max-width: 650px) {
-    width: 100%;
-  }
-`
-
-const Headline = styled.h1`
-  text-align: center;
-`
+import PostList from '../components/Blog/PostList';
+import PaginationButton from '../components/Pagination/PaginationButton';
+import PaginationContainer from '../components/Pagination/PaginationContainer';
+import SearchWrapper from '../components/Blog/SearchWrapper';
 
 class IndexPage extends React.Component {
-  state = { value: '' }
-
-  onChange = e => {
-    this.setState({ value: e.target.value })
-  }
-
   render() {
-    const { value } = this.state
-    const { data, pageContext } = this.props
-    const { edges: posts } = data.allWordpressPost
-    const { previousPagePath, nextPagePath } = pageContext
-
-    const hasValue = value === ''
+    const { data, pageContext } = this.props;
+    const { edges: posts } = data.allWordpressPost;
+    const { previousPagePath, nextPagePath } = pageContext;
 
     return (
-      <>
-        <Headline>{!hasValue ? 'Suchergebnisse' : 'Neuste Artikel'}</Headline>
-
-        <Input
-          type="search"
-          placeholder="Durchsuche Artikel..."
-          value={value}
-          onChange={this.onChange}
-        />
-        {hasValue ? (
-          <>
-            <PostList posts={posts} />
-            <PaginationContainer>
-              {nextPagePath && (
-                <PaginationButton
-                  isLeft
-                  link={nextPagePath}
-                  text="Ältere Beiträge"
-                />
-              )}
-              {previousPagePath && (
-                <PaginationButton
-                  link={previousPagePath}
-                  text="Neuere Beiträge"
-                />
-              )}
-            </PaginationContainer>
-          </>
-        ) : (
-          <SearchList value={value} />
-        )}
-      </>
-    )
+      <SearchWrapper>
+        <PostList posts={posts} />
+        <PaginationContainer>
+          {nextPagePath && (
+            <PaginationButton
+              isLeft
+              link={nextPagePath}
+              text="Ältere Beiträge"
+            />
+          )}
+          {previousPagePath && (
+            <PaginationButton link={previousPagePath} text="Neuere Beiträge" />
+          )}
+        </PaginationContainer>
+      </SearchWrapper>
+    );
   }
 }
 
 IndexPage.propTypes = {
   data: PropTypes.shape({
     allWordpressPost: PropTypes.shape({
-      edges: PropTypes.array,
-    }),
+      edges: PropTypes.array
+    })
   }),
   pageContext: PropTypes.shape({
     currentPage: PropTypes.number,
-    numPages: PropTypes.number,
-  }),
-}
+    numPages: PropTypes.number
+  })
+};
 
 export const pageQuery = graphql`
   query IndexQuery($limit: Int!, $skip: Int!) {
@@ -123,6 +59,6 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
 
-export default IndexPage
+export default IndexPage;

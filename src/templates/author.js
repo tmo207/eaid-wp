@@ -2,6 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
 import PostList from '../components/Blog/PostList';
+import SearchWrapper from '../components/Blog/SearchWrapper';
 
 const Author = props => {
   const { data } = props;
@@ -20,7 +21,9 @@ const Author = props => {
   return (
     <>
       <Helmet title={`${name} | ${siteTitle}`} />
-      <PostList posts={posts} title={title} />
+      <SearchWrapper pageType={`Artikel von ${name}`}>
+        <PostList posts={posts} title={title} />
+      </SearchWrapper>
     </>
   );
 };

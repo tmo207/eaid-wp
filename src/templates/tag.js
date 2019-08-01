@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
 import Layout from '../components/Layout';
 import PostList from '../components/Blog/PostList';
+import SearchWrapper from '../components/Blog/SearchWrapper';
 
 const Tag = props => {
   const { data, pageContext } = props;
@@ -11,12 +12,14 @@ const Tag = props => {
   const { name: tag } = pageContext;
   const title = `${totalCount} post${
     totalCount === 1 ? '' : 's'
-  } with the tag ${tag}`;
+  } mit dem Tag ${tag}`;
 
   return (
     <>
       <Helmet title={`${tag} | ${siteTitle}`} />
-      <PostList posts={posts} title={title} />
+      <SearchWrapper pageType={`Artikel mit Tag: ${tag}`}>
+        <PostList posts={posts} title={title} />
+      </SearchWrapper>
     </>
   );
 };

@@ -1,8 +1,9 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
-import Layout from '../components/Layout';
+
 import PostList from '../components/Blog/PostList';
+import SearchWrapper from '../components/Blog/SearchWrapper';
 
 const Category = props => {
   const { data, pageContext } = props;
@@ -11,12 +12,15 @@ const Category = props => {
   const { name: category } = pageContext;
   const title = `${totalCount} post${
     totalCount === 1 ? '' : 's'
-  } in the “${category}” category`;
+  } in der “${category}” Kategorie`;
+  console.log(data, pageContext);
 
   return (
     <>
       <Helmet title={`${category} | ${siteTitle}`} />
-      <PostList posts={posts} title={title} />
+      <SearchWrapper pageType={`Artikel der Kategorie: ${category}`}>
+        <PostList posts={posts} title={title} />
+      </SearchWrapper>
     </>
   );
 };

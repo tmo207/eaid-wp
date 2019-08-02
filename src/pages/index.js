@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { StaticQuery, graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
 
-import Layout from '../components/Layout';
 import BoxContainer from '../components/ContentBox/BoxContainer';
 import BoxElement from '../components/ContentBox/BoxElement';
 import Headline from '../components/Headline';

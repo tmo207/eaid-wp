@@ -33,11 +33,15 @@ const CommentsForm = () => {
       <BoxElement>
         <Headline margin={'0'}>Schreibe einen Kommentar</Headline>
       </BoxElement>
-      <FormWrapper onSubmit={handleSubmit}>
+      <FormWrapper
+        onSubmit={handleSubmit}
+        action="PATH TO FILE WHICH HANDELS SENDING"
+        method="post"
+      >
         <BoxElement wrap>
           <Textarea placeholder="Kommentar*" />
-          <Input placeholder="Name*" />
-          <Input type="email" placeholder="E-Mail*" />
+          <Input placeholder="Name*" name="name" />
+          <Input type="email" placeholder="E-Mail*" name="email" />
         </BoxElement>
         <div className="buttons">
           <SubmitButton type="submit" disabled={''}>

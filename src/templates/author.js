@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
 import PostList from '../components/Blog/PostList';
 import SearchWrapper from '../components/Blog/SearchWrapper';
+import Text from '../components/Text';
 
 const Author = props => {
   const { data } = props;
@@ -14,16 +15,24 @@ const Author = props => {
 
   // The `authored_wordpress__POST` returns a simple array instead of an array
   // of edges / nodes. We therefore need to convert the array here.
-  const posts = authored_wordpress__POST.map(post => ({
-    node: post
-  }));
+  const posts =
+    authored_wordpress__POST &&
+    authored_wordpress__POST.map(post => ({
+      node: post
+    }));
 
   return (
     <>
       <Helmet title={`${name} | ${siteTitle}`} />
-      <SearchWrapper pageType={`Artikel von ${name}`}>
-        <PostList posts={posts} title={title} />
-      </SearchWrapper>
+      {posts ? (
+        <SearchWrapper pageType={`Artikel von ${name}`}>
+          <PostList posts={posts} title={title} />
+        </SearchWrapper>
+      ) : (
+        <Text center margin={'2rem 0'}>
+          Dieser Autor hat noch keine Artikel verfasst.
+        </Text>
+      )}
     </>
   );
 };

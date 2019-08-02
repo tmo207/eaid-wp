@@ -107,9 +107,7 @@ const BlogPost = ({ data }) => {
         author={post.author}
         img={img}
       />
-      {data.allWordpressWpComments.edges.length > 0 && (
-        <PostComments postId={post.wordpress_id} />
-      )}
+      <PostComments postId={post.wordpress_id} />
       <CommentsForm />
     </>
   );
@@ -131,12 +129,12 @@ export const pageQuery = graphql`
     date(formatString: "MMMM DD, YYYY")
     title
   }
-  query BlogPostByID($id: String!, $postId: Int) {
+  query BlogPostByID($id: String!) {
     wordpressPost(id: { eq: $id }) {
       id
       slug
       content
-      date(formatString: "MMMM DD, YYYY")
+      date(formatString: "DD.MM.YYYY")
       title
       wordpress_id
       categories {
@@ -169,19 +167,6 @@ export const pageQuery = graphql`
               presentationHeight
             }
           }
-        }
-      }
-    }
-    allWordpressWpComments(filter: { post: { eq: $postId } }) {
-      edges {
-        node {
-          id
-          wordpress_id
-          post
-          author_name
-          author_url
-          date(formatString: "DD.MM.YYYY")
-          content
         }
       }
     }

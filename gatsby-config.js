@@ -1,6 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby + WordPress Starter'
+    title: 'Europäische Akademie für Informationsfreiheit und Datenschutz',
+    description:
+      'Dies ist der Blog der Europäischen Akademie für Informationsfreiheit und Datenschutz.'
   },
   plugins: [
     'gatsby-plugin-react-helmet',

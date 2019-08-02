@@ -8,23 +8,28 @@ import {
   VERANSTALTUNGEN_ID,
   VERANSTALTUNGEN_ARCHIV_ID
 } from '../../_common/config';
+import BoxContainer from '../ContentBox/BoxContainer';
 
-const VeranstaltungenArchivTemplate = ({ content, id }) => {
+const VeranstaltungenArchivTemplate = ({ content }) => {
   return (
     <>
       {content && <Text>{content}</Text>}
       <StaticQuery
         query={graphql`
           query ArchivVeranstaltungen {
-            wordpressWpApiMenusMenusItems {
-              items {
-                object_id
-                wordpress_children {
+            allWordpressWpApiMenusMenusItems(
+              filter: { wordpress_id: { eq: 6 } }
+            ) {
+              nodes {
+                items {
                   object_id
                   wordpress_children {
-                    title
                     object_id
-                    object_slug
+                    wordpress_children {
+                      title
+                      object_id
+                      object_slug
+                    }
                   }
                 }
               }
@@ -32,7 +37,7 @@ const VeranstaltungenArchivTemplate = ({ content, id }) => {
           }
         `}
         render={data => {
-          const archivVeranstaltungen = data.wordpressWpApiMenusMenusItems.items
+          const archivVeranstaltungen = data.allWordpressWpApiMenusMenusItems.nodes[0].items
             .filter(
               veranstaltung => veranstaltung.object_id === VERANSTALTUNGEN_ID
             )[0]
@@ -45,7 +50,11 @@ const VeranstaltungenArchivTemplate = ({ content, id }) => {
             <>
               {archivVeranstaltungen.map(item => {
                 const { object_id } = item;
-                return <VeranstaltungsPreview key={object_id} id={object_id} />;
+                return (
+                  <BoxContainer key={object_id}>
+                    <VeranstaltungsPreview id={object_id} />
+                  </BoxContainer>
+                );
               })}
             </>
           );

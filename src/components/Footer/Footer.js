@@ -58,7 +58,6 @@ export default class Footer extends React.Component {
   }
 
   render() {
-    const body = document.body
     return (
       <>
         <Spacer height={this.state.height} />

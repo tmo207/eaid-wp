@@ -59,7 +59,7 @@ export default class Footer extends React.Component {
 
   render() {
     const body = document.body
-    return ReactDOM.createPortal(
+    return (
       <>
         <Spacer height={this.state.height} />
         <FooterContainer ref={footerRef => (this.footerRef = footerRef)}>
@@ -83,8 +83,7 @@ export default class Footer extends React.Component {
             </FooterChild>
           </ElementWrapper>
         </FooterContainer>
-      </>,
-      body
+      </>
     )
   }
 }

@@ -2,11 +2,13 @@ module.exports = {
   siteMetadata: {
     title: 'Europäische Akademie für Informationsfreiheit und Datenschutz',
     description:
-      'Dies ist der Blog der Europäischen Akademie für Informationsfreiheit und Datenschutz.'
+      'Dies ist der Blog der Europäischen Akademie für Informationsfreiheit und Datenschutz.',
+    siteUrl: 'https://www.eaid-berlin.de'
   },
   plugins: [
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
+    'gatsby-plugin-sitemap',
     {
       resolve: 'gatsby-source-filesystem',
       options: {

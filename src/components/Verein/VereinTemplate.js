@@ -41,7 +41,15 @@ const VereinTemplate = ({ title, content }) => {
                         name
                         tatigkeit
                         website
-                        bild
+                        bild {
+                          localFile {
+                            childImageSharp {
+                              fixed(width: 150, height: 150) {
+                                ...GatsbyImageSharpFixed
+                              }
+                            }
+                          }
+                        }
                         id
                       }
                     }

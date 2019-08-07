@@ -1,18 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import Img from 'gatsby-image';
 
-const Img = styled.div`
-  background: ${props => `url(${props.src})`};
-  display: inline-block;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 150px;
-  width: 150px;
+const Image = styled(Img)`
+  border-radius: 100px;
 `;
 
-const ImageCircle = ({ image }) => <Img src={image} className="circle" />;
+const ImageCircle = ({ imageData }) => imageData && <Image fixed={imageData} />;
 
 ImageCircle.defaultProps = {
   aspectRatio: '1:1',
@@ -21,7 +16,7 @@ ImageCircle.defaultProps = {
 };
 
 ImageCircle.propTypes = {
-  image: PropTypes.string.isRequired
+  imageData: PropTypes.object.isRequired
 };
 
 export default ImageCircle;

@@ -76,12 +76,18 @@ export const Profile = ({ person }) => {
     website,
     bild
   } = person;
+  const imageData =
+    bild &&
+    bild.localFile &&
+    bild.localFile.childImageSharp &&
+    bild.localFile.childImageSharp.fixed;
+
   return (
     <>
       <BoxElement>
         <ProfileWrapper onClick={() => setOpen(!open)}>
           <div>
-            <ImageCricle image={bild} />
+            <ImageCricle imageData={imageData} />
           </div>
           <Left>
             <InfoWrapper>
@@ -130,7 +136,7 @@ Profile.propTypes = {
     name: PropTypes.string,
     tatigkeit: PropTypes.string,
     website: PropTypes.string,
-    bild: PropTypes.string
+    bild: PropTypes.object
   }).isRequired
 };
 

@@ -72,9 +72,6 @@ a:hover {
 .activeMobile > li {
   background-color: rgba(253, 216, 65, 1);
 }
-.circle {
-  border-radius: 100px;
-}
 abbr[title] {
   border-bottom: none;
   text-decoration: underline;

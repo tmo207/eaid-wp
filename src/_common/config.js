@@ -4,7 +4,7 @@ export const DESKTOP_SIZE = 1600;
 export const MAX_MOBILE_SIZE = DESKTOP_SIZE - 1;
 export const DESKTOP_MQ = `media (min-width: ${DESKTOP_SIZE}px)`;
 export const MOBILE_MQ = `media (max-width: ${MAX_MOBILE_SIZE}px)`;
-export const HANDHELD_MQ = 'media (max-width: 520px)';
+export const HANDHELD_MQ = 'media (max-width: 650px)';
 
 export const NAVBAR_HEIGHT = '5rem';
 export const MAX_CONTENT_WIDTH = '1700px';

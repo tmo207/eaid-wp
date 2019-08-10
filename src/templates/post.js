@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState, createRef } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { graphql, Link } from 'gatsby';
 import styled from 'styled-components';
 import Img from 'gatsby-image';
 
-import Layout from '../components/Layout';
 import BoxContainer from '../components/ContentBox/BoxContainer';
 
 import {
@@ -86,10 +85,26 @@ export const BlogPostTemplate = ({
 
 BlogPostTemplate.propTypes = {
   content: PropTypes.node.isRequired,
+  categories: PropTypes.array,
+  tags: PropTypes.array,
+  author: PropTypes.object,
+  date: PropTypes.string,
+  img: PropTypes.object,
   title: PropTypes.string
 };
 
 const BlogPost = ({ data }) => {
+  const [answerToParentId, setAnswerToParentId] = useState(0);
+  const [authorName, setAuthorName] = useState('');
+
+  const ref = createRef();
+  const executeScroll = (id, author_name) => {
+    if (typeof window !== 'undefined' && ref) {
+      window.scrollTo(0, ref.current.offsetTop);
+    }
+    setAnswerToParentId(id);
+    setAuthorName(author_name);
+  };
   const { wordpressPost: post } = data;
   const img = post.featured_media
     ? post.featured_media.localFile.childImageSharp.fluid
@@ -107,13 +122,20 @@ const BlogPost = ({ data }) => {
         author={post.author}
         img={img}
       />
-      <PostComments postId={post.wordpress_id} />
-      <CommentsForm />
+      <PostComments postId={post.wordpress_id} onAnswerClick={executeScroll} />
+      <CommentsForm
+        postId={post.wordpress_id}
+        ref={ref}
+        answerToParentId={answerToParentId}
+        answerToParentName={authorName}
+        cancelAnswer={() => setAnswerToParentId(0)}
+      />
     </>
   );
 };
 
 BlogPost.propTypes = {
+  wordpressPost: PropTypes.object,
   data: PropTypes.shape({
     markdownRemark: PropTypes.object
   })

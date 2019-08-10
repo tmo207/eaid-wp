@@ -67,3 +67,46 @@ export const getVeranstaltungen = menus => {
 };
 
 export const toLowerCaseArray = value => value.toLowerCase().split(' ');
+
+export const getDateAndTime = () => {
+  const date = new Date();
+  const month = date.getMonth() + 1;
+
+  const condPrefixTime = getTime =>
+    getTime.toString().length === 1 ? `0${getTime}` : getTime;
+
+  return `${date.getFullYear()}-${condPrefixTime(month)}-${condPrefixTime(
+    date.getDate()
+  )}T${condPrefixTime(date.getHours())}:${condPrefixTime(
+    date.getMinutes()
+  )}:${condPrefixTime(date.getSeconds())}`;
+};
+
+export const unflatten = (array, parent, tree) => {
+  tree = typeof tree !== 'undefined' ? tree : [];
+
+  parent = typeof parent !== 'undefined' ? parent : null;
+
+  const children = parent
+    ? array.filter(child => {
+        if (child.node.parent_element !== null) {
+          return (
+            child.node.parent_element.wordpress_id === parent.node.wordpress_id
+          );
+        }
+      })
+    : array.filter(comment => !comment.node.parent_element);
+
+  if (children.length) {
+    if (!parent) {
+      tree = children;
+    } else {
+      parent.node['children_elements'] = children;
+    }
+    children.forEach(child => {
+      unflatten(array, child);
+    });
+  }
+
+  return tree;
+};

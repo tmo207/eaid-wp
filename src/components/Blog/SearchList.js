@@ -93,7 +93,7 @@ const SearchList = value => {
                 <PostPreview post={post.node} key={post.node.id} />
               ))
             ) : (
-              <Text center margin={'2rem 0'}>
+              <Text align="center" margin={'2rem 0'}>
                 Keine passenden Ergebnisse.
               </Text>
             )}

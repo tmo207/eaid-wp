@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
+
 import PostList from '../components/Blog/PostList';
 import SearchWrapper from '../components/Blog/SearchWrapper';
 import Text from '../components/Text';
@@ -29,7 +30,7 @@ const Author = props => {
           <PostList posts={posts} title={title} />
         </SearchWrapper>
       ) : (
-        <Text center margin={'2rem 0'}>
+        <Text align="center" margin={'2rem 0'}>
           Dieser Autor hat noch keine Artikel verfasst.
         </Text>
       )}

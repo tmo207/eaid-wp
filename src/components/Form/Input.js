@@ -35,30 +35,35 @@ const InputWrapper = styled.div`
   margin-bottom: 0.6rem;
 `;
 
-const Input = ({ placeholder, type }) => {
+const Input = ({ placeholder, type, setContent, hasError }) => {
   const [value, setValue] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
 
   const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const handleChange = event => {
     setValue(event.target.value);
+    setContent(event.target.value);
 
-    if (error) {
-      handleBlur(event);
+    if (
+      type === 'email' &&
+      !emailRegex.test(event.target.value.toLowerCase())
+    ) {
+      setError('Geben Sie eine gültige Email-Adresse an.');
+      if (hasError) {
+        hasError(true);
+      }
+    } else {
+      setError('');
+      if (hasError) {
+        hasError(false);
+      }
     }
   };
 
   const handleBlur = event => {
     if (event.target.value === '') {
-      setError('Required');
-    } else if (
-      type === 'email' &&
-      !emailRegex.test(event.target.value.toLowerCase())
-    ) {
-      setError('Provide valid email');
-    } else {
-      setError('');
+      setError('Pflichtfeld');
     }
   };
 
@@ -66,6 +71,7 @@ const Input = ({ placeholder, type }) => {
     <InputWrapper>
       <InputField
         type="text"
+        name={type}
         value={value}
         onChange={handleChange}
         onBlur={handleBlur}
@@ -83,7 +89,9 @@ Input.defaultProps = {
 
 Input.propTypes = {
   placeholder: PropTypes.string,
-  type: PropTypes.oneOf(['email', 'name'])
+  type: PropTypes.oneOf(['email', 'name']),
+  setContent: PropTypes.func.isRequired,
+  hasError: PropTypes.func
 };
 
 export default Input;

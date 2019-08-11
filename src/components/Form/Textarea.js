@@ -37,7 +37,7 @@ const InputWrapper = styled.div`
   margin-bottom: 0.6rem;
 `;
 
-const Textarea = ({ minRows, maxRows, placeholder }) => {
+const Textarea = ({ minRows, maxRows, placeholder, name, setContent }) => {
   const [value, setValue] = useState('');
   const [rows, setRows] = useState(5);
   const [error, setError] = useState('');
@@ -59,18 +59,20 @@ const Textarea = ({ minRows, maxRows, placeholder }) => {
     }
 
     if (event.target.value === '') {
-      setError('Required');
+      setError('Pflichtfeld');
     } else {
       setError('');
     }
 
     setValue(event.target.value);
+    setContent(event.target.value);
     setRows(currentRows < maxRows ? currentRows : maxRows);
   };
 
   return (
     <InputWrapper>
       <CommentInput
+        name={name}
         placeholder={placeholder}
         rows={rows}
         value={value}
@@ -90,7 +92,9 @@ Textarea.defaultProps = {
 Textarea.propTypes = {
   minRows: PropTypes.number,
   maxRows: PropTypes.number,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  name: PropTypes.string,
+  setContent: PropTypes.func.isRequired
 };
 
 export default Textarea;

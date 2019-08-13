@@ -21,9 +21,11 @@ const transitionStyles = {
   exited: { opacity: 0 },
 }
 
-const MenuWrapper = styled.div`
+const MenuWrapper = styled.button`
   position: fixed;
   z-index: 11000;
+  border: none;
+  background: none;
 `
 
 const Bar = styled.div`
@@ -48,9 +50,12 @@ const LowerBar = styled(Bar)`
 const BurgerMenu = () => {
   const [{ menu }, dispatch] = useStateValue()
   const { open } = menu
+
   return (
     <>
       <MenuWrapper
+        title="Menu"
+        aria-label="Menu"
         onClick={() =>
           dispatch({
             type: 'toggleMenu',

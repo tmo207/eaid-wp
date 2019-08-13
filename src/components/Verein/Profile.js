@@ -28,6 +28,11 @@ const Logo = styled.img`
   transform: ${props => (props.open ? 'rotate(180deg)' : '')};
 `;
 
+const OpenProfileButton = styled.button`
+  background: none;
+  border: none;
+`;
+
 const Left = styled.div`
   width: auto;
   display: flex;
@@ -106,7 +111,11 @@ export const Profile = ({ person }) => {
                 />
               )}
             </InfoWrapper>
-            {biografie && <Logo open={open} src={logo} />}
+            {biografie && (
+              <OpenProfileButton>
+                <Logo open={open} src={logo} />
+              </OpenProfileButton>
+            )}
           </Left>
         </ProfileWrapper>
       </BoxElement>

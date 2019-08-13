@@ -1,10 +1,10 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import styled from 'styled-components'
 import { graphql, StaticQuery } from 'gatsby'
 import Img from 'gatsby-image'
 
 import FooterItems from './FooterItems'
+import FooterContact from './FooterContact'
 
 import { DARKBLUE_FONT } from '../../_common/config'
 
@@ -79,6 +79,9 @@ export default class Footer extends React.Component {
             </FooterChild>
             <FooterChild>
               <FooterItems />
+            </FooterChild>
+            <FooterChild>
+              <FooterContact />
             </FooterChild>
           </ElementWrapper>
         </FooterContainer>

@@ -238,7 +238,7 @@ exports.sourceNodes = ({ actions }) => {
       name: String
       tatigkeit: String
       website: String
-      bild: String
+      bild: wordpress__wp_media @link(from: "bild___NODE")
     }
     type wordpress__AcfStandort implements Node {
       uberschrift: String

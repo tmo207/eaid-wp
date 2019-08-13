@@ -148,16 +148,12 @@ export const pageQuery = graphql`
     id
     slug
     content
-    date(formatString: "MMMM DD, YYYY")
+    date(formatString: "DD.MM.YYYY")
     title
   }
   query BlogPostByID($id: String!) {
     wordpressPost(id: { eq: $id }) {
-      id
-      slug
-      content
-      date(formatString: "DD.MM.YYYY")
-      title
+      ...PostFields
       wordpress_id
       categories {
         name

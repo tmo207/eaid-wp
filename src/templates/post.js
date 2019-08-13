@@ -6,18 +6,19 @@ import styled from 'styled-components';
 import Img from 'gatsby-image';
 
 import BoxContainer from '../components/ContentBox/BoxContainer';
-
-import {
-  ROUNDED_CORNERS,
-  HANDHELD_MQ,
-  SMALL_MOBILE_TEXT
-} from '../_common/config';
 import BoxElement from '../components/ContentBox/BoxElement';
 import Headline from '../components/Headline';
 import Text from '../components/Text';
 import DateAndAuthor from '../components/DateAndAuthor';
 import CommentsForm from '../components/Form/CommentsForm';
 import PostComments from '../components/Blog/PostComments';
+import RelatedPosts from '../components/Blog/RelatedPosts';
+
+import {
+  ROUNDED_CORNERS,
+  HANDHELD_MQ,
+  SMALL_MOBILE_TEXT
+} from '../_common/config';
 
 const StyledImg = styled(Img)`
   border-radius: ${ROUNDED_CORNERS};
@@ -49,6 +50,12 @@ export const BlogPostTemplate = ({
           <Headline>{title}</Headline>
           <Text>{content}</Text>
         </BoxElement>
+        {tags && (
+          <BoxElement wrap lightBG>
+            <Headline>Verwandte Beiträge:</Headline>
+            <RelatedPosts tags={tags} postTitle={title} postContent={content} />
+          </BoxElement>
+        )}
         {categories && categories.length && (
           <BoxElement wrap>
             <Meta>Posted in:</Meta>
@@ -122,14 +129,21 @@ const BlogPost = ({ data }) => {
         author={post.author}
         img={img}
       />
-      <PostComments postId={post.wordpress_id} onAnswerClick={executeScroll} />
-      <CommentsForm
-        postId={post.wordpress_id}
-        ref={ref}
-        answerToParentId={answerToParentId}
-        answerToParentName={authorName}
-        cancelAnswer={() => setAnswerToParentId(0)}
-      />
+      {post.comment_status === 'open' && (
+        <>
+          <PostComments
+            postId={post.wordpress_id}
+            onAnswerClick={executeScroll}
+          />
+          <CommentsForm
+            postId={post.wordpress_id}
+            ref={ref}
+            answerToParentId={answerToParentId}
+            answerToParentName={authorName}
+            cancelAnswer={() => setAnswerToParentId(0)}
+          />
+        </>
+      )}
     </>
   );
 };
@@ -155,6 +169,7 @@ export const pageQuery = graphql`
     wordpressPost(id: { eq: $id }) {
       ...PostFields
       wordpress_id
+      comment_status
       categories {
         name
         slug

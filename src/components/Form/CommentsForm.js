@@ -8,6 +8,8 @@ import BoxElement from '../ContentBox/BoxElement';
 import Headline from '../Headline';
 import Textarea from './Textarea';
 import Text from '../Text';
+import Error from './Error';
+import LoadingSpinner from '../Blog/LoadingSpinner';
 
 import {
   PADDING_SMALL,
@@ -37,6 +39,9 @@ const CommentsForm = React.forwardRef(
     const [author, setAuthor] = useState('');
     const [email, setEmail] = useState('');
     const [hasError, setHasError] = useState(true);
+    const [fetchError, setfetchError] = useState();
+    const [commentSubmitted, setcommentSubmitted] = useState(false);
+    const [fetching, setfetching] = useState(false);
 
     const data = {
       post: postId,
@@ -49,6 +54,7 @@ const CommentsForm = React.forwardRef(
 
     const handleSubmit = e => {
       e.preventDefault();
+      setfetching(true);
       fetch('https://eaid-berlin.de/wp-json/wp/v2/comments', {
         method: 'POST',
         mode: 'cors',
@@ -60,6 +66,16 @@ const CommentsForm = React.forwardRef(
         redirect: 'follow',
         referrer: 'client',
         body: JSON.stringify(data)
+      }).then(response => {
+        if (response.ok) {
+          setfetchError(false);
+          setcommentSubmitted(true);
+          setfetching(false);
+        } else {
+          setfetchError(true);
+          setcommentSubmitted(false);
+          setfetching(false);
+        }
       });
     };
 
@@ -69,35 +85,47 @@ const CommentsForm = React.forwardRef(
           <BoxElement>
             <Headline margin={'0'}>Schreibe einen Kommentar</Headline>
           </BoxElement>
-          <FormWrapper onSubmit={handleSubmit}>
+          {!commentSubmitted ? (
+            <FormWrapper onSubmit={handleSubmit}>
+              <BoxElement wrap>
+                {answerToParentId !== 0 && (
+                  <Text
+                    onClick={cancelAnswer}
+                    secondary
+                    contentWidth
+                  >{`Antwort auf ${answerToParentName}s Kommentar:`}</Text>
+                )}
+                <Textarea placeholder="Kommentar*" setContent={setContent} />
+                <Input placeholder="Name*" setContent={setAuthor} />
+                <Input
+                  type="email"
+                  placeholder="E-Mail*"
+                  setContent={setEmail}
+                  hasError={setHasError}
+                />
+                {fetchError && (
+                  <Error>
+                    Es ist etwas schief gelaufen, bitte probieren Sie es noch
+                    einmal.
+                  </Error>
+                )}
+              </BoxElement>
+              <div className="buttons">
+                <SubmitButton
+                  type="submit"
+                  disabled={
+                    email === '' || author === '' || content === '' || hasError
+                  }
+                >
+                  {fetching ? <LoadingSpinner dark /> : 'Kommentar posten'}
+                </SubmitButton>
+              </div>
+            </FormWrapper>
+          ) : (
             <BoxElement wrap>
-              {answerToParentId !== 0 && (
-                <Text
-                  onClick={cancelAnswer}
-                  secondary
-                  contentWidth
-                >{`Antwort auf ${answerToParentName}s Kommentar:`}</Text>
-              )}
-              <Textarea placeholder="Kommentar*" setContent={setContent} />
-              <Input placeholder="Name*" setContent={setAuthor} />
-              <Input
-                type="email"
-                placeholder="E-Mail*"
-                setContent={setEmail}
-                hasError={setHasError}
-              />
+              <Text>Vielen Dank für Ihren Kommentar. Er wird nun geprüft.</Text>
             </BoxElement>
-            <div className="buttons">
-              <SubmitButton
-                type="submit"
-                disabled={
-                  email === '' || author === '' || content === '' || hasError
-                }
-              >
-                Kommentar posten
-              </SubmitButton>
-            </div>
-          </FormWrapper>
+          )}
         </BoxContainer>
       </div>
     );

@@ -13,7 +13,6 @@ const Category = props => {
   const title = `${totalCount} post${
     totalCount === 1 ? '' : 's'
   } in der “${category}” Kategorie`;
-  console.log(data, pageContext);
 
   return (
     <>

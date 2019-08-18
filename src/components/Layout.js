@@ -5,6 +5,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import Navbar from './Navbar';
 import Footer from './Footer/Footer';
 import Transition from './Transition';
+import Canvas from './Canvas';
 
 import {
   DESKTOP_MQ,
@@ -27,15 +28,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const BgGradient = styled.div`
-  position: absolute;
-  background: linear-gradient(#799ad6, #4469b1);
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-`;
-
 const AllWrapper = styled.div`
   position: relative;
   max-width: 960px;
@@ -54,11 +46,11 @@ const MainWrapper = styled.div`
 const Layout = props => {
   return (
     <>
+      <Canvas />
       <GlobalStyle />
       <Navbar />
       {props.transitions ? (
         <Transition {...props}>
-          <BgGradient />
           <AllWrapper>
             <MainWrapper>
               <main>{props.children}</main>
@@ -67,7 +59,6 @@ const Layout = props => {
         </Transition>
       ) : (
         <>
-          <BgGradient />
           <AllWrapper>
             <MainWrapper>
               <main>{props.children}</main>

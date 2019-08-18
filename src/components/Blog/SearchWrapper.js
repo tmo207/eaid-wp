@@ -57,6 +57,7 @@ const SearchWrapper = ({ children, pageType }) => {
       <Input
         type="search"
         placeholder="Durchsuche Artikel..."
+        aria-describedby="Durchsuche Artikel"
         value={value}
         onChange={e => setValue(e.target.value)}
       />

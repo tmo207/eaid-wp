@@ -55,7 +55,8 @@ const BurgerMenu = () => {
     <>
       <MenuWrapper
         title="Menu"
-        aria-label="Menu"
+        aria-label="Navigation"
+        aria-haspopup="true"
         onClick={() =>
           dispatch({
             type: 'toggleMenu',

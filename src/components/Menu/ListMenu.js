@@ -30,7 +30,7 @@ const ListItem = styled.li`
   }
 `;
 
-const ListMenu = mobile => {
+const ListMenu = ({ mobile }) => {
   const [{ menu }, dispatch] = useStateValue();
   const { open } = menu;
 
@@ -44,7 +44,7 @@ const ListMenu = mobile => {
               return (
                 <div key={item.object_id}>
                   <Link
-                    activeClassName={mobile.mobile ? 'activeMobile' : 'active'}
+                    activeClassName={mobile ? 'activeMobile' : 'active'}
                     to={item.url.replace('https://www.eaid-berlin.de', '')}
                     onClick={() =>
                       dispatch({

@@ -52,11 +52,35 @@ export const shouldUpdateScroll = (
   const { transitions = true } = pluginOptions
 
   if (location.action === 'PUSH') {
-    window.setTimeout(() => window.scrollTo(0, 0), transitions ? 350 : 0)
+    window.setTimeout(
+      () =>
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth',
+        }),
+      transitions ? 350 : 0
+    )
   } else {
     const savedPosition = getSavedScrollPosition(location)
+    const savedPositionY = savedPosition[1]
+    const savedPositionX = savedPosition[0]
+
     window.setTimeout(
-      () => window.scrollTo(...(savedPosition || [0, 0])),
+      () =>
+        window.scrollTo(
+          {
+            top: savedPositionY,
+            left: savedPositionX,
+            behavior: 'smooth',
+          } || [
+            {
+              top: 0,
+              left: 0,
+              behavior: 'smooth',
+            },
+          ]
+        ),
       transitions ? 350 : 0
     )
   }

@@ -8,10 +8,13 @@ import {
   ROUNDED_CORNERS,
   DARKBLUE_BG,
   WHITE,
-  DARKBLUE_FONT
+  DARKBLUE_FONT,
+  HANDHELD_MQ,
+  DESKTOP_MQ
 } from '../../_common/config';
 
 const Input = styled.input`
+  position: relative;
   display: block;
   border: none;
   border-radius: ${ROUNDED_CORNERS};
@@ -32,8 +35,12 @@ const Input = styled.input`
     text-align: center;
   }
 
-  @media (max-width: 650px) {
+  @${HANDHELD_MQ} {
     width: 100%;
+  }
+
+  @${DESKTOP_MQ} {
+    z-index: 50000;
   }
 `;
 

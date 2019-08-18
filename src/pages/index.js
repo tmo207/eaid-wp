@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { StaticQuery, graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
@@ -29,6 +29,21 @@ const Email = styled.a`
 `;
 
 const Startseite = () => {
+  const [windowWidth, setwindowWidth] = useState(window.innerWidth);
+  const isDesktop = windowWidth >= 1200;
+
+  useEffect(() => {
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      window.removeEventListener('resize', onResize);
+    };
+  });
+
+  const onResize = () => {
+    setwindowWidth(window.innerWidth);
+  };
+
   return (
     <StaticQuery
       query={StartseitenQuery}
@@ -52,9 +67,14 @@ const Startseite = () => {
 
         return (
           <>
-            <Headline type="Large">{siteTitle}</Headline>
-            <Text>{content}</Text>
-            <BoxContainer>
+            <Headline margin={isDesktop ? '0 0 6rem' : '0 0 4rem'} type="Large">
+              {siteTitle}
+            </Headline>
+            <Text margin={isDesktop ? '0 0 6rem 15%' : '0 0 4rem'} contentWidth>
+              {content}
+            </Text>
+
+            <BoxContainer margin={isDesktop ? '6rem 15% 6rem 0' : '4rem 0'}>
               <BoxElement>
                 <Headline margin="0" type="Medium">
                   Neuester Blogeintrag
@@ -92,7 +112,7 @@ const Startseite = () => {
               </BoxElement>
             </BoxContainer>
 
-            <BoxContainer>
+            <BoxContainer margin={isDesktop ? '6rem 0 6rem 15%' : '4rem 0'}>
               <BoxElement>
                 <Headline margin="0" type="Medium">
                   Nächste Veranstaltung
@@ -101,7 +121,7 @@ const Startseite = () => {
               <VeranstaltungsPreview id={nextVeranstaltungId} />
             </BoxContainer>
 
-            <BoxContainer>
+            <BoxContainer margin={isDesktop ? '6rem 7.5% 6rem 7.5%' : '4rem 0'}>
               <BoxElement>
                 <Headline margin="0">Kontakt</Headline>
               </BoxElement>

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
+import { Helmet } from 'react-helmet';
 
-import Layout from '../components/Layout';
 import BoxContainer from '../components/ContentBox/BoxContainer';
 import BoxElement from '../components/ContentBox/BoxElement';
 import Headline from '../components/Headline';
@@ -34,7 +34,14 @@ const Page = ({ data }) => {
 
   const Template = selectTemplate(pageId);
 
-  return <Template title={page.title} content={page.content} id={pageId} />;
+  return (
+    <>
+      <Helmet>
+        <title>{`EAID » ${page.title}`}</title>
+      </Helmet>
+      <Template title={page.title} content={page.content} id={pageId} />
+    </>
+  );
 };
 
 Page.propTypes = {

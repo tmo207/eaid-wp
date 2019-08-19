@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
+import { Helmet } from 'react-helmet';
 
 import PostList from '../components/Blog/PostList';
 import PaginationButton from '../components/Pagination/PaginationButton';
@@ -14,21 +15,31 @@ class IndexPage extends React.Component {
     const { previousPagePath, nextPagePath } = pageContext;
 
     return (
-      <SearchWrapper>
-        <PostList posts={posts} />
-        <PaginationContainer>
-          {nextPagePath && (
-            <PaginationButton
-              isLeft
-              link={nextPagePath}
-              text="Ältere Beiträge"
-            />
-          )}
-          {previousPagePath && (
-            <PaginationButton link={previousPagePath} text="Neuere Beiträge" />
-          )}
-        </PaginationContainer>
-      </SearchWrapper>
+      <>
+        <Helmet>
+          <title>
+            EAID » Blog
+          </title>
+        </Helmet>
+        <SearchWrapper>
+          <PostList posts={posts} />
+          <PaginationContainer>
+            {nextPagePath && (
+              <PaginationButton
+                isLeft
+                link={nextPagePath}
+                text="Ältere Beiträge"
+              />
+            )}
+            {previousPagePath && (
+              <PaginationButton
+                link={previousPagePath}
+                text="Neuere Beiträge"
+              />
+            )}
+          </PaginationContainer>
+        </SearchWrapper>
+      </>
     );
   }
 }

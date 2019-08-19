@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 import Footer from './Footer/Footer';
 import Transition from './Transition';
 import Canvas from './Canvas';
+import Meta from './Meta';
 
 import {
   DESKTOP_MQ,
@@ -46,6 +47,7 @@ const MainWrapper = styled.div`
 const Layout = props => {
   return (
     <>
+      <Meta />
       <Canvas />
       <GlobalStyle />
       <Navbar />

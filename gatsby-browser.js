@@ -63,7 +63,6 @@ export const shouldUpdateScroll = (
     )
   } else {
     const savedPosition = getSavedScrollPosition(location)
-    savedPosition.push('smooth')
 
     window.setTimeout(
       () =>

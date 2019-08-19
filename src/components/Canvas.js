@@ -13,9 +13,9 @@ const TheCanvas = styled.canvas`
 
 const Canvas = () => {
   const canvasRef = React.useRef(null);
-  const [scrollPos, setscrollPos] = useState(window.pageYOffset);
-  const [windowWidth, setwindowWidth] = useState(window.innerWidth);
-  const [windowHeigth, setwindowHeigth] = useState(window.innerHeigth);
+  const [scrollPos, setscrollPos] = useState(0);
+  const [windowWidth, setwindowWidth] = useState();
+  const [windowHeigth, setwindowHeigth] = useState();
 
   let ctx = null;
 
@@ -44,6 +44,7 @@ const Canvas = () => {
   const drawRectangles = () => {
     const width = window.innerWidth;
     const height = window.innerHeight;
+    onResize();
     ctx.clearRect(0, 0, width, height);
     canvasArray.map(el => {
       const { x, y, potentFactor, simpleFactor } = el;

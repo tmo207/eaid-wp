@@ -63,23 +63,18 @@ export const shouldUpdateScroll = (
     )
   } else {
     const savedPosition = getSavedScrollPosition(location)
-    const savedPositionY = savedPosition[1]
-    const savedPositionX = savedPosition[0]
+    savedPosition.push('smooth')
 
     window.setTimeout(
       () =>
         window.scrollTo(
-          {
-            top: savedPositionY,
-            left: savedPositionX,
-            behavior: 'smooth',
-          } || [
+          ...(savedPosition || [
             {
               top: 0,
               left: 0,
               behavior: 'smooth',
             },
-          ]
+          ])
         ),
       transitions ? 350 : 0
     )

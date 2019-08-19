@@ -37,6 +37,9 @@ export const DATENSCHUTZ_ID = 2403;
 export const AKTUELLES_ID = 65;
 export const AKTUELLESARCHIV_ID = 1343;
 
+export const maxCanvasWidth = 5000;
+export const maxCanvasHeigth = 3000;
+
 export const canvasArray = [
     {
         'x': 1759.666734821832,

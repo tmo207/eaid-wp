@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { canvasArray } from '../_common/config';
+import { canvasArray, maxCanvasWidth, maxCanvasHeigth } from '../_common/config';
 
 const TheCanvas = styled.canvas`
   position: fixed;
@@ -64,8 +64,8 @@ const Canvas = () => {
   return (
     <TheCanvas
       ref={canvasRef}
-      width={window.innerWidth || windowWidth}
-      height={window.innerHeight || windowHeigth}
+      width={windowWidth || maxCanvasWidth}
+      height={windowHeigth || maxCanvasHeigth}
     />
   );
 };

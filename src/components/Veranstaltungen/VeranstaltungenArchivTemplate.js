@@ -15,27 +15,7 @@ const VeranstaltungenArchivTemplate = ({ content }) => {
     <>
       {content && <Text>{content}</Text>}
       <StaticQuery
-        query={graphql`
-          query ArchivVeranstaltungen {
-            allWordpressWpApiMenusMenusItems(
-              filter: { wordpress_id: { eq: 6 } }
-            ) {
-              nodes {
-                items {
-                  object_id
-                  wordpress_children {
-                    object_id
-                    wordpress_children {
-                      title
-                      object_id
-                      object_slug
-                    }
-                  }
-                }
-              }
-            }
-          }
-        `}
+        query={SubSubMenuItemsQuery}
         render={data => {
           const archivVeranstaltungen = data.allWordpressWpApiMenusMenusItems.nodes[0].items
             .filter(
@@ -65,9 +45,27 @@ const VeranstaltungenArchivTemplate = ({ content }) => {
 };
 
 VeranstaltungenArchivTemplate.propTypes = {
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string,
-  id: PropTypes.number
+  content: PropTypes.string
 };
 
 export default VeranstaltungenArchivTemplate;
+
+export const SubSubMenuItemsQuery = graphql`
+  query ArchivVeranstaltungen {
+    allWordpressWpApiMenusMenusItems(filter: { wordpress_id: { eq: 6 } }) {
+      nodes {
+        items {
+          object_id
+          wordpress_children {
+            object_id
+            wordpress_children {
+              title
+              object_id
+              object_slug
+            }
+          }
+        }
+      }
+    }
+  }
+`;

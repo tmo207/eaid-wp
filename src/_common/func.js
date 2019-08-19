@@ -5,13 +5,17 @@ import VeranstaltungenArchivTemplate from '../components/Veranstaltungen/Veranst
 import { PageTemplate } from '../templates/page';
 import VereinTemplate from '../components/Verein/VereinTemplate';
 import PublikationenTemplate from '../components/PublikationenTemplate';
+import AktuellesTemplate from '../components/Aktuelles/AktuellesTemplate';
+import AktuellesArchivTemplate from '../components/Aktuelles/AktuellesArchivTemplate';
 
 import {
   VERANSTALTUNGEN_ID,
   VERANSTALTUNGEN_ARCHIV_ID,
   VEREIN_ID,
   MAIN_MENU_ID,
-  PUBLIKATIONEN_ID
+  PUBLIKATIONEN_ID,
+  AKTUELLES_ID,
+  AKTUELLESARCHIV_ID
 } from './config';
 
 export const useLockBodyScroll = () => {
@@ -35,6 +39,10 @@ export const getExcerpt = (content, isExcerpt) => {
 
 export const selectTemplate = id => {
   switch (id) {
+    case AKTUELLES_ID:
+      return AktuellesTemplate;
+    case AKTUELLESARCHIV_ID:
+      return AktuellesArchivTemplate;
     case VERANSTALTUNGEN_ID:
       return VeranstaltungenTemplate;
     case VERANSTALTUNGEN_ARCHIV_ID:
@@ -59,9 +67,9 @@ export const getSubPages = (parentPages, targetParentId) =>
     page => page.wordpress_children && page.object_id === targetParentId
   )[0].wordpress_children;
 
-export const getVeranstaltungen = menus => {
+export const getMenuSubFields = (menus, pageId) => {
   const mainMenu = getMainMenu(menus);
-  const veranstaltungenAll = getSubPages(mainMenu.items, VERANSTALTUNGEN_ID);
+  const veranstaltungenAll = getSubPages(mainMenu.items, pageId);
 
   return veranstaltungenAll;
 };

@@ -12,8 +12,12 @@ import DateAndAuthor from '../components/DateAndAuthor';
 import Button from '../components/Button/Button';
 import VeranstaltungsPreview from '../components/Veranstaltungen/VeranstaltungsPreview';
 
-import { getExcerpt, getVeranstaltungen } from '../_common/func';
-import { ROUNDED_CORNERS } from '../_common/config';
+import { getExcerpt, getMenuSubFields } from '../_common/func';
+import {
+  ROUNDED_CORNERS,
+  VERANSTALTUNGEN_ID,
+  AKTUELLES_ID
+} from '../_common/config';
 
 const StyledImg = styled(Img)`
   border-radius: ${ROUNDED_CORNERS};
@@ -61,9 +65,15 @@ const Startseite = () => {
           content
         } = data.allWordpressPage.edges[0].node;
         const { kontakttext, email } = data.allWordpressPage.edges[0].node.acf;
-        const nextVeranstaltungId = getVeranstaltungen(
-          data.allWordpressWpApiMenusMenusItems.edges
+        const nextVeranstaltungId = getMenuSubFields(
+          data.allWordpressWpApiMenusMenusItems.edges,
+          VERANSTALTUNGEN_ID
         )[0].object_id;
+
+        const aktuellstes = getMenuSubFields(
+          data.allWordpressWpApiMenusMenusItems.edges,
+          AKTUELLES_ID
+        )[0];
 
         return (
           <>
@@ -119,6 +129,24 @@ const Startseite = () => {
                 </Headline>
               </BoxElement>
               <VeranstaltungsPreview id={nextVeranstaltungId} />
+            </BoxContainer>
+
+            <BoxContainer margin={isDesktop ? '6rem 15% 6rem 0' : '4rem 0'}>
+              <BoxElement>
+                <Headline margin="0" type="Medium">
+                  Aktuelles
+                </Headline>
+              </BoxElement>
+              <BoxElement>
+                <Link to={`${aktuellstes.object_slug}`} className="noLine">
+                  <Headline margin="0">{aktuellstes.title}</Headline>
+                </Link>
+              </BoxElement>
+              <BoxElement noPadding>
+                <Button type="White" to={`/${aktuellstes.object_slug}`}>
+                  Zum Artikel
+                </Button>
+              </BoxElement>
             </BoxContainer>
 
             <BoxContainer margin={isDesktop ? '6rem 7.5% 6rem 7.5%' : '4rem 0'}>

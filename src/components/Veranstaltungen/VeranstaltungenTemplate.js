@@ -8,8 +8,11 @@ import PaginationButton from '../Pagination/PaginationButton';
 import PaginationContainer from '../Pagination/PaginationContainer';
 import BoxContainer from '../ContentBox/BoxContainer';
 
-import { VERANSTALTUNGEN_ARCHIV_ID } from '../../_common/config';
-import { getVeranstaltungen } from '../../_common/func';
+import {
+  VERANSTALTUNGEN_ARCHIV_ID,
+  VERANSTALTUNGEN_ID
+} from '../../_common/config';
+import { getMenuSubFields } from '../../_common/func';
 
 const VeranstaltungenTemplate = ({ content }) => {
   return (
@@ -18,8 +21,9 @@ const VeranstaltungenTemplate = ({ content }) => {
       <StaticQuery
         query={MenuItemsQuery}
         render={data => {
-          const veranstaltungenAll = getVeranstaltungen(
-            data.allWordpressWpApiMenusMenusItems.edges
+          const veranstaltungenAll = getMenuSubFields(
+            data.allWordpressWpApiMenusMenusItems.edges,
+            VERANSTALTUNGEN_ID
           );
 
           const archiv = veranstaltungenAll.filter(
@@ -61,7 +65,7 @@ VeranstaltungenTemplate.propTypes = {
   id: PropTypes.number
 };
 
-const MenuItemsQuery = graphql`
+export const MenuItemsQuery = graphql`
   query Veranstaltungen {
     allWordpressWpApiMenusMenusItems {
       edges {

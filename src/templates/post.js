@@ -13,11 +13,17 @@ import DateAndAuthor from '../components/DateAndAuthor';
 import CommentsForm from '../components/Form/CommentsForm';
 import PostComments from '../components/Blog/PostComments';
 import RelatedPosts from '../components/Blog/RelatedPosts';
+import { StyledLink } from '../components/Button/Button';
 
 import {
   ROUNDED_CORNERS,
   HANDHELD_MQ,
-  SMALL_MOBILE_TEXT
+  SMALL_MOBILE_TEXT,
+  MOBILE_TEXT,
+  DARKBLUE_BG,
+  WHITE,
+  DARKBLUE_FONT,
+  DESKTOP_MQ
 } from '../_common/config';
 
 const StyledImg = styled(Img)`
@@ -30,6 +36,35 @@ const Meta = styled.span`
   @${HANDHELD_MQ} {
     font-size: ${SMALL_MOBILE_TEXT};
     padding: 0.25rem;
+  }
+`;
+
+const BackButton = styled.button`
+  left: 0;
+  position: fixed;
+  border-radius: ${ROUNDED_CORNERS};
+  padding: 0;
+  font-weight: bold;
+  color: ${WHITE};
+  background: ${DARKBLUE_BG};
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: ${DARKBLUE_FONT};
+  }
+
+  @${HANDHELD_MQ} {
+    font-size: ${MOBILE_TEXT};
+  }
+
+  @${DESKTOP_MQ} {
+    display: none;
+  }
+
+  @media (max-width: 1140px) {
+    top: 90px;
   }
 `;
 
@@ -119,7 +154,15 @@ const BlogPost = ({ data }) => {
 
   return (
     <>
-      <Helmet title={`${post.title} | Blog`} />
+      <Helmet title={`${post.title} | EAID`} />
+      <BackButton tabIndex="-1" role="Navigation">
+        <StyledLink
+          to={'/category/eaid-blog/'}
+          dangerouslySetInnerHTML={{
+            __html: 'zurück'
+          }}
+        />
+      </BackButton>
       <BlogPostTemplate
         content={post.content}
         categories={post.categories}

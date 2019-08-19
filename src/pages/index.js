@@ -33,12 +33,12 @@ const Email = styled.a`
 `;
 
 const Startseite = () => {
-  const [windowWidth, setwindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setwindowWidth] = useState();
   const isDesktop = windowWidth >= 1200;
 
   useEffect(() => {
     window.addEventListener('resize', onResize);
-
+    onResize();
     return () => {
       window.removeEventListener('resize', onResize);
     };

@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { graphql, StaticQuery } from 'gatsby';
 
 import CommentTree from './CommentTree';
+import BoxContainer from '../ContentBox/BoxContainer';
+import BoxElement from '../ContentBox/BoxElement';
+import Headline from '../Headline';
 
 import { unflatten } from '../../_common/func';
 
@@ -18,7 +21,18 @@ const PostComments = ({ postId, onAnswerClick }) => {
 
         const tree = unflatten(associatedComments);
 
-        return <CommentTree comments={tree} onAnswerClick={onAnswerClick} />;
+        return (
+          <>
+            {tree.length > 0 && (
+              <BoxContainer>
+                <BoxElement>
+                  <Headline margin="0">Kommentare</Headline>
+                </BoxElement>
+                <CommentTree comments={tree} onAnswerClick={onAnswerClick} />
+              </BoxContainer>
+            )}
+          </>
+        );
       }}
     />
   );

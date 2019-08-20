@@ -93,7 +93,7 @@ export const BlogPostTemplate = ({
         )}
         {categories && categories.length && (
           <BoxElement wrap>
-            <Meta>Posted in:</Meta>
+            <Meta>Gepostet in:</Meta>
             {categories.map(category => (
               <Meta key={`${category.slug}cat`}>
                 <Link to={`/categories/${category.slug}/`}>
@@ -105,7 +105,7 @@ export const BlogPostTemplate = ({
         )}
         {tags && tags.length && (
           <BoxElement wrap>
-            <Meta>Tagged mit:</Meta>
+            <Meta>Getagged mit:</Meta>
             {tags.map(tag => (
               <Meta key={`${tag.slug}tag`}>
                 <Link to={`/tags/${tag.slug}/`}>{tag.name}</Link>

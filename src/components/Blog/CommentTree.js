@@ -10,7 +10,7 @@ const CommentTree = ({ comments, onAnswerClick }) => {
   return (
     <>
       {comments.map((comment, i) => (
-        <BoxElement wrap margin="1rem 0 0" key={i}>
+        <BoxElement wrap key={i}>
           <Comment comment={comment} onAnswerClick={onAnswerClick} />
           {hasChildren(comment) && (
             <CommentTree

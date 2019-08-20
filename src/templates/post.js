@@ -13,7 +13,6 @@ import DateAndAuthor from '../components/DateAndAuthor';
 import CommentsForm from '../components/Form/CommentsForm';
 import PostComments from '../components/Blog/PostComments';
 import RelatedPosts from '../components/Blog/RelatedPosts';
-import { StyledLink } from '../components/Button/Button';
 import Pingbacks from '../components/Blog/Pingbacks';
 
 import {
@@ -24,7 +23,8 @@ import {
   DARKBLUE_BG,
   WHITE,
   DARKBLUE_FONT,
-  DESKTOP_MQ
+  DESKTOP_MQ,
+  PADDING_SMALL
 } from '../_common/config';
 
 const StyledImg = styled(Img)`
@@ -38,6 +38,12 @@ const Meta = styled.span`
     font-size: ${SMALL_MOBILE_TEXT};
     padding: 0.25rem;
   }
+`;
+
+const StyledLink = styled.span`
+  padding: ${PADDING_SMALL};
+  display: block;
+  text-decoration: none;
 `;
 
 const BackButton = styled.button`
@@ -146,6 +152,7 @@ const BlogPost = ({ data }) => {
   const [authorName, setAuthorName] = useState('');
 
   const ref = createRef();
+
   const executeScroll = (id, author_name) => {
     if (typeof window !== 'undefined' && ref) {
       window.scrollTo(0, ref.current.offsetTop);
@@ -153,6 +160,13 @@ const BlogPost = ({ data }) => {
     setAnswerToParentId(id);
     setAuthorName(author_name);
   };
+
+  const backClick = () => {
+    if (typeof window !== 'undefined') {
+      window.history.back();
+    }
+  };
+
   const { wordpressPost: post } = data;
   const img = post.featured_media
     ? post.featured_media.localFile.childImageSharp.fluid
@@ -163,7 +177,7 @@ const BlogPost = ({ data }) => {
       <Helmet title={`${post.title} | EAID`} />
       <BackButton tabIndex="-1" role="Navigation">
         <StyledLink
-          to={'/category/eaid-blog/'}
+          onClick={backClick}
           dangerouslySetInnerHTML={{
             __html: 'zurück'
           }}

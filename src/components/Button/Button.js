@@ -44,7 +44,7 @@ const GreyButton = styled(ButtonStyle)`
   background: ${LIGHTBLUE_BG};
 `;
 
-export const StyledLink = styled(Link)`
+const StyledLink = styled(Link)`
   padding: ${PADDING_SMALL};
   display: block;
   text-decoration: none;

@@ -77,12 +77,14 @@ export default class Footer extends React.Component {
               <StaticQuery
                 query={footerImageQuery}
                 render={logos => {
-                  return logos.allWordpressWpMedia.edges.map(logo => (
-                    <StyledImage
-                      fluid={logo.node.localFile.childImageSharp.fluid}
-                      key={logo.node.id}
-                    />
-                  ))
+                  return logos.allWordpressAcfOptions.nodes[0].options.footerlogos.map(
+                    logo => (
+                      <StyledImage
+                        fluid={logo.localFile.childImageSharp.fluid}
+                        key={logo.localFile.id}
+                      />
+                    )
+                  )
                 }}
               />
             </FooterChild>
@@ -101,14 +103,16 @@ export default class Footer extends React.Component {
 
 const footerImageQuery = graphql`
   query footerImageQuery {
-    allWordpressWpMedia(filter: { alt_text: { eq: "footer_logo" } }) {
-      edges {
-        node {
-          id
-          localFile {
-            childImageSharp {
-              fluid(maxWidth: 240) {
-                ...GatsbyImageSharpFluid
+    allWordpressAcfOptions {
+      nodes {
+        options {
+          footerlogos {
+            localFile {
+              id
+              childImageSharp {
+                fluid(maxWidth: 240) {
+                  ...GatsbyImageSharpFluid
+                }
               }
             }
           }

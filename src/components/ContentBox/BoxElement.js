@@ -22,6 +22,7 @@ const Wrapper = styled.div`
   color: ${props => (props.lightBG ? '#000000' : WHITE)};
   justify-content: ${props => props.justify};
   margin: ${props => props.margin};
+  flex-direction: ${props => (props.column ? 'column' : 'row')};
 
   @${HANDHELD_MQ} {
     padding: ${props => (props.noPadding ? '0' : '1rem')};
@@ -38,7 +39,8 @@ const BoxElement = ({
   justify,
   inline,
   id,
-  margin
+  margin,
+  column
 }) => {
   return (
     <Wrapper
@@ -51,6 +53,7 @@ const BoxElement = ({
       justify={justify}
       inline={inline}
       margin={margin}
+      column={column}
     >
       {children}
     </Wrapper>
@@ -67,7 +70,8 @@ BoxElement.propTypes = {
   justify: PropTypes.string,
   inline: PropTypes.bool,
   id: PropTypes.string,
-  margin: PropTypes.string
+  margin: PropTypes.string,
+  column: PropTypes.bool
 };
 
 export default BoxElement;

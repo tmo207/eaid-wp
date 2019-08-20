@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const path = require('path');
+const fetch = require('node-fetch');
 const { createFilePath } = require('gatsby-source-filesystem');
 const { paginate } = require('gatsby-awesome-pagination');
 
@@ -221,8 +222,9 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 };
 
-exports.sourceNodes = ({ actions }) => {
-  const { createTypes } = actions;
+exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
+  const { createTypes, createNode } = actions;
+
   const typeDefs = `
     type wordpress__PAGE implements Node {
       acf: wordpress__AcfFields
@@ -250,5 +252,33 @@ exports.sourceNodes = ({ actions }) => {
       content: String
     }
   `;
+
   createTypes(typeDefs);
+
+  const processPing = ping => {
+    const pingId = createNodeId(`my-ping-${ping.comment_ID}`);
+    const pingContent = JSON.stringify(ping);
+    const pingData = Object.assign({}, ping, {
+      id: pingId,
+      parent: null,
+      children: [],
+      internal: {
+        type: 'wordpress__wp_pingbacks',
+        mediaType: 'text/html',
+        content: pingContent,
+        contentDigest: createContentDigest(ping)
+      }
+    });
+
+    return pingData;
+  };
+
+  return fetch('https://eaid-berlin.de/wp-json/wp/mypings/pingbacks')
+    .then(result => result.json())
+    .then(data => {
+      data.forEach(ping => {
+        const nodeData = processPing(ping);
+        createNode(nodeData);
+      });
+    });
 };

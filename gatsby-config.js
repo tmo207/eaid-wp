@@ -41,7 +41,8 @@ module.exports = {
           '**/menus',
           '**/types',
           '**/statuses',
-          '**/search'
+          '**/search',
+          '**/pingbacks'
         ]
       }
     },

@@ -14,6 +14,7 @@ import CommentsForm from '../components/Form/CommentsForm';
 import PostComments from '../components/Blog/PostComments';
 import RelatedPosts from '../components/Blog/RelatedPosts';
 import { StyledLink } from '../components/Button/Button';
+import Pingbacks from '../components/Blog/Pingbacks';
 
 import {
   ROUNDED_CORNERS,
@@ -75,7 +76,8 @@ export const BlogPostTemplate = ({
   title,
   date,
   author,
-  img
+  img,
+  postId
 }) => {
   return (
     <>
@@ -113,7 +115,10 @@ export const BlogPostTemplate = ({
             ))}
           </BoxElement>
         )}
+
+        <Pingbacks postId={postId} />
       </BoxContainer>
+
       <BoxElement inline>
         <DateAndAuthor padding="0" fullWidth inline noCenter>
           <Link to={`/author/${author.slug}`}>
@@ -132,7 +137,8 @@ BlogPostTemplate.propTypes = {
   author: PropTypes.object,
   date: PropTypes.string,
   img: PropTypes.object,
-  title: PropTypes.string
+  title: PropTypes.string,
+  postId: PropTypes.number
 };
 
 const BlogPost = ({ data }) => {
@@ -171,6 +177,7 @@ const BlogPost = ({ data }) => {
         date={post.date}
         author={post.author}
         img={img}
+        postId={post.wordpress_id}
       />
       {post.comment_status === 'open' && (
         <>

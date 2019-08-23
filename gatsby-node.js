@@ -273,7 +273,9 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     return pingData;
   };
 
-  return fetch('https://eaid-berlin.de/wp-json/wp/mypings/pingbacks')
+  return fetch(
+    'https://eaid-berlin.de/zzUbVKD3ckNW/index.php/wp-json/wp/mypings/pingbacks'
+  )
     .then(result => result.json())
     .then(data => {
       data.forEach(ping => {

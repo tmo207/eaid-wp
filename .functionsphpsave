@@ -1,0 +1,51 @@
+// ADD ACF OPTIONS PAGE
+if( function_exists('acf_add_options_page') ) {
+	
+    acf_add_options_page();
+    
+	acf_add_options_sub_page('Footer');
+	
+}
+
+// Add pingbacks to wp JSON
+function getPingbacks() {
+  $comments = get_comments();
+  $pings = array();
+
+  foreach ( $comments as $comment ) :
+           if ($comment->comment_type == 'pingback' or $comment->comment_type == 'trackback' ) {
+         array_push($pings, $comment);
+           }
+   endforeach; 
+
+ 
+  return $pings;
+}
+
+add_action( 'rest_api_init', function () {
+  register_rest_route( 'wp/mypings', '/pingbacks', array(
+    'methods' => 'GET',
+    'callback' => 'getPingbacks',
+  ) );
+} );
+
+// Encrypt acf emails
+add_filter('acf/load_value', 'eae_encode_emails');
+
+// Allow anonymous comments
+function filter_rest_allow_anonymous_comments() {
+    return true;
+}
+add_filter('rest_allow_anonymous_comments','filter_rest_allow_anonymous_comments');
+
+// Make sure build is successful when no post has image
+function nullify_empty($value, $post_id, $field)
+{
+    if (empty($value)) {
+        return null;
+    }
+
+    return $value;
+}
+
+add_filter('acf/format_value', 'nullify_empty', 100, 3);

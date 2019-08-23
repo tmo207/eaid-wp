@@ -50,7 +50,7 @@ VeranstaltungenArchivTemplate.propTypes = {
 
 export default VeranstaltungenArchivTemplate;
 
-export const SubSubMenuItemsQuery = graphql`
+const SubSubMenuItemsQuery = graphql`
   query ArchivVeranstaltungen {
     allWordpressWpApiMenusMenusItems(filter: { wordpress_id: { eq: 6 } }) {
       nodes {

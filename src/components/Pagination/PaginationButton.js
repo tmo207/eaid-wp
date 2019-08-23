@@ -58,8 +58,12 @@ const Text = styled.p`
 
 const PaginationButton = ({ isLeft, link, text }) => {
   return (
-    <Wrapper>
-      <StyledLink to={`/${link}`} rel={isLeft ? 'next' : 'prev'}>
+    <Wrapper tabIndex="-1">
+      <StyledLink
+        to={`/${link}`}
+        rel={isLeft ? 'next' : 'prev'}
+        role="navigation"
+      >
         <ElementWrapper>
           {isLeft && <ArrowLeft src={logo} />}
           <Text>{text}</Text>

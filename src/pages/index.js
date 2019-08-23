@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { StaticQuery, graphql, Link } from 'gatsby';
+import { graphql, Link, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
 
 import BoxContainer from '../components/ContentBox/BoxContainer';
@@ -48,157 +48,147 @@ const Startseite = () => {
     setwindowWidth(window.innerWidth);
   };
 
+  const data = useStaticQuery(StartseitenQuery);
+  const {
+    author,
+    date,
+    excerpt,
+    slug,
+    title,
+    featured_media
+  } = data.wordpressPost;
+  const nextVeranstaltungId = getMenuSubFields(
+    data.allWordpressWpApiMenusMenusItems.edges,
+    VERANSTALTUNGEN_ID
+  )[0].object_id;
+
+  const aktuellstes = getMenuSubFields(
+    data.allWordpressWpApiMenusMenusItems.edges,
+    AKTUELLES_ID
+  )[0];
+
   return (
-    <StaticQuery
-      query={StartseitenQuery}
-      render={data => {
-        const {
-          author,
-          date,
-          excerpt,
-          slug,
-          title,
-          featured_media
-        } = data.wordpressPost;
-        const nextVeranstaltungId = getMenuSubFields(
-          data.allWordpressWpApiMenusMenusItems.edges,
-          VERANSTALTUNGEN_ID
-        )[0].object_id;
-
-        const aktuellstes = getMenuSubFields(
-          data.allWordpressWpApiMenusMenusItems.edges,
-          AKTUELLES_ID
-        )[0];
-
-        return (
+    <>
+      {data.allWordpressPage &&
+        data.allWordpressPage.edges &&
+        data.allWordpressPage.edges[0] &&
+        data.allWordpressPage.edges[0].node && (
           <>
-            {data.allWordpressPage &&
-              data.allWordpressPage.edges &&
-              data.allWordpressPage.edges[0] &&
-              data.allWordpressPage.edges[0].node && (
-                <>
-                  {data.allWordpressPage.edges[0].node.title && (
-                    <Headline
-                      margin={isDesktop ? '0 0 6rem' : '0 0 4rem'}
-                      type="Large"
-                    >
-                      {data.allWordpressPage.edges[0].node.title}
-                    </Headline>
-                  )}
-                  {data.allWordpressPage.edges[0].node.content && (
-                    <Text
-                      margin={isDesktop ? '0 0 6rem 15%' : '0 0 4rem'}
-                      contentWidth
-                    >
-                      {data.allWordpressPage.edges[0].node.content}
-                    </Text>
-                  )}
-                </>
-              )}
-
-            <BoxContainer margin={isDesktop ? '6rem 15% 6rem 0' : '4rem 0'}>
-              <BoxElement>
-                <Headline margin="0" type="Medium">
-                  Neuester Blogeintrag
-                </Headline>
-              </BoxElement>
-              {featured_media && featured_media.localFile && (
-                <StyledImg
-                  fluid={featured_media.localFile.childImageSharp.fluid}
-                />
-              )}
-              <BoxElement>
-                <Link to={`/${slug}`} className="noLine">
-                  <Headline margin="0">{title}</Headline>
-                </Link>
-              </BoxElement>
-              <BoxElement>
-                <Text margin="0">{getExcerpt(excerpt, true)}</Text>
-              </BoxElement>
-              <BoxElement noPadding>
-                <ButtonContainer>
-                  <DateAndAuthor>
-                    <Link to={`/author/${author.slug}`}>
-                      {date} @{author.name}
-                    </Link>
-                  </DateAndAuthor>
-                  <Button type="Grey" to={`/${slug}`}>
-                    weiterlesen
-                  </Button>
-                </ButtonContainer>
-              </BoxElement>
-              <BoxElement noPadding>
-                <Button type="Yellow" to="/category/eaid-blog/">
-                  Zeige alle Beiträge
-                </Button>
-              </BoxElement>
-            </BoxContainer>
-
-            <BoxContainer margin={isDesktop ? '6rem 0 6rem 15%' : '4rem 0'}>
-              <BoxElement>
-                <Headline margin="0" type="Medium">
-                  Nächste Veranstaltung
-                </Headline>
-              </BoxElement>
-              <VeranstaltungsPreview id={nextVeranstaltungId} />
-            </BoxContainer>
-
-            <BoxContainer margin={isDesktop ? '6rem 15% 6rem 0' : '4rem 0'}>
-              <BoxElement>
-                <Headline margin="0" type="Medium">
-                  Aktuelles
-                </Headline>
-              </BoxElement>
-              <BoxElement>
-                <Link to={`${aktuellstes.object_slug}`} className="noLine">
-                  <Headline margin="0">{aktuellstes.title}</Headline>
-                </Link>
-              </BoxElement>
-              <BoxElement noPadding>
-                <Button type="White" to={`/${aktuellstes.object_slug}`}>
-                  Zum Artikel
-                </Button>
-              </BoxElement>
-            </BoxContainer>
-
-            {data.allWordpressPage &&
-              data.allWordpressPage.edges &&
-              data.allWordpressPage.edges[0] &&
-              data.allWordpressPage.edges[0].node &&
-              data.allWordpressPage.edges[0].node.acf &&
-              (data.allWordpressPage.edges[0].node.acf.kontakttext ||
-                data.allWordpressPage.edges[0].node.acf.email) && (
-                <BoxContainer
-                  margin={isDesktop ? '6rem 7.5% 6rem 7.5%' : '4rem 0'}
-                >
-                  <BoxElement>
-                    <Headline margin="0">Kontakt</Headline>
-                  </BoxElement>
-                  <BoxElement>
-                    <Text margin="0">
-                      {data.allWordpressPage.edges[0].node.acf.kontakttext}
-                    </Text>
-                  </BoxElement>
-                  {data.allWordpressPage.edges[0].node.acf.email && (
-                    <BoxElement inline>
-                      <Text inline margin="0">
-                        {'E-Mail: '}
-                      </Text>
-                      <Email
-                        href={`mailto:${data.allWordpressPage.edges[0].node.acf.email}`}
-                        className="noLine"
-                        dangerouslySetInnerHTML={{
-                          __html: data.allWordpressPage.edges[0].node.acf.email
-                        }}
-                      />
-                    </BoxElement>
-                  )}
-                </BoxContainer>
-              )}
+            {data.allWordpressPage.edges[0].node.title && (
+              <Headline
+                margin={isDesktop ? '0 0 6rem' : '0 0 4rem'}
+                type="Large"
+              >
+                {data.allWordpressPage.edges[0].node.title}
+              </Headline>
+            )}
+            {data.allWordpressPage.edges[0].node.content && (
+              <Text
+                margin={isDesktop ? '0 0 6rem 15%' : '0 0 4rem'}
+                contentWidth
+              >
+                {data.allWordpressPage.edges[0].node.content}
+              </Text>
+            )}
           </>
-        );
-      }}
-    />
+        )}
+
+      <BoxContainer margin={isDesktop ? '6rem 15% 6rem 0' : '4rem 0'}>
+        <BoxElement>
+          <Headline margin="0" type="Medium">
+            Neuester Blogeintrag
+          </Headline>
+        </BoxElement>
+        {featured_media && featured_media.localFile && (
+          <StyledImg fluid={featured_media.localFile.childImageSharp.fluid} />
+        )}
+        <BoxElement>
+          <Link to={`/${slug}`} className="noLine">
+            <Headline margin="0">{title}</Headline>
+          </Link>
+        </BoxElement>
+        <BoxElement>
+          <Text margin="0">{getExcerpt(excerpt, true)}</Text>
+        </BoxElement>
+        <BoxElement noPadding>
+          <ButtonContainer>
+            <DateAndAuthor>
+              <Link to={`/author/${author.slug}`}>
+                {date} @{author.name}
+              </Link>
+            </DateAndAuthor>
+            <Button type="Grey" to={`/${slug}`}>
+              weiterlesen
+            </Button>
+          </ButtonContainer>
+        </BoxElement>
+        <BoxElement noPadding>
+          <Button type="Yellow" to="/category/eaid-blog/">
+            Zeige alle Beiträge
+          </Button>
+        </BoxElement>
+      </BoxContainer>
+
+      <BoxContainer margin={isDesktop ? '6rem 0 6rem 15%' : '4rem 0'}>
+        <BoxElement>
+          <Headline margin="0" type="Medium">
+            Nächste Veranstaltung
+          </Headline>
+        </BoxElement>
+        <VeranstaltungsPreview id={nextVeranstaltungId} />
+      </BoxContainer>
+
+      <BoxContainer margin={isDesktop ? '6rem 15% 6rem 0' : '4rem 0'}>
+        <BoxElement>
+          <Headline margin="0" type="Medium">
+            Aktuelles
+          </Headline>
+        </BoxElement>
+        <BoxElement>
+          <Link to={`${aktuellstes.object_slug}`} className="noLine">
+            <Headline margin="0">{aktuellstes.title}</Headline>
+          </Link>
+        </BoxElement>
+        <BoxElement noPadding>
+          <Button type="White" to={`/${aktuellstes.object_slug}`}>
+            Zum Artikel
+          </Button>
+        </BoxElement>
+      </BoxContainer>
+
+      {data.allWordpressPage &&
+        data.allWordpressPage.edges &&
+        data.allWordpressPage.edges[0] &&
+        data.allWordpressPage.edges[0].node &&
+        data.allWordpressPage.edges[0].node.acf &&
+        (data.allWordpressPage.edges[0].node.acf.kontakttext ||
+          data.allWordpressPage.edges[0].node.acf.email) && (
+          <BoxContainer margin={isDesktop ? '6rem 7.5% 6rem 7.5%' : '4rem 0'}>
+            <BoxElement>
+              <Headline margin="0">Kontakt</Headline>
+            </BoxElement>
+            <BoxElement>
+              <Text margin="0">
+                {data.allWordpressPage.edges[0].node.acf.kontakttext}
+              </Text>
+            </BoxElement>
+            {data.allWordpressPage.edges[0].node.acf.email && (
+              <BoxElement inline>
+                <Text inline margin="0">
+                  {'E-Mail: '}
+                </Text>
+                <Email
+                  href={`mailto:${data.allWordpressPage.edges[0].node.acf.email}`}
+                  className="noLine"
+                  dangerouslySetInnerHTML={{
+                    __html: data.allWordpressPage.edges[0].node.acf.email
+                  }}
+                />
+              </BoxElement>
+            )}
+          </BoxContainer>
+        )}
+    </>
   );
 };
 

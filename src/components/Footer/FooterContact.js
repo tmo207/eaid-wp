@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { StaticQuery, graphql } from 'gatsby';
+import { graphql, useStaticQuery } from 'gatsby';
 
 import Text from '../Text';
 
@@ -14,34 +14,28 @@ const Email = styled.a`
 `;
 
 const FooterContact = () => {
+  const data = useStaticQuery(footerContactQuery);
   return (
-    <StaticQuery
-      query={footerContactQuery}
-      render={data => {
-        return (
+    <>
+      {data.allWordpressPage &&
+        data.allWordpressPage.edges &&
+        data.allWordpressPage.edges[0] &&
+        data.allWordpressPage.edges[0].node &&
+        data.allWordpressPage.edges[0].node.acf && (
           <>
-            {data.allWordpressPage &&
-              data.allWordpressPage.edges &&
-              data.allWordpressPage.edges[0] &&
-              data.allWordpressPage.edges[0].node &&
-              data.allWordpressPage.edges[0].node.acf && (
-                <>
-                  <Text secondary>
-                    {data.allWordpressPage.edges[0].node.acf.kontakttext}
-                  </Text>
-                  <Email
-                    href={`mailto:${data.allWordpressPage.edges[0].node.acf.email}`}
-                    className="noLine"
-                    dangerouslySetInnerHTML={{
-                      __html: data.allWordpressPage.edges[0].node.acf.email
-                    }}
-                  />
-                </>
-              )}
+            <Text secondary>
+              {data.allWordpressPage.edges[0].node.acf.kontakttext}
+            </Text>
+            <Email
+              href={`mailto:${data.allWordpressPage.edges[0].node.acf.email}`}
+              className="noLine"
+              dangerouslySetInnerHTML={{
+                __html: data.allWordpressPage.edges[0].node.acf.email
+              }}
+            />
           </>
-        );
-      }}
-    />
+        )}
+    </>
   );
 };
 

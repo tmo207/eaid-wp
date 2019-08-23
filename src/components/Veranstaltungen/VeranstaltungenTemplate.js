@@ -65,7 +65,7 @@ VeranstaltungenTemplate.propTypes = {
   id: PropTypes.number
 };
 
-export const MenuItemsQuery = graphql`
+const MenuItemsQuery = graphql`
   query Veranstaltungen {
     allWordpressWpApiMenusMenusItems {
       edges {

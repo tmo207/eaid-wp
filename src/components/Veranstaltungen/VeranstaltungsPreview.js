@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StaticQuery, graphql, Link } from 'gatsby';
+import { graphql, Link, useStaticQuery } from 'gatsby';
 
 import BoxElement from '../ContentBox/BoxElement';
 import Headline from '../Headline';
@@ -10,33 +10,27 @@ import Button from '../Button/Button';
 import { getExcerpt } from '../../_common/func';
 
 const VeranstaltungsPreview = ({ id }) => {
-  return (
-    <StaticQuery
-      query={ChildPagesQuery}
-      render={data => {
-        const page = data.allWordpressPage.edges.filter(
-          page => page.node.wordpress_id === id
-        )[0].node;
+  const data = useStaticQuery(ChildPagesQuery);
+  const page = data.allWordpressPage.edges.filter(
+    page => page.node.wordpress_id === id
+  )[0].node;
 
-        return (
-          <>
-            <BoxElement>
-              <Link to={`/${page.slug}`} className="noLine">
-                <Headline margin={'0'}>{page.title}</Headline>
-              </Link>
-            </BoxElement>
-            <BoxElement>
-              <Text margin={'0'}>{getExcerpt(page.content, false)}</Text>
-            </BoxElement>
-            <BoxElement noPadding>
-              <Button type="White" to={`/${page.slug}`}>
-                Zur Veranstaltung
-              </Button>
-            </BoxElement>
-          </>
-        );
-      }}
-    />
+  return (
+    <>
+      <BoxElement>
+        <Link to={`/${page.slug}`} className="noLine">
+          <Headline margin={'0'}>{page.title}</Headline>
+        </Link>
+      </BoxElement>
+      <BoxElement>
+        <Text margin={'0'}>{getExcerpt(page.content, false)}</Text>
+      </BoxElement>
+      <BoxElement noPadding>
+        <Button type="White" to={`/${page.slug}`}>
+          Zur Veranstaltung
+        </Button>
+      </BoxElement>
+    </>
   );
 };
 

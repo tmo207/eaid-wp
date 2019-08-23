@@ -18,17 +18,26 @@ const FooterContact = () => {
     <StaticQuery
       query={footerContactQuery}
       render={data => {
-        const { kontakttext, email } = data.allWordpressPage.edges[0].node.acf;
         return (
           <>
-            <Text secondary>{kontakttext}</Text>
-            <Email
-              href={`mailto:${email}`}
-              className="noLine"
-              dangerouslySetInnerHTML={{
-                __html: email
-              }}
-            />
+            {data.allWordpressPage &&
+              data.allWordpressPage.edges &&
+              data.allWordpressPage.edges[0] &&
+              data.allWordpressPage.edges[0].node &&
+              data.allWordpressPage.edges[0].node.acf && (
+                <>
+                  <Text secondary>
+                    {data.allWordpressPage.edges[0].node.acf.kontakttext}
+                  </Text>
+                  <Email
+                    href={`mailto:${data.allWordpressPage.edges[0].node.acf.email}`}
+                    className="noLine"
+                    dangerouslySetInnerHTML={{
+                      __html: data.allWordpressPage.edges[0].node.acf.email
+                    }}
+                  />
+                </>
+              )}
           </>
         );
       }}

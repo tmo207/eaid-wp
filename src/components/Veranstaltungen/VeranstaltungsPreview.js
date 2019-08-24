@@ -38,7 +38,7 @@ VeranstaltungsPreview.propTypes = {
   id: PropTypes.number.isRequired
 };
 
-export const ChildPagesQuery = graphql`
+const ChildPagesQuery = graphql`
   query ChildPagesQuery {
     allWordpressPage {
       edges {

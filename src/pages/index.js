@@ -132,7 +132,7 @@ const Startseite = () => {
       <BoxContainer margin={isDesktop ? '6rem 0 6rem 15%' : '4rem 0'}>
         <BoxElement>
           <Headline margin="0" type="Medium">
-            Nächste Veranstaltung
+            Veranstaltungen
           </Headline>
         </BoxElement>
         <VeranstaltungsPreview id={nextVeranstaltungId} />

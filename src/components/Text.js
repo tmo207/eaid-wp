@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { HANDHELD_MQ, SMALL_MOBILE_TEXT, MOBILE_TEXT } from '../_common/config';
 
-const TextWrap = styled.p`
+const TextWrap = styled.div`
   display: ${props => (props.inline ? 'inline' : 'block')};
   font-size: ${props => (!props.secondary ? '1.4rem' : '1rem')};
   width: ${props => (props.contentWidth ? 'auto' : '100%')};

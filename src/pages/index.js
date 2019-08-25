@@ -16,7 +16,9 @@ import { getExcerpt, getMenuSubFields } from '../_common/func';
 import {
   ROUNDED_CORNERS,
   VERANSTALTUNGEN_ID,
-  AKTUELLES_ID
+  AKTUELLES_ID,
+  MOBILE_TEXT,
+  HANDHELD_MQ
 } from '../_common/config';
 
 const StyledImg = styled(Img)`
@@ -29,6 +31,10 @@ const Email = styled.a`
 
   &:hover {
     color: rgba(255, 255, 255, 0.9);
+  }
+
+  @${HANDHELD_MQ} {
+    font-size: ${MOBILE_TEXT};
   }
 `;
 

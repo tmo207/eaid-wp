@@ -7,6 +7,14 @@ if( function_exists('acf_add_options_page') ) {
 	
 }
 
+// Change WP-JSON route
+
+add_filter( 'rest_url_prefix', 'rest_url_prefix' );
+ 
+function rest_url_prefix( ) {
+  return 'zzUbVKD3ckNW/index.php/wp-json';
+}
+
 // Add pingbacks to wp JSON
 function getPingbacks() {
   $comments = get_comments();

@@ -37,8 +37,8 @@ add_action( 'rest_api_init', function () {
   ) );
 } );
 
-// Encrypt acf emails
-add_filter('acf/load_value', 'eae_encode_emails');
+// Encrypt acf emails (remove comment when plugin is enabled again)
+// add_filter('acf/load_value', 'eae_encode_emails');
 
 // Allow anonymous comments
 function filter_rest_allow_anonymous_comments() {

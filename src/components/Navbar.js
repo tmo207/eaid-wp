@@ -61,9 +61,7 @@ const Navbar = () => {
         <Bar mobile={mobile}>
           {mobile && <BurgerMenu />}
           {!mobile && <ListMenu />}
-          <Link to="/">
-            <Logo mobile={mobile} />
-          </Link>
+          <Logo mobile={mobile} />
         </Bar>
       )}
     </Wrapper>

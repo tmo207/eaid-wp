@@ -35,7 +35,7 @@ const VereinTemplate = ({ title, content }) => {
                   acf {
                     personen_page {
                       __typename
-                      ... on WordPressAcf_person {
+                      ... on wordpress__AcfPerson {
                         biografie
                         email_adresse
                         name

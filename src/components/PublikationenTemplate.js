@@ -53,7 +53,7 @@ const publikationenQuery = graphql`
       acf {
         contentboxen_page {
           __typename
-          ... on wordpress__AcfContentbox {
+          ... on WordPressAcf_contentbox {
             uberschrift
             content
             id

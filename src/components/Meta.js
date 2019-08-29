@@ -20,6 +20,7 @@ import logo from '../img/EAID.png';
 const Meta = () => {
   return (
     <Helmet>
+      <meta charset="UTF-8" />
       <title>
         Europäische Akademie für Informationsfreiheit und Datenschutz e.V.
       </title>

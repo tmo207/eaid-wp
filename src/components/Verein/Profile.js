@@ -91,9 +91,7 @@ export const Profile = ({ person }) => {
     <>
       <BoxElement>
         <ProfileWrapper onClick={() => setOpen(!open)}>
-          <div>
-            <ImageCricle imageData={imageData} />
-          </div>
+          <ImageCricle imageData={imageData} />
           <Left>
             <InfoWrapper>
               <Text bold margin="0 0 0.15rem">

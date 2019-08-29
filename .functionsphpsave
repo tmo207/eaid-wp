@@ -8,7 +8,6 @@ if( function_exists('acf_add_options_page') ) {
 }
 
 // Change WP-JSON route
-
 add_filter( 'rest_url_prefix', 'rest_url_prefix' );
  
 function rest_url_prefix( ) {
@@ -37,8 +36,25 @@ add_action( 'rest_api_init', function () {
   ) );
 } );
 
-// Encrypt acf emails (remove comment when plugin is enabled again)
-// add_filter('acf/load_value', 'eae_encode_emails');
+// Encrypt acf emails
+add_filter('acf/load_value', 'eae_encode_emails');
+
+// Encrypt acf emails
+add_filter('acf/load_value', 'eae_encode_emails');
+
+// Prevent hyperlink flickering in acf fields
+add_action('admin_head', 'prevent_link_flickering');
+
+function prevent_link_flickering() {
+	$current = get_current_screen();
+if ( $current->post_type == 'page' &&  $current->base == 'post') {
+echo '<style>
+    #wpwrap {
+      height: 101%;
+    } 
+  </style>';
+    }
+}
 
 // Allow anonymous comments
 function filter_rest_allow_anonymous_comments() {

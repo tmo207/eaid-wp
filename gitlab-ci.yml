@@ -1,0 +1,23 @@
+image: node:10.16.3
+
+stages:
+  - build
+  - deploy
+
+pages:
+  stage: build
+  script:
+  - npm install
+  - npm run-script build
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+
+deploy:
+    stage: deploy
+    script:
+    - apt-get update -qy
+    - apt-get install -y lftp
+    - lftp -e "open eaid-berlin.de; user $FTP_USERNAME $FTP_PASSWORD; mirror -x ^zzUbVKD3ckNW/ -x zzUbVKD3ckNW/ -X .* -X .*/ --reverse --verbose --delete public/ html/apps/cms; bye"

@@ -21,7 +21,7 @@ export default function HTML(props) {
         <div
           id="statify-js-snippet"
           style={{ display: 'none' }}
-          data-home-url="/"
+          data-home-url="/zzUbVKD3ckNW/"
         />
         <div
           key={'body'}

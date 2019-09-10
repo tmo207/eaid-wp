@@ -20,7 +20,7 @@ const FooterContainer = styled.footer`
 `
 
 const Spacer = styled.div`
-  margin-top: ${props => `${props.height}px`};
+  height: ${props => `${props.height}px`};
 `
 
 const ElementWrapper = styled.div`
@@ -56,6 +56,7 @@ export default class Footer extends React.Component {
     window.addEventListener('resize', this.onResize)
     const height = this.footerRef.clientHeight
     this.setState({ height: height })
+    console.log(height)
   }
 
   componentWillUnmount() {

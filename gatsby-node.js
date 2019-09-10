@@ -274,7 +274,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   };
 
   return fetch(
-    'https://eaid-berlin.de/zzUbVKD3ckNW/index.php/wp-json/wp/mypings/pingbacks'
+    'https://eaid-berlin.de/zzUbVKD3ckNW/wp-json/wp/mypings/pingbacks'
   )
     .then(result => result.json())
     .then(data => {

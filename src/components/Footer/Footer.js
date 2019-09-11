@@ -56,7 +56,6 @@ export default class Footer extends React.Component {
     window.addEventListener('resize', this.onResize)
     const height = this.footerRef.clientHeight
     this.setState({ height: height })
-    console.log(height)
   }
 
   componentWillUnmount() {

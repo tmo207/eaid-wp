@@ -55,21 +55,18 @@ const CommentsForm = React.forwardRef(
     const handleSubmit = e => {
       e.preventDefault();
       setfetching(true);
-      fetch(
-        'https://eaid-berlin.de/zzUbVKD3ckNW/zzUbVKD3ckNW/wp-json/wp/v2/comments',
-        {
-          method: 'POST',
-          mode: 'cors',
-          cache: 'no-cache',
-          credentials: 'omit',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          redirect: 'follow',
-          referrer: 'client',
-          body: JSON.stringify(data)
-        }
-      ).then(response => {
+      fetch('https://eaid-berlin.de/zzUbVKD3ckNW/wp-json/wp/v2/comments', {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'omit',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrer: 'client',
+        body: JSON.stringify(data)
+      }).then(response => {
         if (response.ok) {
           setfetchError(false);
           setcommentSubmitted(true);

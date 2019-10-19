@@ -32,8 +32,8 @@ module.exports = {
                   title: edge.node.title,
                   description: edge.node.excerpt,
                   date: edge.node.date,
-                  url: '/' + site.siteMetadata.siteUrl + edge.node.slug,
-                  guid: '/' + site.siteMetadata.siteUrl + edge.node.slug
+                  url: site.siteMetadata.siteUrl + '/' + edge.node.slug,
+                  guid: site.siteMetadata.siteUrl + '/' + edge.node.slug
                 });
               });
             },

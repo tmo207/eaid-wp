@@ -103,6 +103,9 @@ sup {
   position: relative;
   vertical-align: baseline;
 }
+#main {
+  min-height: 600px;
+}
 sub {
   bottom: -0.25em;
 }

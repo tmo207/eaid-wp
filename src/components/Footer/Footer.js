@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { graphql, StaticQuery } from 'gatsby'
 import Img from 'gatsby-image'
 
+import RSSLogo from '../RSSLogo'
 import FooterItems from './FooterItems'
 import FooterContact from './FooterContact'
 
@@ -87,6 +88,7 @@ export default class Footer extends React.Component {
                   )
                 }}
               />
+              <RSSLogo />
             </FooterChild>
             <FooterChild>
               <FooterItems />

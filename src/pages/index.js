@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { graphql, Link, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
+import { FormattedMessage } from 'react-intl';
 
 import BoxContainer from '../components/ContentBox/BoxContainer';
 import BoxElement from '../components/ContentBox/BoxElement';
@@ -101,9 +102,13 @@ const Startseite = () => {
 
       <BoxContainer margin={isDesktop ? '6rem 15% 6rem 0' : '4rem 0'}>
         <BoxElement>
-          <Headline margin="0" type="Medium">
-            Neuester Blogeintrag
-          </Headline>
+          <FormattedMessage id="NEWEST_POST_HEADLINE">
+            {headline => (
+              <Headline margin="0" type="Medium">
+                {headline}
+              </Headline>
+            )}
+          </FormattedMessage>
         </BoxElement>
         {featured_media && featured_media.localFile && (
           <StyledImg fluid={featured_media.localFile.childImageSharp.fluid} />
@@ -123,32 +128,48 @@ const Startseite = () => {
                 {date} @{author.name}
               </Link>
             </DateAndAuthor>
-            <Button type="Grey" to={`/${slug}`}>
-              weiterlesen
-            </Button>
+            <FormattedMessage id="SHOW_FULL_POST">
+              {message => (
+                <Button type="Grey" to={`/${slug}`}>
+                  {message}
+                </Button>
+              )}
+            </FormattedMessage>
           </ButtonContainer>
         </BoxElement>
         <BoxElement noPadding>
-          <Button type="Yellow" to="/category/eaid-blog/">
-            Zeige alle Beiträge
-          </Button>
+          <FormattedMessage id="SHOW_ALL_POSTS">
+            {message => (
+              <Button type="Yellow" to="/category/eaid-blog/">
+                {message}
+              </Button>
+            )}
+          </FormattedMessage>
         </BoxElement>
       </BoxContainer>
 
       <BoxContainer margin={isDesktop ? '6rem 0 6rem 15%' : '4rem 0'}>
         <BoxElement>
-          <Headline margin="0" type="Medium">
-            Veranstaltungen
-          </Headline>
+          <FormattedMessage id="EVENTS_HEADLINE">
+            {headline => (
+              <Headline margin="0" type="Medium">
+                {headline}
+              </Headline>
+            )}
+          </FormattedMessage>
         </BoxElement>
         <VeranstaltungsPreview id={nextVeranstaltungId} />
       </BoxContainer>
 
       <BoxContainer margin={isDesktop ? '6rem 15% 6rem 0' : '4rem 0'}>
         <BoxElement>
-          <Headline margin="0" type="Medium">
-            Aktuelles
-          </Headline>
+          <FormattedMessage id="NEWS_HEADLINE">
+            {headline => (
+              <Headline margin="0" type="Medium">
+                {headline}
+              </Headline>
+            )}
+          </FormattedMessage>
         </BoxElement>
         <BoxElement>
           <Link to={`${aktuellstes.object_slug}`} className="noLine">
@@ -156,9 +177,13 @@ const Startseite = () => {
           </Link>
         </BoxElement>
         <BoxElement noPadding>
-          <Button type="White" to={`/${aktuellstes.object_slug}`}>
-            Zum Artikel
-          </Button>
+          <FormattedMessage id="SHOW_ARTICLE">
+            {message => (
+              <Button type="White" to={`/${aktuellstes.object_slug}`}>
+                {message}
+              </Button>
+            )}
+          </FormattedMessage>
         </BoxElement>
       </BoxContainer>
 
@@ -171,7 +196,9 @@ const Startseite = () => {
           data.allWordpressPage.edges[0].node.acf.email) && (
           <BoxContainer margin={isDesktop ? '6rem 7.5% 6rem 7.5%' : '4rem 0'}>
             <BoxElement>
-              <Headline margin="0">Kontakt</Headline>
+              <FormattedMessage id="CONTACT_HEADLINE">
+                {headline => <Headline margin="0">{headline}</Headline>}
+              </FormattedMessage>
             </BoxElement>
             <BoxElement>
               <Text margin="0">

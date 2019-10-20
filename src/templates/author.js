@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
+import { FormattedMessage } from 'react-intl';
 
 import PostList from '../components/Blog/PostList';
 import SearchWrapper from '../components/Blog/SearchWrapper';
@@ -30,9 +31,13 @@ const Author = props => {
           <PostList posts={posts} title={title} />
         </SearchWrapper>
       ) : (
-        <Text align="center" margin={'2rem 0'}>
-          Dieser Autor hat noch keine Artikel verfasst.
-        </Text>
+        <FormattedMessage id="AUTHOR_WITHOUT_POSTS_HEADLINE">
+          {message => (
+            <Text align="center" margin={'2rem 0'}>
+              {message}
+            </Text>
+          )}
+        </FormattedMessage>
       )}
     </>
   );

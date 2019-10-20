@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import Img from 'gatsby-image';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 
 import Headline from '../Headline';
 import Text from '../Text';
@@ -42,9 +43,13 @@ const PostPreview = ({ post }) => {
               {post.date} @{post.author.name}
             </Link>
           </DateAndAuthor>
-          <Button type="Grey" to={`/${post.slug}`}>
-            weiterlesen
-          </Button>
+          <FormattedMessage id="SHOW_FULL_POST">
+            {message => (
+              <Button type="Grey" to={`/${post.slug}`}>
+                {message}
+              </Button>
+            )}
+          </FormattedMessage>
         </ButtonContainer>
       </BoxElement>
     </BoxContainer>

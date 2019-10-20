@@ -8,6 +8,7 @@ import Text from '../Text';
 
 import logo from '../../img/arrow.png';
 import { PADDING_SMALL } from '../../_common/config';
+import { FormattedMessage } from 'react-intl';
 
 const ProfileWrapper = styled.div`
   width: 100%;
@@ -121,9 +122,13 @@ export const Profile = ({ person }) => {
         <DescriptionContainer open={open}>
           {website && (
             <WebsiteWrapper>
-              <Text bold inline>
-                {'Persönliche Website: '}
-              </Text>
+              <FormattedMessage id="PERSONAL_WEBSITE">
+                {message => (
+                  <Text bold inline>
+                    {`${message}: `}
+                  </Text>
+                )}
+              </FormattedMessage>
               <a href={website}>
                 <Text inline>{website}</Text>
               </a>

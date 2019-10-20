@@ -1,10 +1,11 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 const NotFoundPage = () => (
-  <div>
-    <h1>NICHTS GEFUNDEN.</h1>
-    <p>Diese Seite existiert nicht.</p>
-  </div>
+  <>
+    <FormattedMessage id="404_HEADLINE" tagName="h1" />
+    <FormattedMessage id="404_DESCRIPTION" tagName="p" />
+  </>
 );
 
 export default NotFoundPage;

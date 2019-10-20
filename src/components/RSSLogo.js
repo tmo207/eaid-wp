@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Text from './Text';
+import { FormattedMessage } from 'react-intl';
 
 const StyledLink = styled.a`
   text-decoration: none;
@@ -382,9 +383,13 @@ dv8DAIJTH/OQxGoAAAAXdEVYdHhtcDpQaXhlbFhEaW1lbnNpb24AMTI4YNDnUAAAABd0RVh0eG1w
 OlBpeGVsWURpbWVuc2lvbgAxMjj93wYmAAAAAElFTkSuQmCC"
         />
       </svg>
-      <Text padding="0 0.5rem" margin="0" contentWidth secondary>
-        Abonnieren
-      </Text>
+      <FormattedMessage id="SUBSCRIBE">
+        {message => (
+          <Text padding="0 0.5rem" margin="0" contentWidth secondary>
+            {message}
+          </Text>
+        )}
+      </FormattedMessage>
     </StyledLink>
   );
 };

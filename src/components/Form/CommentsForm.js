@@ -18,6 +18,7 @@ import {
   DARKBLUE_BG
 } from '../../_common/config';
 import { getDateAndTime } from '../../_common/func';
+import { FormattedMessage } from 'react-intl';
 
 const FormWrapper = styled.form`
   width: 100%;
@@ -83,19 +84,30 @@ const CommentsForm = React.forwardRef(
       <div ref={ref}>
         <BoxContainer>
           <BoxElement>
-            <Headline margin={'0'}>Schreibe einen Kommentar</Headline>
+            <FormattedMessage id="COMMENTS_WRITE">
+              {headline => <Headline margin={'0'}>{headline}</Headline>}
+            </FormattedMessage>
           </BoxElement>
           {!commentSubmitted ? (
             <FormWrapper onSubmit={handleSubmit}>
               <BoxElement wrap>
                 {answerToParentId !== 0 && (
-                  <Text
-                    onClick={cancelAnswer}
-                    secondary
-                    contentWidth
-                  >{`Antwort auf ${answerToParentName}s Kommentar:`}</Text>
+                  <FormattedMessage
+                    id="COMMENTS_ANSWER_TO"
+                    values={{ subject: answerToParentName }}
+                  >
+                    {message => (
+                      <Text onClick={cancelAnswer} secondary contentWidth>
+                        {message}
+                      </Text>
+                    )}
+                  </FormattedMessage>
                 )}
-                <Textarea placeholder="Kommentar*" setContent={setContent} />
+                <FormattedMessage id="COMMENTS_PLACEHOLDER">
+                  {message => (
+                    <Textarea placeholder={message} setContent={setContent} />
+                  )}
+                </FormattedMessage>
                 <Input placeholder="Name*" setContent={setAuthor} />
                 <Input
                   type="email"
@@ -104,10 +116,9 @@ const CommentsForm = React.forwardRef(
                   hasError={setHasError}
                 />
                 {fetchError && (
-                  <Error>
-                    Es ist etwas schief gelaufen, bitte probieren Sie es noch
-                    einmal.
-                  </Error>
+                  <FormattedMessage id="COMMENTS_POST_ERROR">
+                    {message => <Error>{message}</Error>}
+                  </FormattedMessage>
                 )}
               </BoxElement>
               <div className="buttons">
@@ -117,13 +128,21 @@ const CommentsForm = React.forwardRef(
                     email === '' || author === '' || content === '' || hasError
                   }
                 >
-                  {fetching ? <LoadingSpinner dark /> : 'Kommentar posten'}
+                  {fetching ? (
+                    <LoadingSpinner dark />
+                  ) : (
+                    <FormattedMessage id="COMMENTS_POST_BUTTON">
+                      {message => message}
+                    </FormattedMessage>
+                  )}
                 </SubmitButton>
               </div>
             </FormWrapper>
           ) : (
             <BoxElement wrap>
-              <Text>Vielen Dank für Ihren Kommentar. Er wird nun geprüft.</Text>
+              <FormattedMessage id="COMMENTS_SUCCESS">
+                {message => <Text>{message}</Text>}
+              </FormattedMessage>
             </BoxElement>
           )}
         </BoxContainer>

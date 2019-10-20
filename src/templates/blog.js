@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import { Helmet } from 'react-helmet';
+import { FormattedMessage } from 'react-intl';
 
 import PostList from '../components/Blog/PostList';
 import PaginationButton from '../components/Pagination/PaginationButton';
@@ -17,25 +18,24 @@ class IndexPage extends React.Component {
     return (
       <>
         <Helmet>
-          <title>
-            EAID » Blog
-          </title>
+          <title>EAID » Blog</title>
         </Helmet>
         <SearchWrapper>
           <PostList posts={posts} />
           <PaginationContainer>
             {nextPagePath && (
-              <PaginationButton
-                isLeft
-                link={nextPagePath}
-                text="Ältere Beiträge"
-              />
+              <FormattedMessage id="OLDER_POSTS_NAV">
+                {message => (
+                  <PaginationButton isLeft link={nextPagePath} text={message} />
+                )}
+              </FormattedMessage>
             )}
             {previousPagePath && (
-              <PaginationButton
-                link={previousPagePath}
-                text="Neuere Beiträge"
-              />
+              <FormattedMessage id="NEWER_POSTS_NAV">
+                {message => (
+                  <PaginationButton link={previousPagePath} text={message} />
+                )}
+              </FormattedMessage>
             )}
           </PaginationContainer>
         </SearchWrapper>

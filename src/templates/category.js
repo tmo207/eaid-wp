@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
+import { FormattedMessage } from 'react-intl';
 
 import PostList from '../components/Blog/PostList';
 import SearchWrapper from '../components/Blog/SearchWrapper';
@@ -17,9 +18,13 @@ const Category = props => {
   return (
     <>
       <Helmet title={`${category} | ${siteTitle}`} />
-      <SearchWrapper pageType={`Artikel der Kategorie: ${category}`}>
-        <PostList posts={posts} title={title} />
-      </SearchWrapper>
+      <FormattedMessage id="CATEGORY_DISPLAYER">
+        {message => (
+          <SearchWrapper pageType={`${message} ${category}`}>
+            <PostList posts={posts} title={title} />
+          </SearchWrapper>
+        )}
+      </FormattedMessage>
     </>
   );
 };

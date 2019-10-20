@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql, StaticQuery } from 'gatsby';
+import { FormattedMessage } from 'react-intl';
 
 import CommentTree from './CommentTree';
 import BoxContainer from '../ContentBox/BoxContainer';
@@ -26,7 +27,9 @@ const PostComments = ({ postId, onAnswerClick }) => {
             {tree.length > 0 && (
               <BoxContainer>
                 <BoxElement>
-                  <Headline margin="0">Kommentare</Headline>
+                  <FormattedMessage id="COMMENTS_HEADLINE">
+                    {headline => <Headline margin="0">{headline}</Headline>}
+                  </FormattedMessage>
                 </BoxElement>
                 <CommentTree comments={tree} onAnswerClick={onAnswerClick} />
               </BoxContainer>

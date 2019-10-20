@@ -1,7 +1,8 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
-import Layout from '../components/Layout';
+import { FormattedMessage } from 'react-intl';
+
 import PostList from '../components/Blog/PostList';
 import SearchWrapper from '../components/Blog/SearchWrapper';
 
@@ -17,9 +18,13 @@ const Tag = props => {
   return (
     <>
       <Helmet title={`${tag} | ${siteTitle}`} />
-      <SearchWrapper pageType={`Artikel mit Tag: ${tag}`}>
-        <PostList posts={posts} title={title} />
-      </SearchWrapper>
+      <FormattedMessage id="TAG_DISPLAYER">
+        {message => (
+          <SearchWrapper pageType={`${message} ${tag}`}>
+            <PostList posts={posts} title={title} />
+          </SearchWrapper>
+        )}
+      </FormattedMessage>
     </>
   );
 };

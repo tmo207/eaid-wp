@@ -4,11 +4,12 @@ import { StaticQuery, graphql } from 'gatsby';
 
 import VeranstaltungsPreview from './VeranstaltungsPreview';
 import Text from '../Text';
+import BoxContainer from '../ContentBox/BoxContainer';
+
 import {
   VERANSTALTUNGEN_ID,
   VERANSTALTUNGEN_ARCHIV_ID
 } from '../../_common/config';
-import BoxContainer from '../ContentBox/BoxContainer';
 
 const VeranstaltungenArchivTemplate = ({ content }) => {
   return (

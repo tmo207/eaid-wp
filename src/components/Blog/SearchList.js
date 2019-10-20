@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
+import { FormattedMessage } from 'react-intl';
 
 import PostPreview from './PostPreview';
 import LoadingSpinner from './LoadingSpinner';
@@ -93,9 +94,13 @@ const SearchList = value => {
                 <PostPreview post={post.node} key={post.node.id} />
               ))
             ) : (
-              <Text align="center" margin={'2rem 0'}>
-                Keine passenden Ergebnisse.
-              </Text>
+              <FormattedMessage id="NO_SEARCH_RESULTS">
+                {message => (
+                  <Text align="center" margin={'2rem 0'}>
+                    {message}
+                  </Text>
+                )}
+              </FormattedMessage>
             )}
             {isFetching && resultsTotalLength > numberOfResultsShowing && (
               <LoadingSpinner />

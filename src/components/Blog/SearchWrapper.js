@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 
 import SearchList from './SearchList';
 
@@ -53,21 +54,31 @@ const SearchWrapper = ({ children, pageType }) => {
   const hasNoValue = value === '';
   return (
     <>
-      <Headline>{!hasNoValue ? 'Suchergebnisse' : pageType}</Headline>
-      <Input
-        type="search"
-        placeholder="Durchsuche Artikel..."
-        aria-describedby="Durchsuche Artikel"
-        value={value}
-        onChange={e => setValue(e.target.value)}
-      />
+      <FormattedMessage id="SEARCH_RESULTS_HEADLINE">
+        {headline => <Headline>{!hasNoValue ? headline : pageType}</Headline>}
+      </FormattedMessage>
+      <FormattedMessage id="SEARCH_POST">
+        {message => (
+          <Input
+            type="search"
+            placeholder={`${message}...`}
+            aria-describedby={message}
+            value={value}
+            onChange={e => setValue(e.target.value)}
+          />
+        )}
+      </FormattedMessage>
       {hasNoValue ? children : <SearchList value={value} />}
     </>
   );
 };
 
 SearchWrapper.defaultProps = {
-  pageType: 'Neuste Artikel'
+  pageType: (
+    <FormattedMessage id="BLOG_HEADLINE">
+      {headline => headline}
+    </FormattedMessage>
+  )
 };
 
 SearchWrapper.propTypes = {

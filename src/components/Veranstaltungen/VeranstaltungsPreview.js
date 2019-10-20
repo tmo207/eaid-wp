@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql, Link, useStaticQuery } from 'gatsby';
+import { FormattedMessage } from 'react-intl';
 
 import BoxElement from '../ContentBox/BoxElement';
 import Headline from '../Headline';
@@ -26,9 +27,13 @@ const VeranstaltungsPreview = ({ id }) => {
         <Text margin={'0'}>{getExcerpt(page.content, false)}</Text>
       </BoxElement>
       <BoxElement noPadding>
-        <Button type="White" to={`/${page.slug}`}>
-          Zur Veranstaltung
-        </Button>
+        <FormattedMessage id="SHOW_EVENT">
+          {message => (
+            <Button type="White" to={`/${page.slug}`}>
+              {message}
+            </Button>
+          )}
+        </FormattedMessage>
       </BoxElement>
     </>
   );

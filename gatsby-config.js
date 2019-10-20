@@ -28,13 +28,16 @@ module.exports = {
           {
             serialize: ({ query: { site, allWordpressPost } }) => {
               return allWordpressPost.edges.map(edge => {
-                return Object.assign({}, {
-                  title: edge.node.title,
-                  description: edge.node.excerpt,
-                  date: edge.node.date,
-                  url: site.siteMetadata.siteUrl + '/' + edge.node.slug,
-                  guid: site.siteMetadata.siteUrl + '/' + edge.node.slug
-                });
+                return Object.assign(
+                  {},
+                  {
+                    title: edge.node.title,
+                    description: edge.node.excerpt,
+                    date: edge.node.date,
+                    url: site.siteMetadata.siteUrl + '/' + edge.node.slug,
+                    guid: site.siteMetadata.siteUrl + '/' + edge.node.slug
+                  }
+                );
               });
             },
             query: `
@@ -59,7 +62,8 @@ module.exports = {
               }
             `,
             output: '/feed.xml',
-            title: 'Europäische Akademie für Informationsfreiheit und Datenschutz'
+            title:
+              'Europäische Akademie für Informationsfreiheit und Datenschutz'
           }
         ]
       }

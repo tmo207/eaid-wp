@@ -7,17 +7,19 @@ stages:
 pages:
   stage: build
   script:
-  - npm install
-  - npm run-script build
+    - npm install
+    - npm run-script build
+  only:
+    - master
   artifacts:
     paths:
-    - public
-  only:
-  - master
+      - public
 
 deploy:
-    stage: deploy
-    script:
+  stage: deploy
+  script:
     - apt-get update -qy
     - apt-get install -y lftp
     - lftp -e "open eaid-berlin.de; user $FTP_USERNAME $FTP_PASSWORD; mirror -x ^zzUbVKD3ckNW/ -x zzUbVKD3ckNW/ -X .* -X .*/ --reverse --verbose --delete public/ html/apps/cms; bye"
+  only:
+    - master

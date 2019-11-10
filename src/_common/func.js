@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useState, useEffect } from 'react';
 
 import VeranstaltungenTemplate from '../components/Veranstaltungen/VeranstaltungenTemplate';
 import VeranstaltungenArchivTemplate from '../components/Veranstaltungen/VeranstaltungenArchivTemplate';
@@ -109,7 +109,7 @@ export const unflatten = (array, parent, tree) => {
     if (!parent) {
       tree = children;
     } else {
-      parent.node['children_elements'] = children;
+      parent.node.children_elements = children;
     }
     children.forEach(child => {
       unflatten(array, child);
@@ -118,3 +118,31 @@ export const unflatten = (array, parent, tree) => {
 
   return tree;
 };
+
+export const usePostsSearch = (value, posts) => {
+  const searchValueArray = toLowerCaseArray(value).filter(el => el !== '');
+
+  const result = posts.filter(post => {
+    const { title, excerpt, date, author } = post.node;
+
+    const contentArray = toLowerCaseArray(title).concat(
+      toLowerCaseArray(excerpt),
+      toLowerCaseArray(date),
+      toLowerCaseArray(author.name)
+    );
+
+    const isSubstringIncluded = string =>
+      contentArray.find(contentElement => contentElement.includes(string));
+
+    return searchValueArray.every(isSubstringIncluded);
+  });
+
+  const numberOfPosts = result.length;
+
+  return { filteredPosts: result, numberOfPosts };
+};
+
+export const getRightLanguagePosts = (posts, language) =>
+  posts.filter(
+    post => language === post.node.polylang_current_lang.split(/[-_]/)[0]
+  );

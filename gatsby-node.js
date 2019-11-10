@@ -2,7 +2,6 @@ const _ = require('lodash');
 const path = require('path');
 const fetch = require('node-fetch');
 const { createFilePath } = require('gatsby-source-filesystem');
-const { paginate } = require('gatsby-awesome-pagination');
 
 const getOnlyPublished = edges =>
   _.filter(edges, ({ node }) => node.status === 'publish');
@@ -95,12 +94,8 @@ exports.createPages = ({ actions, graphql }) => {
         });
       });
 
-      // Create a paginated blog, e.g., /, /page/2, /page/3
-      paginate({
-        createPage,
-        items: posts,
-        itemsPerPage: 10,
-        pathPrefix: '/category/eaid-blog',
+      createPage({
+        path: '/category/eaid-blog',
         component: blogTemplate
       });
     })

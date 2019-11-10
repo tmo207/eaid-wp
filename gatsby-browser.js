@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import Layout from './src/components/Layout'
 
-import { MenuContextProvider, LanguageContextProvider } from './src/_common/state'
+import {
+  MenuContextProvider,
+  LanguageContextProvider,
+} from './src/_common/state'
 
 export const wrapRootElement = ({ element }) => {
   const initialState = {
@@ -60,7 +63,6 @@ export const shouldUpdateScroll = (
         window.scrollTo({
           top: 0,
           left: 0,
-          behavior: 'smooth',
         }),
       transitions ? 350 : 0
     )
@@ -74,7 +76,6 @@ export const shouldUpdateScroll = (
             {
               top: 0,
               left: 0,
-              behavior: 'smooth',
             },
           ])
         ),

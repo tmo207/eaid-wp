@@ -4,7 +4,7 @@ import { Transition } from 'react-transition-group'
 
 import MobileMenu from './MobileMenu'
 
-import { useStateValue } from '../../_common/state'
+import { useMenuStateValue } from '../../_common/state'
 import { WHITE } from '../../_common/config'
 
 const duration = 200
@@ -48,7 +48,7 @@ const LowerBar = styled(Bar)`
 `
 
 const BurgerMenu = () => {
-  const [{ menu }, dispatch] = useStateValue()
+  const [{ menu }, dispatch] = useMenuStateValue()
   const { open } = menu
 
   return (

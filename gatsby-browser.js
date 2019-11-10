@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Layout from './src/components/Layout'
 
-import { StateProvider } from './src/_common/state'
+import { MenuContextProvider, LanguageContextProvider } from './src/_common/state'
 
 export const wrapRootElement = ({ element }) => {
   const initialState = {
     menu: { open: false },
+    language: navigator.language.split(/[-_]/)[0] === 'de' ? 'de' : 'en',
   }
 
   const reducer = (state, action) => {
@@ -23,9 +24,11 @@ export const wrapRootElement = ({ element }) => {
   }
 
   return (
-    <StateProvider initialState={initialState} reducer={reducer}>
-      {element}
-    </StateProvider>
+    <LanguageContextProvider initialState={initialState} reducer={reducer}>
+      <MenuContextProvider initialState={initialState} reducer={reducer}>
+        {element}
+      </MenuContextProvider>
+    </LanguageContextProvider>
   )
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { createGlobalStyle } from 'styled-components';
 import { IntlProvider } from 'react-intl';
@@ -18,6 +18,7 @@ import {
   MAX_CONTENT_WIDTH,
   WHITE
 } from '../_common/config';
+import { useLanguageStateValue } from '../_common/state';
 
 import './Layout.css';
 
@@ -48,11 +49,13 @@ const MainWrapper = styled.div`
 `;
 
 const Layout = props => {
-  const language = navigator.language.split(/[-_]/)[0];
+  const [{language}] = useLanguageStateValue();
+
   const messages = {
     de: messages_de,
     en: messages_en
   };
+
   return (
     <IntlProvider
       locale={language}

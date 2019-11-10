@@ -9,7 +9,7 @@ import {
   DARKBLUE_FONT,
   ROUNDED_CORNERS
 } from '../../_common/config';
-import { useStateValue } from '../../_common/state';
+import { useMenuStateValue } from '../../_common/state';
 
 const ListWrapper = styled.ul`
   color: ${DARKBLUE_FONT};
@@ -31,7 +31,7 @@ const ListItem = styled.li`
 `;
 
 const ListMenu = ({ mobile }) => {
-  const [{ menu }, dispatch] = useStateValue();
+  const [{ menu }, dispatch] = useMenuStateValue();
   const { open } = menu;
 
   return (

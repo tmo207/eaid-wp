@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState, useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 
 import VeranstaltungenTemplate from '../components/Veranstaltungen/VeranstaltungenTemplate';
 import VeranstaltungenArchivTemplate from '../components/Veranstaltungen/VeranstaltungenArchivTemplate';
@@ -147,8 +147,19 @@ export const getRightLanguagePosts = (posts, language) =>
     post => language === post.node.polylang_current_lang.split(/[-_]/)[0]
   );
 
-export const getRightLanguagePage = (translations, language) =>
-  translations.filter(
+export const getRightLanguagePage = (translations, language) => {
+  const translation = translations.filter(
     translation =>
       translation.polylang_current_lang.split(/[-_]/)[0] === language
   )[0];
+
+  const germanPage = translations.filter(
+    translation => translation.polylang_current_lang.split(/[-_]/)[0] === 'de'
+  )[0];
+
+  if (translation) {
+    return translation;
+  }
+
+  return germanPage;
+};

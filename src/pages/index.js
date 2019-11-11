@@ -87,7 +87,7 @@ const Startseite = () => {
   const rightLanguagePageContent = getRightLanguagePage(
     data.allWordpressPage.edges[0].node.polylang_translations,
     language
-  )[0];
+  );
 
   const {
     title,

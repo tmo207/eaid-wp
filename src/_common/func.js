@@ -151,4 +151,4 @@ export const getRightLanguagePage = (translations, language) =>
   translations.filter(
     translation =>
       translation.polylang_current_lang.split(/[-_]/)[0] === language
-  );
+  )[0];

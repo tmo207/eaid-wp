@@ -146,3 +146,9 @@ export const getRightLanguagePosts = (posts, language) =>
   posts.filter(
     post => language === post.node.polylang_current_lang.split(/[-_]/)[0]
   );
+
+export const getRightLanguagePage = (translations, language) =>
+  translations.filter(
+    translation =>
+      translation.polylang_current_lang.split(/[-_]/)[0] === language
+  );

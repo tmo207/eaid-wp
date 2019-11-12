@@ -18,7 +18,7 @@ import {
   MAX_CONTENT_WIDTH,
   WHITE
 } from '../_common/config';
-import { useLanguageStateValue } from '../_common/state';
+import { getLanguage } from '../_common/func';
 
 import './Layout.css';
 
@@ -49,7 +49,7 @@ const MainWrapper = styled.div`
 `;
 
 const Layout = props => {
-  const [{ language }] = useLanguageStateValue();
+  const language = getLanguage();
 
   const messages = {
     de: messages_de,

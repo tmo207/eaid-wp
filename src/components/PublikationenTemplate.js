@@ -6,11 +6,10 @@ import Text from './Text';
 import BoxContainer from './ContentBox/BoxContainer';
 import BoxElement from './ContentBox/BoxElement';
 
-import { useLanguageStateValue } from '../_common/state';
-import { getRightLanguagePage } from '../_common/func';
+import { getRightLanguagePage, getLanguage } from '../_common/func';
 
 export const PublikationenTemplate = () => {
-  const [{ language }] = useLanguageStateValue();
+  const language = getLanguage();
 
   return (
     <StaticQuery

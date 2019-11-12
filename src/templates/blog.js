@@ -5,11 +5,10 @@ import { Helmet } from 'react-helmet';
 
 import PostList from '../components/Blog/PostList';
 
-import { useLanguageStateValue } from '../_common/state';
-import { getRightLanguagePosts } from '../_common/func';
+import { getRightLanguagePosts, getLanguage } from '../_common/func';
 
 const IndexPage = ({ data }) => {
-  const [{ language }] = useLanguageStateValue();
+  const language = getLanguage();
 
   const { edges: posts } = data.allWordpressPost;
 

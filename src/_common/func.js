@@ -1,4 +1,5 @@
 import { useLayoutEffect } from 'react';
+import { useStaticQuery, graphql } from 'gatsby';
 
 import VeranstaltungenTemplate from '../components/Veranstaltungen/VeranstaltungenTemplate';
 import VeranstaltungenArchivTemplate from '../components/Veranstaltungen/VeranstaltungenArchivTemplate';
@@ -8,6 +9,7 @@ import PublikationenTemplate from '../components/PublikationenTemplate';
 import AktuellesTemplate from '../components/Aktuelles/AktuellesTemplate';
 import AktuellesArchivTemplate from '../components/Aktuelles/AktuellesArchivTemplate';
 
+import { useLanguageStateValue } from './state';
 import {
   VERANSTALTUNGEN_ID,
   VERANSTALTUNGEN_ARCHIV_ID,
@@ -162,4 +164,24 @@ export const getRightLanguagePage = (translations, language) => {
   }
 
   return germanPage;
+};
+
+export const getLanguage = () => {
+  const [{ language: browserLanguage }] = useLanguageStateValue();
+  const wpLanguageSetting = useStaticQuery(graphql`
+    query languageSetting {
+      allWordpressAcfOptions {
+        nodes {
+          options {
+            veroffentlichte_sprachen
+          }
+        }
+      }
+    }
+  `).allWordpressAcfOptions.nodes[0].options.veroffentlichte_sprachen;
+
+  const shouldTranslate = wpLanguageSetting !== 'Nur Deutsch';
+  const language = shouldTranslate ? browserLanguage : 'de';
+
+  return language;
 };

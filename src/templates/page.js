@@ -8,8 +8,11 @@ import BoxElement from '../components/ContentBox/BoxElement';
 import Headline from '../components/Headline';
 import Text from '../components/Text';
 
-import { selectTemplate, getRightLanguagePage } from '../_common/func';
-import { useLanguageStateValue } from '../_common/state';
+import {
+  selectTemplate,
+  getRightLanguagePage,
+  getLanguage
+} from '../_common/func';
 
 export const PageTemplate = ({ title, content }) => (
   <BoxContainer>
@@ -28,7 +31,7 @@ PageTemplate.propTypes = {
 };
 
 const Page = ({ data }) => {
-  const [{ language }] = useLanguageStateValue();
+  const language = getLanguage();
 
   const rightLanguagePage = getRightLanguagePage(
     data.wordpressPage.polylang_translations,

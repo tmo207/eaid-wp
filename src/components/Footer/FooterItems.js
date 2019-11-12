@@ -9,7 +9,7 @@ import {
   IMPRESSUM_ID_EN,
   DATENSCHUTZ_ID_EN
 } from '../../_common/config';
-import { useLanguageStateValue } from '../../_common/state';
+import { getLanguage } from '../../_common/func';
 
 const LinksWrapper = styled.div`
   margin-bottom: 2.5rem;
@@ -25,7 +25,7 @@ const StyledLink = styled(Link)`
 `;
 
 const FooterItems = () => {
-  const [{ language }] = useLanguageStateValue();
+  const language = getLanguage();
 
   return (
     <StaticQuery

@@ -17,7 +17,8 @@ import VeranstaltungsPreview from '../components/Veranstaltungen/VeranstaltungsP
 import {
   getExcerpt,
   getMenuSubFields,
-  getRightLanguagePage
+  getRightLanguagePage,
+  getLanguage
 } from '../_common/func';
 import {
   ROUNDED_CORNERS,
@@ -26,7 +27,6 @@ import {
   MOBILE_TEXT,
   HANDHELD_MQ
 } from '../_common/config';
-import { useLanguageStateValue } from '../_common/state';
 
 const StyledImg = styled(Img)`
   border-radius: ${ROUNDED_CORNERS};
@@ -46,7 +46,7 @@ const Email = styled.a`
 `;
 
 const Startseite = () => {
-  const [{ language }] = useLanguageStateValue();
+  const language = getLanguage();
   const [windowWidth, setwindowWidth] = useState();
 
   const isDesktop = windowWidth >= 1200;

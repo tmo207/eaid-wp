@@ -11,15 +11,14 @@ import BoxContainer from '../ContentBox/BoxContainer';
 import BoxElement from '../ContentBox/BoxElement';
 
 import { ROUNDED_CORNERS } from '../../_common/config';
-import { getRightLanguagePage } from '../../_common/func';
-import { useLanguageStateValue } from '../../_common/state';
+import { getRightLanguagePage, getLanguage } from '../../_common/func';
 
 const StyledImg = styled(Img)`
   border-radius: ${ROUNDED_CORNERS};
 `;
 
 const VereinTemplate = ({ title, content }) => {
-  const [{ language }] = useLanguageStateValue();
+  const language = getLanguage();
 
   return (
     <>

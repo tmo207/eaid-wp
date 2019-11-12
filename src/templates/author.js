@@ -6,11 +6,10 @@ import { FormattedMessage } from 'react-intl';
 import PostList from '../components/Blog/PostList';
 import Text from '../components/Text';
 
-import { getRightLanguagePosts } from '../_common/func';
-import { useLanguageStateValue } from '../_common/state';
+import { getRightLanguagePosts, getLanguage } from '../_common/func';
 
 const Author = props => {
-  const [{ language }] = useLanguageStateValue();
+  const language = getLanguage();
 
   const { data } = props;
   const { authored_wordpress__POST, name } = data.wordpressWpUsers;

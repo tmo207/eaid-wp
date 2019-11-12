@@ -37,6 +37,7 @@
       }
     ],
     "react/require-default-props": 0,
+    "camelcase": 0,
     "no-shadow": 0,
     "react/jsx-fragments": 0,
     "no-trailing-spaces": 2,

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
@@ -20,41 +21,37 @@ const StyledImg = styled(Img)`
   border-radius: ${ROUNDED_CORNERS};
 `;
 
-const PostPreview = ({ post }) => {
-  return (
-    <BoxContainer>
-      {post.featured_media && post.featured_media.localFile && (
-        <StyledImg
-          fluid={post.featured_media.localFile.childImageSharp.fluid}
-        />
-      )}
-      <BoxElement>
-        <Link to={`/${post.slug}`} className="noLine">
-          <Headline margin="0">{post.title}</Headline>
-        </Link>
-      </BoxElement>
-      <BoxElement>
-        <Text margin="0">{getExcerpt(post.excerpt, true)}</Text>
-      </BoxElement>
-      <BoxElement noPadding>
-        <ButtonContainer>
-          <DateAndAuthor>
-            <Link to={`/author/${post.author.slug}`}>
-              {post.date} @{post.author.name}
-            </Link>
-          </DateAndAuthor>
-          <FormattedMessage id="SHOW_FULL_POST">
-            {message => (
-              <Button type="Grey" to={`/${post.slug}`}>
-                {message}
-              </Button>
-            )}
-          </FormattedMessage>
-        </ButtonContainer>
-      </BoxElement>
-    </BoxContainer>
-  );
-};
+const PostPreview = ({ post }) => (
+  <BoxContainer>
+    {post.featured_media && post.featured_media.localFile && (
+      <StyledImg fluid={post.featured_media.localFile.childImageSharp.fluid} />
+    )}
+    <BoxElement>
+      <Link to={`/${post.slug}`} className="noLine">
+        <Headline margin="0">{post.title}</Headline>
+      </Link>
+    </BoxElement>
+    <BoxElement>
+      <Text margin="0">{getExcerpt(post.excerpt, true)}</Text>
+    </BoxElement>
+    <BoxElement noPadding>
+      <ButtonContainer>
+        <DateAndAuthor>
+          <Link to={`/author/${post.author.slug}`}>
+            {post.date} @{post.author.name}
+          </Link>
+        </DateAndAuthor>
+        <FormattedMessage id="SHOW_FULL_POST">
+          {message => (
+            <Button type="Grey" to={`/${post.slug}`}>
+              {message}
+            </Button>
+          )}
+        </FormattedMessage>
+      </ButtonContainer>
+    </BoxElement>
+  </BoxContainer>
+);
 
 PostPreview.propTypes = {
   post: PropTypes.shape({

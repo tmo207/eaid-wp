@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { createGlobalStyle } from 'styled-components';
 import { IntlProvider } from 'react-intl';
@@ -49,12 +49,14 @@ const MainWrapper = styled.div`
 `;
 
 const Layout = props => {
-  const [{language}] = useLanguageStateValue();
+  const [{ language }] = useLanguageStateValue();
 
   const messages = {
     de: messages_de,
     en: messages_en
   };
+
+  const { transitions, children } = props;
 
   return (
     <IntlProvider
@@ -66,11 +68,11 @@ const Layout = props => {
       <Canvas />
       <GlobalStyle />
       <Navbar />
-      {props.transitions ? (
+      {transitions ? (
         <Transition {...props}>
           <AllWrapper>
             <MainWrapper>
-              <main>{props.children}</main>
+              <main>{children}</main>
             </MainWrapper>
           </AllWrapper>
         </Transition>
@@ -78,7 +80,7 @@ const Layout = props => {
         <>
           <AllWrapper>
             <MainWrapper>
-              <main>{props.children}</main>
+              <main>{children}</main>
             </MainWrapper>
           </AllWrapper>
         </>

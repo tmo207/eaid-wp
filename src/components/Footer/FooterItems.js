@@ -17,54 +17,52 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const FooterItems = () => {
-  return (
-    <StaticQuery
-      query={footerItemsQuery}
-      render={data => {
-        const { items } = data.allWordpressWpApiMenusMenusItems.nodes[0];
+const FooterItems = () => (
+  <StaticQuery
+    query={footerItemsQuery}
+    render={data => {
+      const { items } = data.allWordpressWpApiMenusMenusItems.nodes[0];
 
-        const pageItems = items.filter(
-          item =>
-            item.wordpress_id !== IMPRESSUM_ID &&
-            item.wordpress_id !== DATENSCHUTZ_ID
-        );
-        const infoItems = items.filter(
-          item =>
-            item.wordpress_id === IMPRESSUM_ID ||
-            item.wordpress_id === DATENSCHUTZ_ID
-        );
+      const pageItems = items.filter(
+        item =>
+          item.wordpress_id !== IMPRESSUM_ID &&
+          item.wordpress_id !== DATENSCHUTZ_ID
+      );
+      const infoItems = items.filter(
+        item =>
+          item.wordpress_id === IMPRESSUM_ID ||
+          item.wordpress_id === DATENSCHUTZ_ID
+      );
 
-        return (
-          <>
-            <LinksWrapper>
-              {pageItems.map(item => (
-                <StyledLink
-                  key={item.wordpress_id}
-                  to={item.url.replace('https://www.eaid-berlin.de', '')}
-                  dangerouslySetInnerHTML={{
-                    __html: item.title
-                  }}
-                />
-              ))}
-            </LinksWrapper>
-            <LinksWrapper>
-              {infoItems.map(item => (
-                <StyledLink
-                  key={item.wordpress_id}
-                  to={item.url.replace('https://www.eaid-berlin.de', '')}
-                  dangerouslySetInnerHTML={{
-                    __html: item.title
-                  }}
-                />
-              ))}
-            </LinksWrapper>
-          </>
-        );
-      }}
-    />
-  );
-};
+      return (
+        <>
+          <LinksWrapper>
+            {pageItems.map(item => (
+              <StyledLink
+                key={item.wordpress_id}
+                to={item.url.replace('https://www.eaid-berlin.de', '')}
+                dangerouslySetInnerHTML={{
+                  __html: item.title
+                }}
+              />
+            ))}
+          </LinksWrapper>
+          <LinksWrapper>
+            {infoItems.map(item => (
+              <StyledLink
+                key={item.wordpress_id}
+                to={item.url.replace('https://www.eaid-berlin.de', '')}
+                dangerouslySetInnerHTML={{
+                  __html: item.title
+                }}
+              />
+            ))}
+          </LinksWrapper>
+        </>
+      );
+    }}
+  />
+);
 
 export default FooterItems;
 

@@ -41,24 +41,22 @@ const BoxElement = ({
   id,
   margin,
   column
-}) => {
-  return (
-    <Wrapper
-      id={id}
-      noPadding={noPadding}
-      noBorder={noBorder}
-      flexGrow={flexGrow}
-      wrap={wrap}
-      lightBG={lightBG}
-      justify={justify}
-      inline={inline}
-      margin={margin}
-      column={column}
-    >
-      {children}
-    </Wrapper>
-  );
-};
+}) => (
+  <Wrapper
+    id={id}
+    noPadding={noPadding}
+    noBorder={noBorder}
+    flexGrow={flexGrow}
+    wrap={wrap}
+    lightBG={lightBG}
+    justify={justify}
+    inline={inline}
+    margin={margin}
+    column={column}
+  >
+    {children}
+  </Wrapper>
+);
 
 BoxElement.propTypes = {
   children: PropTypes.node.isRequired,

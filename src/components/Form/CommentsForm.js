@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 
 import Input from './Input';
 import BoxContainer from '../ContentBox/BoxContainer';
@@ -18,7 +19,6 @@ import {
   DARKBLUE_BG
 } from '../../_common/config';
 import { getDateAndTime } from '../../_common/func';
-import { FormattedMessage } from 'react-intl';
 
 const FormWrapper = styled.form`
   width: 100%;
@@ -50,7 +50,7 @@ const CommentsForm = React.forwardRef(
       author_name: author,
       author_email: email,
       date: getDateAndTime(),
-      content: content
+      content
     };
 
     const handleSubmit = e => {
@@ -85,7 +85,7 @@ const CommentsForm = React.forwardRef(
         <BoxContainer>
           <BoxElement>
             <FormattedMessage id="COMMENTS_WRITE">
-              {headline => <Headline margin={'0'}>{headline}</Headline>}
+              {headline => <Headline margin="0">{headline}</Headline>}
             </FormattedMessage>
           </BoxElement>
           {!commentSubmitted ? (

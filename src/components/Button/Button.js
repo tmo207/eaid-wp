@@ -58,6 +58,8 @@ const selectButton = type => {
       return WhiteButton;
     case 'Grey':
       return GreyButton;
+    default:
+      return 'White';
   }
 };
 

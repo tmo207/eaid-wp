@@ -37,34 +37,30 @@ const ListMenu = ({ mobile }) => {
   return (
     <StaticQuery
       query={menuQuery}
-      render={items => {
-        return (
-          <ListWrapper role="navigation">
-            {items.wordpressWpApiMenusMenusItems.items.map(item => {
-              return (
-                <div key={item.object_id}>
-                  <Link
-                    activeClassName={mobile ? 'activeMobile' : 'active'}
-                    to={item.url.replace('https://www.eaid-berlin.de', '')}
-                    onClick={() =>
-                      dispatch({
-                        type: 'toggleMenu',
-                        toggleMenuState: { open: !open }
-                      })
-                    }
-                  >
-                    <ListItem
-                      dangerouslySetInnerHTML={{
-                        __html: item.title
-                      }}
-                    />
-                  </Link>
-                </div>
-              );
-            })}
-          </ListWrapper>
-        );
-      }}
+      render={items => (
+        <ListWrapper role="navigation">
+          {items.wordpressWpApiMenusMenusItems.items.map(item => (
+            <div key={item.object_id}>
+              <Link
+                activeClassName={mobile ? 'activeMobile' : 'active'}
+                to={item.url.replace('https://www.eaid-berlin.de', '')}
+                onClick={() =>
+                  dispatch({
+                    type: 'toggleMenu',
+                    toggleMenuState: { open: !open }
+                  })
+                }
+              >
+                <ListItem
+                  dangerouslySetInnerHTML={{
+                    __html: item.title
+                  }}
+                />
+              </Link>
+            </div>
+          ))}
+        </ListWrapper>
+      )}
     />
   );
 };

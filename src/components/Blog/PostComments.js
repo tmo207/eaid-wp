@@ -10,36 +10,34 @@ import Headline from '../Headline';
 
 import { unflatten } from '../../_common/func';
 
-const PostComments = ({ postId, onAnswerClick }) => {
-  return (
-    <StaticQuery
-      query={commentQuery}
-      render={comments => {
-        const associatedComments = comments.allWordpressWpComments.edges.filter(
-          comment =>
-            comment.node.post === postId && comment.node.status === 'approved'
-        );
+const PostComments = ({ postId, onAnswerClick }) => (
+  <StaticQuery
+    query={commentQuery}
+    render={comments => {
+      const associatedComments = comments.allWordpressWpComments.edges.filter(
+        comment =>
+          comment.node.post === postId && comment.node.status === 'approved'
+      );
 
-        const tree = unflatten(associatedComments);
+      const tree = unflatten(associatedComments);
 
-        return (
-          <>
-            {tree.length > 0 && (
-              <BoxContainer>
-                <BoxElement>
-                  <FormattedMessage id="COMMENTS_HEADLINE">
-                    {headline => <Headline margin="0">{headline}</Headline>}
-                  </FormattedMessage>
-                </BoxElement>
-                <CommentTree comments={tree} onAnswerClick={onAnswerClick} />
-              </BoxContainer>
-            )}
-          </>
-        );
-      }}
-    />
-  );
-};
+      return (
+        <>
+          {tree.length > 0 && (
+            <BoxContainer>
+              <BoxElement>
+                <FormattedMessage id="COMMENTS_HEADLINE">
+                  {headline => <Headline margin="0">{headline}</Headline>}
+                </FormattedMessage>
+              </BoxElement>
+              <CommentTree comments={tree} onAnswerClick={onAnswerClick} />
+            </BoxContainer>
+          )}
+        </>
+      );
+    }}
+  />
+);
 
 PostComments.propTypes = {
   postId: PropTypes.number,

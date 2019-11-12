@@ -30,7 +30,7 @@ const AktuellesPreview = ({ id }) => {
       {page[0] && page[0].node && (
         <BoxElement>
           <Link to={`/${page[0].node.slug}`} className="noLine">
-            <Headline margin={'0'}>{page[0].node.title}</Headline>
+            <Headline margin="0">{page[0].node.title}</Headline>
           </Link>
         </BoxElement>
       )}

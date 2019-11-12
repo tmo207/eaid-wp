@@ -21,17 +21,14 @@ const Text = styled.p`
   }
 `;
 
-const DateAndAuthor = ({ children, padding, noCenter, fullWidth }) => {
-  return (
+const DateAndAuthor = ({ children, padding, noCenter, fullWidth }) => (
     <Text padding={padding} noCenter={noCenter} fullWidth={fullWidth}>
       {children}
     </Text>
   );
-};
 
 DateAndAuthor.propTypes = {
   children: PropTypes.node.isRequired,
-  margin: PropTypes.string,
   padding: PropTypes.string,
   noCenter: PropTypes.bool,
   fullWidth: PropTypes.bool

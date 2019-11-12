@@ -7,9 +7,7 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const ButtonContainer = ({ children }) => {
-  return <Container>{children}</Container>;
-};
+const ButtonContainer = ({ children }) => <Container>{children}</Container>;
 
 ButtonContainer.propTypes = {
   children: PropTypes.node.isRequired

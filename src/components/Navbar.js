@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'gatsby';
 
 import Logo from './Logo';
 import BurgerMenu from './Menu/BurgerMenu';
@@ -67,7 +66,5 @@ const Navbar = () => {
     </Wrapper>
   );
 };
-
-Navbar.propTypes = {};
 
 export default Navbar;

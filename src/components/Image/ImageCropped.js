@@ -18,7 +18,7 @@ const ImageCropped = maxWidth => (
     `}
     render={data => (
       <Img
-        imgStyle={{ maxWidth: maxWidth }}
+        imgStyle={{ maxWidth }}
         fluid={data.placeholderImage.childImageSharp.fluid}
       />
     )}

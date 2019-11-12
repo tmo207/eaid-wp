@@ -14,55 +14,51 @@ import {
 } from '../../_common/config';
 import { getMenuSubFields } from '../../_common/func';
 
-const VeranstaltungenTemplate = ({ content }) => {
-  return (
-    <>
-      {content && <Text>{content}</Text>}
-      <StaticQuery
-        query={MenuItemsQuery}
-        render={data => {
-          const veranstaltungenAll = getMenuSubFields(
-            data.allWordpressWpApiMenusMenusItems.edges,
-            VERANSTALTUNGEN_ID
-          );
+const VeranstaltungenTemplate = ({ content }) => (
+  <>
+    {content && <Text>{content}</Text>}
+    <StaticQuery
+      query={MenuItemsQuery}
+      render={data => {
+        const veranstaltungenAll = getMenuSubFields(
+          data.allWordpressWpApiMenusMenusItems.edges,
+          VERANSTALTUNGEN_ID
+        );
 
-          const archiv = veranstaltungenAll.filter(
-            item => item.object_id === VERANSTALTUNGEN_ARCHIV_ID
-          )[0];
+        const archiv = veranstaltungenAll.filter(
+          item => item.object_id === VERANSTALTUNGEN_ARCHIV_ID
+        )[0];
 
-          const veranstaltungen = veranstaltungenAll.filter(
-            item => item.object_id !== VERANSTALTUNGEN_ARCHIV_ID
-          );
+        const veranstaltungen = veranstaltungenAll.filter(
+          item => item.object_id !== VERANSTALTUNGEN_ARCHIV_ID
+        );
 
-          return (
-            <>
-              {veranstaltungen.map(item => {
-                const { object_id } = item;
-                return (
-                  <BoxContainer key={object_id}>
-                    <VeranstaltungsPreview id={object_id} />
-                  </BoxContainer>
-                );
-              })}
-              <PaginationContainer>
-                <PaginationButton
-                  isLeft
-                  text={archiv.title}
-                  link={archiv.object_slug}
-                />
-              </PaginationContainer>
-            </>
-          );
-        }}
-      />
-    </>
-  );
-};
+        return (
+          <>
+            {veranstaltungen.map(item => {
+              const { object_id } = item;
+              return (
+                <BoxContainer key={object_id}>
+                  <VeranstaltungsPreview id={object_id} />
+                </BoxContainer>
+              );
+            })}
+            <PaginationContainer>
+              <PaginationButton
+                isLeft
+                text={archiv.title}
+                link={archiv.object_slug}
+              />
+            </PaginationContainer>
+          </>
+        );
+      }}
+    />
+  </>
+);
 
 VeranstaltungenTemplate.propTypes = {
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string,
-  id: PropTypes.number
+  content: PropTypes.string
 };
 
 const MenuItemsQuery = graphql`

@@ -20,11 +20,11 @@ const VeranstaltungsPreview = ({ id }) => {
     <>
       <BoxElement>
         <Link to={`/${page.slug}`} className="noLine">
-          <Headline margin={'0'}>{page.title}</Headline>
+          <Headline margin="0">{page.title}</Headline>
         </Link>
       </BoxElement>
       <BoxElement>
-        <Text margin={'0'}>{getExcerpt(page.content, false)}</Text>
+        <Text margin="0">{getExcerpt(page.content, false)}</Text>
       </BoxElement>
       <BoxElement noPadding>
         <FormattedMessage id="SHOW_EVENT">

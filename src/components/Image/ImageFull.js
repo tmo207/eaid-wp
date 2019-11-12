@@ -16,15 +16,13 @@ const ImageCropped = maxWidth => (
         }
       }
     `}
-    render={data => {
-      return (
-        <Img
-          style={{ marginBottom: '1rem' }}
-          imgStyle={{ maxWidth: maxWidth }}
-          fluid={data.placeholderImage.childImageSharp.fluid}
-        />
-      );
-    }}
+    render={data => (
+      <Img
+        style={{ marginBottom: '1rem' }}
+        imgStyle={{ maxWidth }}
+        fluid={data.placeholderImage.childImageSharp.fluid}
+      />
+    )}
   />
 );
 

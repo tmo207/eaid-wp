@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { injectIntl } from 'react-intl';
 
 import Error from './Error';
 
@@ -35,7 +36,7 @@ const InputWrapper = styled.div`
   margin-bottom: 0.6rem;
 `;
 
-const Input = ({ placeholder, type, setContent, hasError }) => {
+const Input = ({ placeholder, type, setContent, hasError, intl }) => {
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
 
@@ -49,7 +50,7 @@ const Input = ({ placeholder, type, setContent, hasError }) => {
       type === 'email' &&
       !emailRegex.test(event.target.value.toLowerCase())
     ) {
-      setError('Geben Sie eine gültige Email-Adresse an.');
+      setError(intl.formatMessage({ id: 'COMMENTS_EMAIL_ERROR' }));
       if (hasError) {
         hasError(true);
       }
@@ -63,7 +64,7 @@ const Input = ({ placeholder, type, setContent, hasError }) => {
 
   const handleBlur = event => {
     if (event.target.value === '') {
-      setError('Pflichtfeld');
+      setError(intl.formatMessage({ id: 'MANDATORY_FIELD' }));
     }
   };
 
@@ -94,4 +95,4 @@ Input.propTypes = {
   hasError: PropTypes.func
 };
 
-export default Input;
+export default injectIntl(Input);

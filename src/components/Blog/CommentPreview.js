@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
+
 import Text from '../Text';
 
 const FlexWrap = styled.div`
@@ -23,35 +25,51 @@ const CommentPreview = ({
         {showFull ? comment : comment.slice(0, 299).concat('...')}
       </Text>
       <FlexWrap>
-        <Text
-          margin="0"
-          secondary
-          contentWidth
-          onClick={() => setShowFull(!showFull)}
-        >
-          {showFull ? 'weniger anzeigen' : 'mehr anzeigen'}
-        </Text>
-        <Text
-          margin="0"
-          secondary
-          contentWidth
-          onClick={() => onAnswerClick(commentId, commentAuthor)}
-        >
-          antworten
-        </Text>
+        <FormattedMessage id="COMMENT_SHOW_MORE">
+          {moreMessage => (
+            <FormattedMessage id="COMMENT_SHOW_LESS">
+              {lessMessage => (
+                <Text
+                  margin="0"
+                  secondary
+                  contentWidth
+                  onClick={() => setShowFull(!showFull)}
+                >
+                  {showFull ? lessMessage : moreMessage}
+                </Text>
+              )}
+            </FormattedMessage>
+          )}
+        </FormattedMessage>
+        <FormattedMessage id="COMMENT_ANSWER">
+          {message => (
+            <Text
+              margin="0"
+              secondary
+              contentWidth
+              onClick={() => onAnswerClick(commentId, commentAuthor)}
+            >
+              {message}
+            </Text>
+          )}
+        </FormattedMessage>
       </FlexWrap>
     </>
   ) : (
     <>
       <Text margin="0">{comment}</Text>
-      <Text
-        margin="0"
-        secondary
-        align="end"
-        onClick={() => onAnswerClick(commentId, commentAuthor)}
-      >
-        antworten
-      </Text>
+      <FormattedMessage id="COMMENT_ANSWER">
+        {message => (
+          <Text
+            margin="0"
+            secondary
+            align="end"
+            onClick={() => onAnswerClick(commentId, commentAuthor)}
+          >
+            {message}
+          </Text>
+        )}
+      </FormattedMessage>
     </>
   );
 };

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
+import { getLanguage } from '../_common/func';
+
 import apple57 from '../img/favicons/apple-icon-57x57.png';
 import apple60 from '../img/favicons/apple-icon-60x60.png';
 import apple72 from '../img/favicons/apple-icon-72x72.png';
@@ -18,8 +20,11 @@ import ms144 from '../img/favicons/ms-icon-144x144.png';
 import logo from '../img/EAID.png';
 
 const Meta = () => {
+  const language = getLanguage();
+
   return (
     <Helmet>
+      <html lang={language} />
       <meta charset="UTF-8" />
       <title>
         Europäische Akademie für Informationsfreiheit und Datenschutz e.V.

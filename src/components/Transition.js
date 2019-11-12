@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Transition = ({ children, location }) => {
@@ -11,14 +12,14 @@ const Transition = ({ children, location }) => {
     enter: {
       opacity: 1,
       transition: {
-        duration: duration,
+        duration,
         delay: duration,
         when: 'beforeChildren'
       }
     },
     exit: {
       opacity: 0,
-      transition: { duration: duration }
+      transition: { duration }
     }
   };
 
@@ -36,6 +37,13 @@ const Transition = ({ children, location }) => {
       </motion.main>
     </AnimatePresence>
   );
+};
+
+Transition.propTypes = {
+  children: PropTypes.node,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default Transition;

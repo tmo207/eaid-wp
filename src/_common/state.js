@@ -1,17 +1,31 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
-export const StateContext = createContext();
+export const MenuContext = createContext();
+export const LanguageContext = createContext();
 
-export const StateProvider = ({ reducer, initialState, children }) => (
-  <StateContext.Provider value={useReducer(reducer, initialState)}>
+export const MenuContextProvider = ({ reducer, initialState, children }) => (
+  <MenuContext.Provider value={useReducer(reducer, initialState)}>
     {children}
-  </StateContext.Provider>
+  </MenuContext.Provider>
 );
 
-export const useStateValue = () => useContext(StateContext);
+export const LanguageContextProvider = ({ reducer, initialState, children }) => (
+  <LanguageContext.Provider value={useReducer(reducer, initialState)}>
+    {children}
+  </LanguageContext.Provider>
+);
 
-StateProvider.propTypes = {
+export const useMenuStateValue = () => useContext(MenuContext);
+export const useLanguageStateValue = () => useContext(LanguageContext);
+
+MenuContextProvider.propTypes = {
+  reducer: PropTypes.func.isRequired,
+  initialState: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired
+};
+
+LanguageContextProvider.propTypes = {
   reducer: PropTypes.func.isRequired,
   initialState: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired

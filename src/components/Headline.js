@@ -40,6 +40,8 @@ const selectHeadline = type => {
       return Medium;
     case 'Small':
       return Small;
+    default:
+      return Medium;
   }
 };
 

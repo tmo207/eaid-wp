@@ -2,20 +2,36 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Text from './Text';
+import { FormattedMessage } from 'react-intl';
 
 const StyledLink = styled.a`
-link-decoration: none;
-margin-top: 2rem;
+  text-decoration: none;
+  margin-top: 2rem;
   display: flex;
-  justif
 `;
 
 const Logo = () => {
   return (
-      <StyledLink href="https://www.eaid-berlin.de/feed.xml" className="noLine">
-      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32" enableBackground="new 0 0 32 32" xmlSpace="preserve">  
-      <image id="image0" width="32" height="32" x="0" y="0"
-    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACAEAYAAACTrr2IAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
+    <StyledLink href="https://www.eaid-berlin.de/feed.xml" className="noLine">
+      <svg
+        version="1.1"
+        id="Layer_1"
+        xmlns="http://www.w3.org/2000/svg"
+        x="0px"
+        y="0px"
+        width="32px"
+        height="32px"
+        viewBox="0 0 32 32"
+        enableBackground="new 0 0 32 32"
+        xmlSpace="preserve"
+      >
+        <image
+          id="image0"
+          width="32"
+          height="32"
+          x="0"
+          y="0"
+          href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACAEAYAAACTrr2IAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
 AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0T///////8JWPfcAAAA
 CXBIWXMAAAsSAAALEgHS3X78AAAcOHpUWHRSYXcgcHJvZmlsZSB0eXBlIDhiaW0AAHic7Z1bjuOw
 rq7fNYo1BOsuDUdXYD+c+b/uj7KTOKnUpbvXwU4BSXUnTixLJEX+/GkZkEr1f/6f+s9//mO2sAVl
@@ -364,10 +380,17 @@ lSXQO47EMAwD0AuxsD7WB1NNktn7H2llpnkFTQKCLSocvjoWFViKviqTV5tky9tx2KySFszcnE7i
 tRdVumnM1jJp0T7WokKVGnW6KbcdcPF5PTp9k6R1bKXs9B5Ti/bR5nLp2jRo0qKn081OC1Vq1Cm3
 5xJdEliYBjYCiUJjvkYEohCDOGRjSpKQgk5XoQZ16IYGNDHH2frIlaH3c8nPfxnuf9/nsYhbrs7t
 dv8DAIJTH/OQxGoAAAAXdEVYdHhtcDpQaXhlbFhEaW1lbnNpb24AMTI4YNDnUAAAABd0RVh0eG1w
-OlBpeGVsWURpbWVuc2lvbgAxMjj93wYmAAAAAElFTkSuQmCC" />
-</svg>
-<Text padding="0 0.5rem" margin="0" contentWidth secondary>Abonnieren</Text>
-      </StyledLink>
+OlBpeGVsWURpbWVuc2lvbgAxMjj93wYmAAAAAElFTkSuQmCC"
+        />
+      </svg>
+      <FormattedMessage id="SUBSCRIBE">
+        {message => (
+          <Text padding="0 0.5rem" margin="0" contentWidth secondary>
+            {message}
+          </Text>
+        )}
+      </FormattedMessage>
+    </StyledLink>
   );
 };
 

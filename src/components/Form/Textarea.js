@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { injectIntl } from 'react-intl';
 
 import Error from './Error';
 
@@ -37,7 +38,14 @@ const InputWrapper = styled.div`
   margin-bottom: 0.6rem;
 `;
 
-const Textarea = ({ minRows, maxRows, placeholder, name, setContent }) => {
+const Textarea = ({
+  minRows,
+  maxRows,
+  placeholder,
+  name,
+  setContent,
+  intl
+}) => {
   const [value, setValue] = useState('');
   const [rows, setRows] = useState(5);
   const [error, setError] = useState('');
@@ -59,7 +67,7 @@ const Textarea = ({ minRows, maxRows, placeholder, name, setContent }) => {
     }
 
     if (event.target.value === '') {
-      setError('Pflichtfeld');
+      setError(intl.formatMessage({ id: 'MANDATORY_FIELD' }));
     } else {
       setError('');
     }
@@ -97,4 +105,4 @@ Textarea.propTypes = {
   setContent: PropTypes.func.isRequired
 };
 
-export default Textarea;
+export default injectIntl(Textarea);

@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import { graphql, Link } from 'gatsby';
 import styled from 'styled-components';
 import Img from 'gatsby-image';
+import { FormattedMessage } from 'react-intl';
 
 import BoxContainer from '../components/ContentBox/BoxContainer';
 import BoxElement from '../components/ContentBox/BoxElement';
@@ -176,12 +177,16 @@ const BlogPost = ({ data }) => {
     <>
       <Helmet title={`${post.title} | EAID`} />
       <BackButton tabIndex="-1" role="Navigation">
-        <StyledLink
-          onClick={backClick}
-          dangerouslySetInnerHTML={{
-            __html: 'zurück'
-          }}
-        />
+        <FormattedMessage id="BACK">
+          {message => (
+            <StyledLink
+              onClick={backClick}
+              dangerouslySetInnerHTML={{
+                __html: message
+              }}
+            />
+          )}
+        </FormattedMessage>
       </BackButton>
       <BlogPostTemplate
         content={post.content}

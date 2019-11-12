@@ -1,4 +1,5 @@
 import { useLayoutEffect } from 'react';
+import { useStaticQuery, graphql } from 'gatsby';
 
 import VeranstaltungenTemplate from '../components/Veranstaltungen/VeranstaltungenTemplate';
 import VeranstaltungenArchivTemplate from '../components/Veranstaltungen/VeranstaltungenArchivTemplate';
@@ -8,6 +9,7 @@ import PublikationenTemplate from '../components/PublikationenTemplate';
 import AktuellesTemplate from '../components/Aktuelles/AktuellesTemplate';
 import AktuellesArchivTemplate from '../components/Aktuelles/AktuellesArchivTemplate';
 
+import { useLanguageStateValue } from './state';
 import {
   VERANSTALTUNGEN_ID,
   VERANSTALTUNGEN_ARCHIV_ID,
@@ -109,7 +111,7 @@ export const unflatten = (array, parent, tree) => {
     if (!parent) {
       tree = children;
     } else {
-      parent.node['children_elements'] = children;
+      parent.node.children_elements = children;
     }
     children.forEach(child => {
       unflatten(array, child);
@@ -117,4 +119,73 @@ export const unflatten = (array, parent, tree) => {
   }
 
   return tree;
+};
+
+export const usePostsSearch = (value, posts) => {
+  const searchValueArray = toLowerCaseArray(value).filter(el => el !== '');
+
+  const result = posts.filter(post => {
+    const { title, excerpt, date, author } = post.node;
+
+    const contentArray = toLowerCaseArray(title).concat(
+      toLowerCaseArray(excerpt),
+      toLowerCaseArray(date),
+      toLowerCaseArray(author.name)
+    );
+
+    const isSubstringIncluded = string =>
+      contentArray.find(contentElement => contentElement.includes(string));
+
+    return searchValueArray.every(isSubstringIncluded);
+  });
+
+  const numberOfPosts = result.length;
+
+  return { filteredPosts: result, numberOfPosts };
+};
+
+export const getRightLanguagePosts = (posts, language) => {
+  if (posts) {
+    return posts.filter(
+      post => language === post.node.polylang_current_lang.split(/[-_]/)[0]
+    );
+  }
+  return null;
+};
+
+export const getRightLanguagePage = (translations, language) => {
+  const translation = translations.filter(
+    translation =>
+      translation.polylang_current_lang.split(/[-_]/)[0] === language
+  )[0];
+
+  const germanPage = translations.filter(
+    translation => translation.polylang_current_lang.split(/[-_]/)[0] === 'de'
+  )[0];
+
+  if (translation) {
+    return translation;
+  }
+
+  return germanPage;
+};
+
+export const getLanguage = () => {
+  const [{ language: browserLanguage }] = useLanguageStateValue();
+  const wpLanguageSetting = useStaticQuery(graphql`
+    query languageSetting {
+      allWordpressAcfOptions {
+        nodes {
+          options {
+            veroffentlichte_sprachen
+          }
+        }
+      }
+    }
+  `).allWordpressAcfOptions.nodes[0].options.veroffentlichte_sprachen;
+
+  const shouldTranslate = wpLanguageSetting !== 'Nur Deutsch';
+  const language = shouldTranslate ? browserLanguage : 'de';
+
+  return language;
 };

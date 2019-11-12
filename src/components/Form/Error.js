@@ -7,15 +7,13 @@ const Wrapper = styled.div`
   font-size: 1rem;
 `;
 
-const Error = ({ children }) => {
-  return (
-    <Wrapper
-      dangerouslySetInnerHTML={{
-        __html: children
-      }}
-    />
-  );
-};
+const Error = ({ children }) => (
+  <Wrapper
+    dangerouslySetInnerHTML={{
+      __html: children
+    }}
+  />
+);
 
 Error.propTypes = {
   children: PropTypes.node.isRequired

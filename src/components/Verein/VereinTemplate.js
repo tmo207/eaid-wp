@@ -11,12 +11,15 @@ import BoxContainer from '../ContentBox/BoxContainer';
 import BoxElement from '../ContentBox/BoxElement';
 
 import { ROUNDED_CORNERS } from '../../_common/config';
+import { getRightLanguagePage, getLanguage } from '../../_common/func';
 
 const StyledImg = styled(Img)`
   border-radius: ${ROUNDED_CORNERS};
 `;
 
 const VereinTemplate = ({ title, content }) => {
+  const language = getLanguage();
+
   return (
     <>
       {content && (
@@ -29,8 +32,9 @@ const VereinTemplate = ({ title, content }) => {
         query={graphql`
           query Verein {
             allWordpressPage(filter: { wordpress_id: { eq: 31 } }) {
-              edges {
-                node {
+              nodes {
+                polylang_translations {
+                  polylang_current_lang
                   title
                   acf {
                     personen_page {
@@ -73,27 +77,37 @@ const VereinTemplate = ({ title, content }) => {
           }
         `}
         render={data => {
-          const personen = data.allWordpressPage.edges[0].node.acf.personen_page;
-          const standort = data.allWordpressPage.edges[0].node.acf.standort;
+          const rightLanguagePage = getRightLanguagePage(
+            data.allWordpressPage.nodes[0].polylang_translations,
+            language
+          );
+
+          const personen = rightLanguagePage.acf.personen_page;
+          const { standort } = rightLanguagePage.acf;
 
           return (
             <>
-              {personen.map(person => (
-                <Profile key={person.id} person={person} />
-              ))}
+              {personen &&
+                personen.map(person => (
+                  <Profile key={person.id} person={person} />
+                ))}
               {standort && (
                 <BoxContainer>
-                  <BoxElement>
-                    <Headline margin="0">{standort.uberschrift}</Headline>
-                  </BoxElement>
+                  {standort.uberschrift && (
+                    <BoxElement>
+                      <Headline margin="0">{standort.uberschrift}</Headline>
+                    </BoxElement>
+                  )}
                   {standort.foto && (
                     <StyledImg
                       fluid={standort.foto.localFile.childImageSharp.fluid}
                     />
                   )}
-                  <BoxElement>
-                    <Text margin="0">{standort.beschreibung}</Text>
-                  </BoxElement>
+                  {standort.beschreibung && (
+                    <BoxElement>
+                      <Text margin="0">{standort.beschreibung}</Text>
+                    </BoxElement>
+                  )}
                 </BoxContainer>
               )}
             </>
@@ -106,8 +120,7 @@ const VereinTemplate = ({ title, content }) => {
 
 VereinTemplate.propTypes = {
   title: PropTypes.string.isRequired,
-  content: PropTypes.string,
-  id: PropTypes.number
+  content: PropTypes.string
 };
 
 export default VereinTemplate;

@@ -1,7 +1,9 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { graphql, Link, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
+import { FormattedMessage } from 'react-intl';
 
 import BoxContainer from '../components/ContentBox/BoxContainer';
 import BoxElement from '../components/ContentBox/BoxElement';
@@ -12,7 +14,12 @@ import DateAndAuthor from '../components/DateAndAuthor';
 import Button from '../components/Button/Button';
 import VeranstaltungsPreview from '../components/Veranstaltungen/VeranstaltungsPreview';
 
-import { getExcerpt, getMenuSubFields } from '../_common/func';
+import {
+  getExcerpt,
+  getMenuSubFields,
+  getRightLanguagePage,
+  getLanguage
+} from '../_common/func';
 import {
   ROUNDED_CORNERS,
   VERANSTALTUNGEN_ID,
@@ -39,7 +46,9 @@ const Email = styled.a`
 `;
 
 const Startseite = () => {
+  const language = getLanguage();
   const [windowWidth, setwindowWidth] = useState();
+
   const isDesktop = windowWidth >= 1200;
 
   useEffect(() => {
@@ -55,14 +64,16 @@ const Startseite = () => {
   };
 
   const data = useStaticQuery(StartseitenQuery);
+
   const {
-    author,
-    date,
-    excerpt,
-    slug,
-    title,
-    featured_media
+    author: postAuthor,
+    date: postDate,
+    excerpt: postExcerpt,
+    slug: postSlug,
+    title: postTitle,
+    featured_media: postMedia
   } = data.wordpressPost;
+
   const nextVeranstaltungId = getMenuSubFields(
     data.allWordpressWpApiMenusMenusItems.edges,
     VERANSTALTUNGEN_ID
@@ -73,82 +84,104 @@ const Startseite = () => {
     AKTUELLES_ID
   )[0];
 
+  const rightLanguagePageContent = getRightLanguagePage(
+    data.allWordpressPage.edges[0].node.polylang_translations,
+    language
+  );
+
+  const {
+    title,
+    content,
+    acf: { kontakttext, email }
+  } = rightLanguagePageContent;
+
   return (
     <>
-      {data.allWordpressPage &&
-        data.allWordpressPage.edges &&
-        data.allWordpressPage.edges[0] &&
-        data.allWordpressPage.edges[0].node && (
-          <>
-            {data.allWordpressPage.edges[0].node.title && (
-              <Headline
-                margin={isDesktop ? '0 0 6rem' : '0 0 4rem'}
-                type="Large"
-              >
-                {data.allWordpressPage.edges[0].node.title}
-              </Headline>
-            )}
-            {data.allWordpressPage.edges[0].node.content && (
-              <Text
-                margin={isDesktop ? '0 0 6rem 15%' : '0 0 4rem'}
-                contentWidth
-              >
-                {data.allWordpressPage.edges[0].node.content}
-              </Text>
-            )}
-          </>
-        )}
+      {rightLanguagePageContent && (
+        <>
+          {title && (
+            <Headline margin={isDesktop ? '0 0 6rem' : '0 0 4rem'} type="Large">
+              {title}
+            </Headline>
+          )}
+          {content && (
+            <Text margin={isDesktop ? '0 0 6rem 15%' : '0 0 4rem'} contentWidth>
+              {content}
+            </Text>
+          )}
+        </>
+      )}
 
       <BoxContainer margin={isDesktop ? '6rem 15% 6rem 0' : '4rem 0'}>
         <BoxElement>
-          <Headline margin="0" type="Medium">
-            Neuester Blogeintrag
-          </Headline>
+          <FormattedMessage id="NEWEST_POST_HEADLINE">
+            {headline => (
+              <Headline margin="0" type="Medium">
+                {headline}
+              </Headline>
+            )}
+          </FormattedMessage>
         </BoxElement>
-        {featured_media && featured_media.localFile && (
-          <StyledImg fluid={featured_media.localFile.childImageSharp.fluid} />
+        {postMedia && postMedia.localFile && (
+          <StyledImg fluid={postMedia.localFile.childImageSharp.fluid} />
         )}
         <BoxElement>
-          <Link to={`/${slug}`} className="noLine">
-            <Headline margin="0">{title}</Headline>
+          <Link to={`/${postSlug}`} className="noLine">
+            <Headline margin="0">{postTitle}</Headline>
           </Link>
         </BoxElement>
         <BoxElement>
-          <Text margin="0">{getExcerpt(excerpt, true)}</Text>
+          <Text margin="0">{getExcerpt(postExcerpt, true)}</Text>
         </BoxElement>
         <BoxElement noPadding>
           <ButtonContainer>
             <DateAndAuthor>
-              <Link to={`/author/${author.slug}`}>
-                {date} @{author.name}
+              <Link to={`/author/${postAuthor.slug}`}>
+                {postDate} @{postAuthor.name}
               </Link>
             </DateAndAuthor>
-            <Button type="Grey" to={`/${slug}`}>
-              weiterlesen
-            </Button>
+            <FormattedMessage id="SHOW_FULL_POST">
+              {message => (
+                <Button type="Grey" to={`/${postSlug}`}>
+                  {message}
+                </Button>
+              )}
+            </FormattedMessage>
           </ButtonContainer>
         </BoxElement>
         <BoxElement noPadding>
-          <Button type="Yellow" to="/category/eaid-blog/">
-            Zeige alle Beiträge
-          </Button>
+          <FormattedMessage id="SHOW_ALL_POSTS">
+            {message => (
+              <Button type="Yellow" to="/category/eaid-blog/">
+                {message}
+              </Button>
+            )}
+          </FormattedMessage>
         </BoxElement>
       </BoxContainer>
 
       <BoxContainer margin={isDesktop ? '6rem 0 6rem 15%' : '4rem 0'}>
         <BoxElement>
-          <Headline margin="0" type="Medium">
-            Veranstaltungen
-          </Headline>
+          <FormattedMessage id="EVENTS_HEADLINE">
+            {headline => (
+              <Headline margin="0" type="Medium">
+                {headline}
+              </Headline>
+            )}
+          </FormattedMessage>
         </BoxElement>
         <VeranstaltungsPreview id={nextVeranstaltungId} />
       </BoxContainer>
 
       <BoxContainer margin={isDesktop ? '6rem 15% 6rem 0' : '4rem 0'}>
         <BoxElement>
-          <Headline margin="0" type="Medium">
-            Aktuelles
-          </Headline>
+          <FormattedMessage id="NEWS_HEADLINE">
+            {headline => (
+              <Headline margin="0" type="Medium">
+                {headline}
+              </Headline>
+            )}
+          </FormattedMessage>
         </BoxElement>
         <BoxElement>
           <Link to={`${aktuellstes.object_slug}`} className="noLine">
@@ -156,38 +189,38 @@ const Startseite = () => {
           </Link>
         </BoxElement>
         <BoxElement noPadding>
-          <Button type="White" to={`/${aktuellstes.object_slug}`}>
-            Zum Artikel
-          </Button>
+          <FormattedMessage id="SHOW_ARTICLE">
+            {message => (
+              <Button type="White" to={`/${aktuellstes.object_slug}`}>
+                {message}
+              </Button>
+            )}
+          </FormattedMessage>
         </BoxElement>
       </BoxContainer>
 
-      {data.allWordpressPage &&
-        data.allWordpressPage.edges &&
-        data.allWordpressPage.edges[0] &&
-        data.allWordpressPage.edges[0].node &&
-        data.allWordpressPage.edges[0].node.acf &&
-        (data.allWordpressPage.edges[0].node.acf.kontakttext ||
-          data.allWordpressPage.edges[0].node.acf.email) && (
+      {rightLanguagePageContent &&
+        rightLanguagePageContent.acf &&
+        (kontakttext || email) && (
           <BoxContainer margin={isDesktop ? '6rem 7.5% 6rem 7.5%' : '4rem 0'}>
             <BoxElement>
-              <Headline margin="0">Kontakt</Headline>
+              <FormattedMessage id="CONTACT_HEADLINE">
+                {headline => <Headline margin="0">{headline}</Headline>}
+              </FormattedMessage>
             </BoxElement>
             <BoxElement>
-              <Text margin="0">
-                {data.allWordpressPage.edges[0].node.acf.kontakttext}
-              </Text>
+              <Text margin="0">{kontakttext}</Text>
             </BoxElement>
-            {data.allWordpressPage.edges[0].node.acf.email && (
+            {email && (
               <BoxElement inline>
                 <Text inline margin="0">
-                  {'E-Mail: '}
+                  E-Mail:
                 </Text>
                 <Email
-                  href={`mailto:${data.allWordpressPage.edges[0].node.acf.email}`}
+                  href={`mailto:${email}`}
                   className="noLine"
                   dangerouslySetInnerHTML={{
-                    __html: data.allWordpressPage.edges[0].node.acf.email
+                    __html: email
                   }}
                 />
               </BoxElement>
@@ -206,11 +239,21 @@ const StartseitenQuery = graphql`
     allWordpressPage(filter: { path: { eq: "/" } }) {
       edges {
         node {
+          polylang_current_lang
           title
           content
           acf {
             kontakttext
             email
+          }
+          polylang_translations {
+            title
+            polylang_current_lang
+            content
+            acf {
+              kontakttext
+              email
+            }
           }
         }
       }

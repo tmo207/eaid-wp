@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 
 import BoxElement from '../ContentBox/BoxElement';
 import ImageCricle from '../Image/ImageCircle';
@@ -121,9 +122,13 @@ export const Profile = ({ person }) => {
         <DescriptionContainer open={open}>
           {website && (
             <WebsiteWrapper>
-              <Text bold inline>
-                {'Persönliche Website: '}
-              </Text>
+              <FormattedMessage id="PERSONAL_WEBSITE">
+                {message => (
+                  <Text bold inline>
+                    {`${message}: `}
+                  </Text>
+                )}
+              </FormattedMessage>
               <a href={website}>
                 <Text inline>{website}</Text>
               </a>

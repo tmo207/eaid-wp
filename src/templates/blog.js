@@ -4,65 +4,37 @@ import { graphql } from 'gatsby';
 import { Helmet } from 'react-helmet';
 
 import PostList from '../components/Blog/PostList';
-import PaginationButton from '../components/Pagination/PaginationButton';
-import PaginationContainer from '../components/Pagination/PaginationContainer';
-import SearchWrapper from '../components/Blog/SearchWrapper';
 
-class IndexPage extends React.Component {
-  render() {
-    const { data, pageContext } = this.props;
-    const { edges: posts } = data.allWordpressPost;
-    const { previousPagePath, nextPagePath } = pageContext;
+import { getRightLanguagePosts, getLanguage } from '../_common/func';
 
-    return (
-      <>
-        <Helmet>
-          <title>
-            EAID » Blog
-          </title>
-        </Helmet>
-        <SearchWrapper>
-          <PostList posts={posts} />
-          <PaginationContainer>
-            {nextPagePath && (
-              <PaginationButton
-                isLeft
-                link={nextPagePath}
-                text="Ältere Beiträge"
-              />
-            )}
-            {previousPagePath && (
-              <PaginationButton
-                link={previousPagePath}
-                text="Neuere Beiträge"
-              />
-            )}
-          </PaginationContainer>
-        </SearchWrapper>
-      </>
-    );
-  }
-}
+const IndexPage = ({ data }) => {
+  const language = getLanguage();
+
+  const { edges: posts } = data.allWordpressPost;
+
+  const rightLanguagePosts = getRightLanguagePosts(posts, language);
+
+  return (
+    <>
+      <Helmet>
+        <title>EAID » Blog</title>
+      </Helmet>
+      <PostList posts={rightLanguagePosts} />
+    </>
+  );
+};
 
 IndexPage.propTypes = {
   data: PropTypes.shape({
     allWordpressPost: PropTypes.shape({
       edges: PropTypes.array
     })
-  }),
-  pageContext: PropTypes.shape({
-    currentPage: PropTypes.number,
-    numPages: PropTypes.number
   })
 };
 
 export const pageQuery = graphql`
-  query IndexQuery($limit: Int!, $skip: Int!) {
-    allWordpressPost(
-      sort: { fields: date, order: DESC }
-      limit: $limit
-      skip: $skip
-    ) {
+  query IndexQuery {
+    allWordpressPost(sort: { fields: date, order: DESC }) {
       edges {
         node {
           ...PostListFields

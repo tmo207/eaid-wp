@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { graphql, StaticQuery } from 'gatsby'
 import Img from 'gatsby-image'
+import { FormattedMessage } from 'react-intl'
 
 import RSSLogo from '../RSSLogo'
 import FooterItems from './FooterItems'
@@ -74,7 +75,9 @@ export default class Footer extends React.Component {
         <FooterContainer ref={footerRef => (this.footerRef = footerRef)}>
           <ElementWrapper>
             <FooterChild logos>
-              <StyledText secondary>In Kooperation mit</StyledText>
+              <FormattedMessage id="FOOTER_COOPERATES">
+                {message => <StyledText secondary>{message}</StyledText>}
+              </FormattedMessage>
               <StaticQuery
                 query={footerImageQuery}
                 render={logos => {

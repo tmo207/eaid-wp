@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { createGlobalStyle } from 'styled-components';
+import { IntlProvider } from 'react-intl';
 
 import Navbar from './Navbar';
 import Footer from './Footer/Footer';
@@ -8,6 +9,8 @@ import Transition from './Transition';
 import Canvas from './Canvas';
 import Meta from './Meta';
 
+import messages_de from '../i18n/de';
+import messages_en from '../i18n/en';
 import {
   DESKTOP_MQ,
   NAVBAR_HEIGHT,
@@ -15,6 +18,7 @@ import {
   MAX_CONTENT_WIDTH,
   WHITE
 } from '../_common/config';
+import { getLanguage } from '../_common/func';
 
 import './Layout.css';
 
@@ -45,17 +49,30 @@ const MainWrapper = styled.div`
 `;
 
 const Layout = props => {
+  const language = getLanguage();
+
+  const messages = {
+    de: messages_de,
+    en: messages_en
+  };
+
+  const { transitions, children } = props;
+
   return (
-    <>
+    <IntlProvider
+      locale={language}
+      messages={messages[language]}
+      defaultLocale="de"
+    >
       <Meta />
       <Canvas />
       <GlobalStyle />
       <Navbar />
-      {props.transitions ? (
+      {transitions ? (
         <Transition {...props}>
           <AllWrapper>
             <MainWrapper>
-              <main>{props.children}</main>
+              <main>{children}</main>
             </MainWrapper>
           </AllWrapper>
         </Transition>
@@ -63,13 +80,13 @@ const Layout = props => {
         <>
           <AllWrapper>
             <MainWrapper>
-              <main>{props.children}</main>
+              <main>{children}</main>
             </MainWrapper>
           </AllWrapper>
         </>
       )}
       <Footer />
-    </>
+    </IntlProvider>
   );
 };
 

@@ -8,9 +8,9 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const BoxContainer = ({ children, margin }) => {
-  return <Container margin={margin}>{children}</Container>;
-};
+const BoxContainer = ({ children, margin }) => (
+  <Container margin={margin}>{children}</Container>
+);
 
 BoxContainer.propTypes = {
   children: PropTypes.node.isRequired,

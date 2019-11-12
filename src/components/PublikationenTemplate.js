@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
 
 import Headline from './Headline';
@@ -7,12 +6,21 @@ import Text from './Text';
 import BoxContainer from './ContentBox/BoxContainer';
 import BoxElement from './ContentBox/BoxElement';
 
+import { getRightLanguagePage, getLanguage } from '../_common/func';
+
 export const PublikationenTemplate = () => {
+  const language = getLanguage();
+
   return (
     <StaticQuery
       query={publikationenQuery}
       render={data => {
-        const { title, content, acf } = data.wordpressPage;
+        const rightLanguageContent = getRightLanguagePage(
+          data.wordpressPage.polylang_translations,
+          language
+        );
+
+        const { title, content, acf } = rightLanguageContent;
         const { contentboxen_page: contentBoxen } = acf;
 
         return (
@@ -36,27 +44,24 @@ export const PublikationenTemplate = () => {
   );
 };
 
-PublikationenTemplate.propTypes = {
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string,
-  boxenContent: PropTypes.arrayOf(PropTypes.object)
-};
-
 export default PublikationenTemplate;
 
 const publikationenQuery = graphql`
   query publikationenQuery {
     wordpressPage(wordpress_id: { eq: 947 }) {
-      title
-      content
-      wordpress_id
-      acf {
-        contentboxen_page {
-          __typename
-          ... on WordPressAcf_contentbox {
-            uberschrift
-            content
-            id
+      polylang_translations {
+        polylang_current_lang
+        title
+        content
+        wordpress_id
+        acf {
+          contentboxen_page {
+            __typename
+            ... on WordPressAcf_contentbox {
+              uberschrift
+              content
+              id
+            }
           }
         }
       }

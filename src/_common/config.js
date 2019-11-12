@@ -33,6 +33,8 @@ export const MAIN_MENU_ID = 6;
 export const FOOTER_MENU_ID = 729;
 export const IMPRESSUM_ID = 2401;
 export const DATENSCHUTZ_ID = 2403;
+export const IMPRESSUM_ID_EN = 2817;
+export const DATENSCHUTZ_ID_EN = 2818;
 export const AKTUELLES_ID = 65;
 export const AKTUELLESARCHIV_ID = 1343;
 

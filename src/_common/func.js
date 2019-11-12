@@ -144,10 +144,14 @@ export const usePostsSearch = (value, posts) => {
   return { filteredPosts: result, numberOfPosts };
 };
 
-export const getRightLanguagePosts = (posts, language) =>
-  posts.filter(
-    post => language === post.node.polylang_current_lang.split(/[-_]/)[0]
-  );
+export const getRightLanguagePosts = (posts, language) => {
+  if (posts) {
+    return posts.filter(
+      post => language === post.node.polylang_current_lang.split(/[-_]/)[0]
+    );
+  }
+  return null;
+};
 
 export const getRightLanguagePage = (translations, language) => {
   const translation = translations.filter(

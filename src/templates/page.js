@@ -8,20 +8,19 @@ import BoxElement from '../components/ContentBox/BoxElement';
 import Headline from '../components/Headline';
 import Text from '../components/Text';
 
-import { selectTemplate } from '../_common/func';
+import { selectTemplate, getRightLanguagePage } from '../_common/func';
+import { useLanguageStateValue } from '../_common/state';
 
-export const PageTemplate = ({ title, content }) => {
-  return (
-    <BoxContainer>
-      <BoxElement lightBG>
-        <Headline margin="0">{title}</Headline>
-      </BoxElement>
-      <BoxElement lightBG>
-        <Text margin="0">{content}</Text>
-      </BoxElement>
-    </BoxContainer>
-  );
-};
+export const PageTemplate = ({ title, content }) => (
+  <BoxContainer>
+    <BoxElement lightBG>
+      <Headline margin="0">{title}</Headline>
+    </BoxElement>
+    <BoxElement lightBG>
+      <Text margin="0">{content}</Text>
+    </BoxElement>
+  </BoxContainer>
+);
 
 PageTemplate.propTypes = {
   title: PropTypes.string.isRequired,
@@ -29,17 +28,28 @@ PageTemplate.propTypes = {
 };
 
 const Page = ({ data }) => {
+  const [{ language }] = useLanguageStateValue();
+
   const { wordpressPage: page } = data;
   const { wordpress_id: pageId } = page;
 
   const Template = selectTemplate(pageId);
+
+  const rightLanguagePage = getRightLanguagePage(
+    data.wordpressPage.polylang_translations,
+    language
+  );
 
   return (
     <>
       <Helmet>
         <title>{`EAID » ${page.title}`}</title>
       </Helmet>
-      <Template title={page.title} content={page.content} id={pageId} />
+      <Template
+        title={rightLanguagePage.title}
+        content={rightLanguagePage.content}
+        id={pageId}
+      />
     </>
   );
 };
@@ -53,9 +63,14 @@ export default Page;
 export const pageQuery = graphql`
   query PageById($id: String!) {
     wordpressPage(id: { eq: $id }) {
-      title
-      content
+      polylang_current_lang
       wordpress_id
+      polylang_translations {
+        polylang_current_lang
+        title
+        content
+        wordpress_id
+      }
     }
   }
 `;

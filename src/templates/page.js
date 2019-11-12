@@ -43,7 +43,7 @@ const Page = ({ data }) => {
   return (
     <>
       <Helmet>
-        <title>{`EAID » ${page.title}`}</title>
+        <title>{`EAID » ${rightLanguagePage.title}`}</title>
       </Helmet>
       <Template
         title={rightLanguagePage.title}

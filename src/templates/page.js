@@ -30,15 +30,16 @@ PageTemplate.propTypes = {
 const Page = ({ data }) => {
   const [{ language }] = useLanguageStateValue();
 
-  const { wordpressPage: page } = data;
-  const { wordpress_id: pageId } = page;
-
-  const Template = selectTemplate(pageId);
-
   const rightLanguagePage = getRightLanguagePage(
     data.wordpressPage.polylang_translations,
     language
   );
+
+  const templateID = data.wordpressPage.polylang_translations.filter(
+    translation => translation.polylang_current_lang === 'de_DE'
+  )[0].wordpress_id;
+
+  const Template = selectTemplate(templateID);
 
   return (
     <>
@@ -48,7 +49,6 @@ const Page = ({ data }) => {
       <Template
         title={rightLanguagePage.title}
         content={rightLanguagePage.content}
-        id={pageId}
       />
     </>
   );

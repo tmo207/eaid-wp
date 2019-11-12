@@ -45,12 +45,16 @@ const FooterItems = () => {
           pageItems = items.filter(
             item =>
               item.wordpress_id !== IMPRESSUM_ID_EN &&
-              item.wordpress_id !== DATENSCHUTZ_ID_EN
+              item.wordpress_id !== DATENSCHUTZ_ID_EN &&
+              item.wordpress_id !== IMPRESSUM_ID &&
+              item.wordpress_id !== DATENSCHUTZ_ID
           );
           infoItems = items.filter(
             item =>
               item.wordpress_id === IMPRESSUM_ID_EN ||
-              item.wordpress_id === DATENSCHUTZ_ID_EN
+              item.wordpress_id === DATENSCHUTZ_ID_EN ||
+              item.wordpress_id === IMPRESSUM_ID ||
+              item.wordpress_id === DATENSCHUTZ_ID
           );
         } else {
           // eslint-disable-next-line prefer-destructuring

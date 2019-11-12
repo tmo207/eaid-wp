@@ -10,6 +10,7 @@ import {
   ROUNDED_CORNERS
 } from '../../_common/config';
 import { useMenuStateValue } from '../../_common/state';
+import { getLanguage } from '../../_common/func';
 
 const ListWrapper = styled.ul`
   color: ${DARKBLUE_FONT};
@@ -33,34 +34,44 @@ const ListItem = styled.li`
 const ListMenu = ({ mobile }) => {
   const [{ menu }, dispatch] = useMenuStateValue();
   const { open } = menu;
+  const language = getLanguage();
 
   return (
     <StaticQuery
       query={menuQuery}
-      render={items => (
-        <ListWrapper role="navigation">
-          {items.wordpressWpApiMenusMenusItems.items.map(item => (
-            <div key={item.object_id}>
-              <Link
-                activeClassName={mobile ? 'activeMobile' : 'active'}
-                to={item.url.replace('https://www.eaid-berlin.de', '')}
-                onClick={() =>
-                  dispatch({
-                    type: 'toggleMenu',
-                    toggleMenuState: { open: !open }
-                  })
-                }
-              >
-                <ListItem
-                  dangerouslySetInnerHTML={{
-                    __html: item.title
-                  }}
-                />
-              </Link>
-            </div>
-          ))}
-        </ListWrapper>
-      )}
+      render={items => {
+        const menus = items.allWordpressWpApiMenusMenusItems.nodes;
+
+        const menuEN = menus.filter(menu => menu.wordpress_id === 1492)[0];
+        const menuDE = menus.filter(menu => menu.wordpress_id === 6)[0];
+
+        const menu = language === 'de' ? menuDE : menuEN;
+
+        return (
+          <ListWrapper role="navigation">
+            {menu.items.map(item => (
+              <div key={item.object_id}>
+                <Link
+                  activeClassName={mobile ? 'activeMobile' : 'active'}
+                  to={item.url.replace('https://www.eaid-berlin.de', '')}
+                  onClick={() =>
+                    dispatch({
+                      type: 'toggleMenu',
+                      toggleMenuState: { open: !open }
+                    })
+                  }
+                >
+                  <ListItem
+                    dangerouslySetInnerHTML={{
+                      __html: item.title
+                    }}
+                  />
+                </Link>
+              </div>
+            ))}
+          </ListWrapper>
+        );
+      }}
     />
   );
 };
@@ -75,11 +86,15 @@ ListMenu.propTypes = {
 
 const menuQuery = graphql`
   query MenuItems {
-    wordpressWpApiMenusMenusItems(wordpress_id: { eq: 6 }) {
-      items {
-        title
-        url
-        object_id
+    allWordpressWpApiMenusMenusItems {
+      nodes {
+        wordpress_id
+        name
+        items {
+          title
+          url
+          object_id
+        }
       }
     }
   }

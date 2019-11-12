@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 
 import BoxElement from '../ContentBox/BoxElement';
 import ImageCricle from '../Image/ImageCircle';
@@ -8,7 +9,6 @@ import Text from '../Text';
 
 import logo from '../../img/arrow.png';
 import { PADDING_SMALL } from '../../_common/config';
-import { FormattedMessage } from 'react-intl';
 
 const ProfileWrapper = styled.div`
   width: 100%;

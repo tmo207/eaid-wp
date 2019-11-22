@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
 
+import { FormattedMessage } from 'react-intl';
 import VeranstaltungsPreview from './VeranstaltungsPreview';
 import Text from '../Text';
 import PaginationButton from '../Pagination/PaginationButton';
@@ -10,58 +11,82 @@ import BoxContainer from '../ContentBox/BoxContainer';
 
 import {
   VERANSTALTUNGEN_ARCHIV_ID,
-  VERANSTALTUNGEN_ID
+  VERANSTALTUNGEN_ID,
+  VERANSTALTUNGEN_EN_ID,
+  VERANSTALTUNGEN_ARCHIV_EN_ID
 } from '../../_common/config';
-import { getMenuSubFields } from '../../_common/func';
+import { getMenuSubFields, getLanguage, getMainMenu } from '../../_common/func';
 
-const VeranstaltungenTemplate = ({ content }) => (
-  <>
-    {content && <Text>{content}</Text>}
-    <StaticQuery
-      query={MenuItemsQuery}
-      render={data => {
-        const veranstaltungenAll = getMenuSubFields(
-          data.allWordpressWpApiMenusMenusItems.edges,
-          VERANSTALTUNGEN_ID
-        );
+const VeranstaltungenTemplate = ({ content }) => {
+  const language = getLanguage();
+  return (
+    <>
+      {content && <Text>{content}</Text>}
+      <StaticQuery
+        query={MenuItemsQuery}
+        render={data => {
+          const veranstaltungenID = language === 'de' ? VERANSTALTUNGEN_ID : VERANSTALTUNGEN_EN_ID;
+          const veranstaltungenArchivID = language === 'de' ? VERANSTALTUNGEN_ARCHIV_ID : VERANSTALTUNGEN_ARCHIV_EN_ID;
+          const veranstaltungenAll = getMenuSubFields(
+            data.allWordpressWpApiMenusMenusItems.edges,
+            veranstaltungenID, language
+          );
 
-        const archiv = veranstaltungenAll.filter(
-          item => item.object_id === VERANSTALTUNGEN_ARCHIV_ID
-        )[0];
+          const archiv = veranstaltungenAll && veranstaltungenAll.filter(
+            item => item.object_id === veranstaltungenArchivID
+          )[0];
 
-        const veranstaltungen = veranstaltungenAll.filter(
-          item => item.object_id !== VERANSTALTUNGEN_ARCHIV_ID
-        );
+          const veranstaltungen = veranstaltungenAll && veranstaltungenAll.filter(
+            item => item.object_id !== veranstaltungenArchivID
+          );
 
-        return (
-          <>
-            {veranstaltungen.map(item => {
-              const { object_id } = item;
-              return (
-                <BoxContainer key={object_id}>
-                  <VeranstaltungsPreview id={object_id} />
-                </BoxContainer>
-              );
-            })}
-            <PaginationContainer>
-              <PaginationButton
-                isLeft
-                text={archiv.title}
-                link={archiv.object_slug}
-              />
-            </PaginationContainer>
-          </>
-        );
-      }}
-    />
-  </>
-);
+          const menu = getMainMenu(data.allWordpressWpApiMenusMenusItems.edges, language);
+
+          const archivVeranstaltungen = menu.items
+            .filter(
+              veranstaltung => veranstaltung.object_id === veranstaltungenID
+            )[0]
+            .wordpress_children.filter(
+              archivVeranstaltung =>
+                archivVeranstaltung.object_id === veranstaltungenArchivID
+            )[0].wordpress_children;
+
+          console.log({ archivVeranstaltungen });
+
+
+          return (
+            <>
+              {!!veranstaltungen && veranstaltungen.map(item => {
+                const { object_id } = item;
+                return (
+                  <BoxContainer key={object_id}>
+                    <VeranstaltungsPreview id={object_id} />
+                  </BoxContainer>
+                );
+              })}
+              {!!archiv && !!archivVeranstaltungen && (
+                <PaginationContainer>
+                  <PaginationButton
+                    isLeft
+                    text={archiv.title}
+                    link={archiv.object_slug}
+                  />
+                </PaginationContainer>
+              )}
+              {!veranstaltungen && <FormattedMessage id="NO_EVENTS_FOUND" />}
+            </>
+          );
+        }}
+      />
+    </>
+  );
+};
 
 VeranstaltungenTemplate.propTypes = {
   content: PropTypes.string
 };
 
-const MenuItemsQuery = graphql`
+export const MenuItemsQuery = graphql`
   query Veranstaltungen {
     allWordpressWpApiMenusMenusItems {
       edges {
@@ -73,6 +98,11 @@ const MenuItemsQuery = graphql`
               title
               object_id
               object_slug
+              wordpress_children {
+                title
+                object_id
+                object_slug
+            }
             }
           }
         }

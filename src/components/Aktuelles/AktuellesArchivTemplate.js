@@ -1,44 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useStaticQuery, graphql } from 'gatsby';
+import { useStaticQuery } from 'gatsby';
 
 import Text from '../Text';
 import BoxContainer from '../ContentBox/BoxContainer';
 import AktuellesPreview from './AktuellesPreview';
+import { MenuItemsQuery } from '../Veranstaltungen/VeranstaltungenTemplate';
 
-import { AKTUELLES_ID, AKTUELLESARCHIV_ID } from '../../_common/config';
+import { AKTUELLES_ID, AKTUELLESARCHIV_ID, AKTUELLES_EN_ID, AKTUELLESARCHIV_EN_ID } from '../../_common/config';
+import { getLanguage, getMainMenu } from '../../_common/func';
 
 const AktuellesArchivTemplate = ({ content }) => {
-  const data = useStaticQuery(graphql`
-    query AktuellesArchiv {
-      allWordpressWpApiMenusMenusItems(filter: { wordpress_id: { eq: 6 } }) {
-        nodes {
-          items {
-            object_id
-            wordpress_children {
-              object_id
-              wordpress_children {
-                title
-                object_id
-                object_slug
-              }
-            }
-          }
-        }
-      }
-    }
-  `);
-  const archivVeranstaltungen = data.allWordpressWpApiMenusMenusItems.nodes[0].items
-    .filter(veranstaltung => veranstaltung.object_id === AKTUELLES_ID)[0]
+  const language = getLanguage();
+
+  const aktuellesID = language === 'de' ? AKTUELLES_ID : AKTUELLES_EN_ID;
+  const aktuellesArchivID = language === 'de' ? AKTUELLESARCHIV_ID : AKTUELLESARCHIV_EN_ID;
+
+
+  const data = useStaticQuery(MenuItemsQuery);
+
+  const menu = getMainMenu(data.allWordpressWpApiMenusMenusItems.edges, language);
+
+  const archivAktuelles = menu.items
+    .filter(veranstaltung => veranstaltung.object_id === aktuellesID)[0]
     .wordpress_children.filter(
-      archivVeranstaltung =>
-        archivVeranstaltung.object_id === AKTUELLESARCHIV_ID
+      archivAktuell =>
+        archivAktuell.object_id === aktuellesArchivID
     )[0].wordpress_children;
 
   return (
     <>
       {content && <Text>{content}</Text>}
-      {archivVeranstaltungen.map(item => {
+      {!!archivAktuelles && archivAktuelles.map(item => {
         const { object_id } = item;
         return (
           <BoxContainer margin="0" key={object_id}>

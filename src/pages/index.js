@@ -25,7 +25,9 @@ import {
   VERANSTALTUNGEN_ID,
   AKTUELLES_ID,
   MOBILE_TEXT,
-  HANDHELD_MQ
+  HANDHELD_MQ,
+  VERANSTALTUNGEN_EN_ID,
+  AKTUELLES_EN_ID
 } from '../_common/config';
 
 const StyledImg = styled(Img)`
@@ -74,14 +76,17 @@ const Startseite = () => {
     featured_media: postMedia
   } = data.wordpressPost;
 
-  const nextVeranstaltungId = getMenuSubFields(
+  const veranstaltungenID = language === 'de' ? VERANSTALTUNGEN_ID : VERANSTALTUNGEN_EN_ID;
+  const nextVeranstaltung = getMenuSubFields(
     data.allWordpressWpApiMenusMenusItems.edges,
-    VERANSTALTUNGEN_ID
-  )[0].object_id;
+    veranstaltungenID, language
+  );
+  const nextVeranstaltungId = nextVeranstaltung && nextVeranstaltung[0].object_id;
 
+  const aktuellstesID = language === 'de' ? AKTUELLES_ID : AKTUELLES_EN_ID;
   const aktuellstes = getMenuSubFields(
     data.allWordpressWpApiMenusMenusItems.edges,
-    AKTUELLES_ID
+    aktuellstesID, language
   )[0];
 
   const rightLanguagePageContent = getRightLanguagePage(
@@ -160,44 +165,48 @@ const Startseite = () => {
         </BoxElement>
       </BoxContainer>
 
-      <BoxContainer margin={isDesktop ? '6rem 0 6rem 15%' : '4rem 0'}>
-        <BoxElement>
-          <FormattedMessage id="EVENTS_HEADLINE">
-            {headline => (
-              <Headline margin="0" type="Medium">
-                {headline}
-              </Headline>
-            )}
-          </FormattedMessage>
-        </BoxElement>
-        <VeranstaltungsPreview id={nextVeranstaltungId} />
-      </BoxContainer>
+      {!!nextVeranstaltungId && (
+        <BoxContainer margin={isDesktop ? '6rem 0 6rem 15%' : '4rem 0'}>
+          <BoxElement>
+            <FormattedMessage id="EVENTS_HEADLINE">
+              {headline => (
+                <Headline margin="0" type="Medium">
+                  {headline}
+                </Headline>
+              )}
+            </FormattedMessage>
+          </BoxElement>
+          <VeranstaltungsPreview id={nextVeranstaltungId} />
+        </BoxContainer>
+      )}
 
-      <BoxContainer margin={isDesktop ? '6rem 15% 6rem 0' : '4rem 0'}>
-        <BoxElement>
-          <FormattedMessage id="NEWS_HEADLINE">
-            {headline => (
-              <Headline margin="0" type="Medium">
-                {headline}
-              </Headline>
-            )}
-          </FormattedMessage>
-        </BoxElement>
-        <BoxElement>
-          <Link to={`${aktuellstes.object_slug}`} className="noLine">
-            <Headline margin="0">{aktuellstes.title}</Headline>
-          </Link>
-        </BoxElement>
-        <BoxElement noPadding>
-          <FormattedMessage id="SHOW_ARTICLE">
-            {message => (
-              <Button type="White" to={`/${aktuellstes.object_slug}`}>
-                {message}
-              </Button>
-            )}
-          </FormattedMessage>
-        </BoxElement>
-      </BoxContainer>
+      {!!aktuellstes && (
+        <BoxContainer margin={isDesktop ? '6rem 15% 6rem 0' : '4rem 0'}>
+          <BoxElement>
+            <FormattedMessage id="NEWS_HEADLINE">
+              {headline => (
+                <Headline margin="0" type="Medium">
+                  {headline}
+                </Headline>
+              )}
+            </FormattedMessage>
+          </BoxElement>
+          <BoxElement>
+            <Link to={`${aktuellstes.object_slug}`} className="noLine">
+              <Headline margin="0">{aktuellstes.title}</Headline>
+            </Link>
+          </BoxElement>
+          <BoxElement noPadding>
+            <FormattedMessage id="SHOW_ARTICLE">
+              {message => (
+                <Button type="White" to={`/${aktuellstes.object_slug}`}>
+                  {message}
+                </Button>
+              )}
+            </FormattedMessage>
+          </BoxElement>
+        </BoxContainer>
+      )}
 
       {rightLanguagePageContent &&
         rightLanguagePageContent.acf &&

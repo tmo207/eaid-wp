@@ -33,5 +33,7 @@
   "BLOG_HEADLINE": "Beiträge",
   "FOOTER_COOPERATES": "In Kooperation mit",
   "PERSONAL_WEBSITE": "Persönliche Website",
-  "SUBSCRIBE": "Abonnieren"
+  "SUBSCRIBE": "Abonnieren",
+  "NO_EVENTS_FOUND": "Es sind momentan keine Veranstaltungen geplant.",
+  "NO_NEWS": "Hier gibt es leider noch keine Beiträge."
 }

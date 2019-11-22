@@ -8,16 +8,18 @@ import {
 } from './src/_common/state'
 
 export const wrapRootElement = ({ element }) => {
-  const initialState = {
+  const initMenuState = {
     menu: { open: false },
+  }
+
+  const initLanguageState = {
     language: navigator.language.split(/[-_]/)[0] === 'de' ? 'de' : 'en',
   }
 
-  const reducer = (state, action) => {
+  const menuReducer = (state, action) => {
     switch (action.type) {
       case 'toggleMenu':
         return {
-          ...state,
           menu: action.toggleMenuState,
         }
 
@@ -26,9 +28,21 @@ export const wrapRootElement = ({ element }) => {
     }
   }
 
+  const languageReducer = (state, action) => {
+    switch (action.type) {
+      case 'toggleLanguage':
+        return {
+          language: action.toggleLanguageState
+        }
+
+      default:
+        return state
+    }
+  }
+
   return (
-    <LanguageContextProvider initialState={initialState} reducer={reducer}>
-      <MenuContextProvider initialState={initialState} reducer={reducer}>
+    <LanguageContextProvider initialState={initLanguageState} reducer={languageReducer}>
+      <MenuContextProvider initialState={initMenuState} reducer={menuReducer}>
         {element}
       </MenuContextProvider>
     </LanguageContextProvider>

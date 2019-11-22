@@ -3,14 +3,19 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link, graphql, StaticQuery } from 'gatsby';
 
+import enFlag from '../../img/enFlag.png';
+import deFlag from '../../img/deFlag.png';
+
 import {
   LIGHTBLUE_BG,
   LIGHTBLUE_HOVER,
   DARKBLUE_FONT,
-  ROUNDED_CORNERS
+  ROUNDED_CORNERS,
+  MAIN_MENU_ID,
+  MAIN_MENU_EN_ID
 } from '../../_common/config';
-import { useMenuStateValue } from '../../_common/state';
-import { getLanguage } from '../../_common/func';
+import { useMenuStateValue, useLanguageStateValue } from '../../_common/state';
+import { getLanguage, shouldTranslate } from '../../_common/func';
 
 const ListWrapper = styled.ul`
   color: ${DARKBLUE_FONT};
@@ -34,7 +39,20 @@ const ListItem = styled.li`
 const ListMenu = ({ mobile }) => {
   const [{ menu }, dispatch] = useMenuStateValue();
   const { open } = menu;
+  const [_, disp] = useLanguageStateValue();
   const language = getLanguage();
+  const isTranslationActive = shouldTranslate();
+
+  const onLanguageClick = () => {
+    disp({
+      type: 'toggleLanguage',
+      toggleLanguageState: language === 'de' ? 'en' : 'de'
+    });
+    dispatch({
+      type: 'toggleMenu',
+      toggleMenuState: { open: !open }
+    });
+  };
 
   return (
     <StaticQuery
@@ -42,8 +60,8 @@ const ListMenu = ({ mobile }) => {
       render={items => {
         const menus = items.allWordpressWpApiMenusMenusItems.nodes;
 
-        const menuEN = menus.filter(menu => menu.wordpress_id === 1492)[0];
-        const menuDE = menus.filter(menu => menu.wordpress_id === 6)[0];
+        const menuEN = menus.filter(menu => menu.wordpress_id === MAIN_MENU_EN_ID)[0];
+        const menuDE = menus.filter(menu => menu.wordpress_id === MAIN_MENU_ID)[0];
 
         const menu = language === 'de' ? menuDE : menuEN;
 
@@ -53,7 +71,7 @@ const ListMenu = ({ mobile }) => {
               <div key={item.object_id}>
                 <Link
                   activeClassName={mobile ? 'activeMobile' : 'active'}
-                  to={item.url.replace('https://www.eaid-berlin.de', '')}
+                  to={item.object_id === 2769 ? '' : item.url.replace('https://www.eaid-berlin.de', '')}
                   onClick={() =>
                     dispatch({
                       type: 'toggleMenu',
@@ -69,6 +87,16 @@ const ListMenu = ({ mobile }) => {
                 </Link>
               </div>
             ))}
+            {isTranslationActive && (
+              <Link
+                to='/'
+                onClick={onLanguageClick}
+              >
+                <ListItem>
+                  <img src={language === 'de' ? enFlag : deFlag} alt={language === 'de' ? 'Englisch' : 'Deutsch'} />
+                </ListItem>
+              </Link>
+            )}
           </ListWrapper>
         );
       }}

@@ -17,7 +17,8 @@ import {
   MAIN_MENU_ID,
   PUBLIKATIONEN_ID,
   AKTUELLES_ID,
-  AKTUELLESARCHIV_ID
+  AKTUELLESARCHIV_ID,
+  MAIN_MENU_EN_ID
 } from './config';
 
 export const useLockBodyScroll = () => {
@@ -58,19 +59,23 @@ export const selectTemplate = id => {
   }
 };
 
-export const getMainMenu = menus =>
+export const getMainMenu = (menus, language) =>
   menus.filter(item => {
     const { wordpress_id } = item.node;
-    return wordpress_id === MAIN_MENU_ID;
+    const isRightLanguageMenu = language === 'de' ? wordpress_id === MAIN_MENU_ID : wordpress_id === MAIN_MENU_EN_ID;
+    return isRightLanguageMenu;
   })[0].node;
 
-export const getSubPages = (parentPages, targetParentId) =>
-  parentPages.filter(
-    page => page.wordpress_children && page.object_id === targetParentId
-  )[0].wordpress_children;
+export const getSubPages = (parentPages, targetParentId) => {
+  const subPagesArray = parentPages.filter(
+    page => page && page.wordpress_children && page.object_id === targetParentId
+  );
+  const subPages = subPagesArray.length && subPagesArray[0].wordpress_children;
+  return subPages;
+};
 
-export const getMenuSubFields = (menus, pageId) => {
-  const mainMenu = getMainMenu(menus);
+export const getMenuSubFields = (menus, pageId, language) => {
+  const mainMenu = getMainMenu(menus, language);
   const veranstaltungenAll = getSubPages(mainMenu.items, pageId);
 
   return veranstaltungenAll;
@@ -99,12 +104,12 @@ export const unflatten = (array, parent, tree) => {
 
   const children = parent
     ? array.filter(child => {
-        if (child.node.parent_element !== null) {
-          return (
-            child.node.parent_element.wordpress_id === parent.node.wordpress_id
-          );
-        }
-      })
+      if (child.node.parent_element !== null) {
+        return (
+          child.node.parent_element.wordpress_id === parent.node.wordpress_id
+        );
+      }
+    })
     : array.filter(comment => !comment.node.parent_element);
 
   if (children.length) {
@@ -170,8 +175,7 @@ export const getRightLanguagePage = (translations, language) => {
   return germanPage;
 };
 
-export const getLanguage = () => {
-  const [{ language: browserLanguage }] = useLanguageStateValue();
+export const shouldTranslate = () => {
   const wpLanguageSetting = useStaticQuery(graphql`
     query languageSetting {
       allWordpressAcfOptions {
@@ -185,7 +189,11 @@ export const getLanguage = () => {
   `).allWordpressAcfOptions.nodes[0].options.veroffentlichte_sprachen;
 
   const shouldTranslate = wpLanguageSetting !== 'Nur Deutsch';
-  const language = shouldTranslate ? browserLanguage : 'de';
+  return shouldTranslate;
+};
 
+export const getLanguage = () => {
+  const [{ language: browserLanguage }] = useLanguageStateValue();
+  const language = shouldTranslate() ? browserLanguage : 'de';
   return language;
 };

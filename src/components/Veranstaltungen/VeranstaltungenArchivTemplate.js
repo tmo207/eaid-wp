@@ -5,7 +5,6 @@ import { StaticQuery } from 'gatsby';
 import VeranstaltungsPreview from './VeranstaltungsPreview';
 import Text from '../Text';
 import BoxContainer from '../ContentBox/BoxContainer';
-import { MenuItemsQuery } from './VeranstaltungenTemplate';
 
 import {
   VERANSTALTUNGEN_ID,
@@ -14,6 +13,7 @@ import {
   VERANSTALTUNGEN_ARCHIV_EN_ID
 } from '../../_common/config';
 import { getLanguage, getMainMenu, getMenuSubFieldsChildren } from '../../_common/func';
+import { MenuItemsQuery } from '../../_common/gql';
 
 const VeranstaltungenArchivTemplate = ({ content }) => {
   const language = getLanguage();

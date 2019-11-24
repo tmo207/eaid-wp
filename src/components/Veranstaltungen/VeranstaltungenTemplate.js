@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StaticQuery, graphql } from 'gatsby';
+import { StaticQuery } from 'gatsby';
 
 import { FormattedMessage } from 'react-intl';
 import VeranstaltungsPreview from './VeranstaltungsPreview';
@@ -16,6 +16,7 @@ import {
   VERANSTALTUNGEN_ARCHIV_EN_ID
 } from '../../_common/config';
 import { getMenuSubFields, getLanguage, getMainMenu, getMenuSubFieldsChildren } from '../../_common/func';
+import { MenuItemsQuery } from '../../_common/gql';
 
 const VeranstaltungenTemplate = ({ content }) => {
   const language = getLanguage();
@@ -76,29 +77,5 @@ VeranstaltungenTemplate.propTypes = {
   content: PropTypes.string
 };
 
-export const MenuItemsQuery = graphql`
-  query Veranstaltungen {
-    allWordpressWpApiMenusMenusItems {
-      edges {
-        node {
-          wordpress_id
-          items {
-            object_id
-            wordpress_children {
-              title
-              object_id
-              object_slug
-              wordpress_children {
-                title
-                object_id
-                object_slug
-            }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
 
 export default VeranstaltungenTemplate;

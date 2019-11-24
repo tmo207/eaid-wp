@@ -1,4 +1,6 @@
 /* eslint-disable import/prefer-default-export */
+import { graphql } from 'gatsby';
+
 export const pageQuery = graphql`
   fragment PostListFields on wordpress__POST {
     polylang_current_lang
@@ -27,6 +29,31 @@ export const pageQuery = graphql`
             originalName
             presentationWidth
             presentationHeight
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const MenuItemsQuery = graphql`
+  query Veranstaltungen {
+    allWordpressWpApiMenusMenusItems {
+      edges {
+        node {
+          wordpress_id
+          items {
+            object_id
+            wordpress_children {
+              title
+              object_id
+              object_slug
+              wordpress_children {
+                title
+                object_id
+                object_slug
+            }
+            }
           }
         }
       }

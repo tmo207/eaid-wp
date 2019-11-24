@@ -9,10 +9,10 @@ import Headline from '../components/Headline';
 import Text from '../components/Text';
 
 import {
-  selectTemplate,
   getRightLanguagePage,
   getLanguage
 } from '../_common/func';
+import { selectTemplate } from '../_common/reducer';
 
 export const PageTemplate = ({ title, content }) => (
   <BoxContainer>

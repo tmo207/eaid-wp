@@ -1,23 +1,9 @@
 import { useLayoutEffect } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 
-import VeranstaltungenTemplate from '../components/Veranstaltungen/VeranstaltungenTemplate';
-import VeranstaltungenArchivTemplate from '../components/Veranstaltungen/VeranstaltungenArchivTemplate';
-import { PageTemplate } from '../templates/page';
-import VereinTemplate from '../components/Verein/VereinTemplate';
-import PublikationenTemplate from '../components/PublikationenTemplate';
-import AktuellesTemplate from '../components/Aktuelles/AktuellesTemplate';
-import AktuellesArchivTemplate from '../components/Aktuelles/AktuellesArchivTemplate';
-
 import { useLanguageStateValue } from './state';
 import {
-  VERANSTALTUNGEN_ID,
-  VERANSTALTUNGEN_ARCHIV_ID,
-  VEREIN_ID,
   MAIN_MENU_ID,
-  PUBLIKATIONEN_ID,
-  AKTUELLES_ID,
-  AKTUELLESARCHIV_ID,
   MAIN_MENU_EN_ID
 } from './config';
 
@@ -38,25 +24,6 @@ export const getExcerpt = (content, isExcerpt) => {
   const newExcerpt = content.slice(0, excerptLength).concat('...');
 
   return newExcerpt;
-};
-
-export const selectTemplate = id => {
-  switch (id) {
-    case AKTUELLES_ID:
-      return AktuellesTemplate;
-    case AKTUELLESARCHIV_ID:
-      return AktuellesArchivTemplate;
-    case VERANSTALTUNGEN_ID:
-      return VeranstaltungenTemplate;
-    case VERANSTALTUNGEN_ARCHIV_ID:
-      return VeranstaltungenArchivTemplate;
-    case VEREIN_ID:
-      return VereinTemplate;
-    case PUBLIKATIONEN_ID:
-      return PublikationenTemplate;
-    default:
-      return PageTemplate;
-  }
 };
 
 export const getMainMenu = (menus, language) =>

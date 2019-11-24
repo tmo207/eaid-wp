@@ -8,7 +8,7 @@ import AktuellesPreview from './AktuellesPreview';
 import { MenuItemsQuery } from '../Veranstaltungen/VeranstaltungenTemplate';
 
 import { AKTUELLES_ID, AKTUELLESARCHIV_ID, AKTUELLES_EN_ID, AKTUELLESARCHIV_EN_ID } from '../../_common/config';
-import { getLanguage, getMainMenu } from '../../_common/func';
+import { getLanguage, getMainMenu, getMenuSubFieldsChildren } from '../../_common/func';
 
 const AktuellesArchivTemplate = ({ content }) => {
   const language = getLanguage();
@@ -21,12 +21,7 @@ const AktuellesArchivTemplate = ({ content }) => {
 
   const menu = getMainMenu(data.allWordpressWpApiMenusMenusItems.edges, language);
 
-  const archivAktuelles = menu.items
-    .filter(veranstaltung => veranstaltung.object_id === aktuellesID)[0]
-    .wordpress_children.filter(
-      archivAktuell =>
-        archivAktuell.object_id === aktuellesArchivID
-    )[0].wordpress_children;
+  const archivAktuelles = getMenuSubFieldsChildren(menu, aktuellesID, aktuellesArchivID);
 
   return (
     <>

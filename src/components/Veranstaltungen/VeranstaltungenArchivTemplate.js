@@ -13,7 +13,7 @@ import {
   VERANSTALTUNGEN_EN_ID,
   VERANSTALTUNGEN_ARCHIV_EN_ID
 } from '../../_common/config';
-import { getLanguage, getMainMenu } from '../../_common/func';
+import { getLanguage, getMainMenu, getMenuSubFieldsChildren } from '../../_common/func';
 
 const VeranstaltungenArchivTemplate = ({ content }) => {
   const language = getLanguage();
@@ -29,14 +29,7 @@ const VeranstaltungenArchivTemplate = ({ content }) => {
         render={data => {
           const menu = getMainMenu(data.allWordpressWpApiMenusMenusItems.edges, language);
 
-          const archivVeranstaltungen = menu.items
-            .filter(
-              veranstaltung => veranstaltung.object_id === veranstaltungenID
-            )[0]
-            .wordpress_children.filter(
-              archivVeranstaltung =>
-                archivVeranstaltung.object_id === veranstaltungenArchivID
-            )[0].wordpress_children;
+          const archivVeranstaltungen = getMenuSubFieldsChildren(menu, veranstaltungenID, veranstaltungenArchivID);
 
           return (
             <>

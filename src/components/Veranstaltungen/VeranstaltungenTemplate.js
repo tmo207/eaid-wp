@@ -15,7 +15,7 @@ import {
   VERANSTALTUNGEN_EN_ID,
   VERANSTALTUNGEN_ARCHIV_EN_ID
 } from '../../_common/config';
-import { getMenuSubFields, getLanguage, getMainMenu } from '../../_common/func';
+import { getMenuSubFields, getLanguage, getMainMenu, getMenuSubFieldsChildren } from '../../_common/func';
 
 const VeranstaltungenTemplate = ({ content }) => {
   const language = getLanguage();
@@ -42,17 +42,7 @@ const VeranstaltungenTemplate = ({ content }) => {
 
           const menu = getMainMenu(data.allWordpressWpApiMenusMenusItems.edges, language);
 
-          const archivVeranstaltungen = menu.items
-            .filter(
-              veranstaltung => veranstaltung.object_id === veranstaltungenID
-            )[0]
-            .wordpress_children.filter(
-              archivVeranstaltung =>
-                archivVeranstaltung.object_id === veranstaltungenArchivID
-            )[0].wordpress_children;
-
-          console.log({ archivVeranstaltungen });
-
+          const archivVeranstaltungen = getMenuSubFieldsChildren(menu, veranstaltungenID, veranstaltungenArchivID);
 
           return (
             <>
@@ -73,7 +63,7 @@ const VeranstaltungenTemplate = ({ content }) => {
                   />
                 </PaginationContainer>
               )}
-              {!veranstaltungen && <FormattedMessage id="NO_EVENTS_FOUND" />}
+              {!veranstaltungen[0] && !archivVeranstaltungen && <FormattedMessage id="NO_EVENTS_FOUND" />}
             </>
           );
         }}

@@ -9,7 +9,7 @@ import PaginationButton from '../Pagination/PaginationButton';
 import AktuellesPreview from './AktuellesPreview';
 import { MenuItemsQuery } from '../Veranstaltungen/VeranstaltungenTemplate';
 
-import { getMenuSubFields, getLanguage } from '../../_common/func';
+import { getMenuSubFields, getLanguage, getMainMenu, getMenuSubFieldsChildren } from '../../_common/func';
 import { AKTUELLES_ID, AKTUELLESARCHIV_ID, AKTUELLES_EN_ID, AKTUELLESARCHIV_EN_ID } from '../../_common/config';
 
 const Wrapper = styled.div`
@@ -36,6 +36,11 @@ const AktuellesTemplate = () => {
   const aktuelles = aktuellesAll && aktuellesAll.filter(
     item => item.object_id !== aktuellesArchivID
   );
+
+  const menu = getMainMenu(data.allWordpressWpApiMenusMenusItems.edges, language);
+
+  const aktuellesInArchiv = getMenuSubFieldsChildren(menu, aktuellesID, aktuellesArchivID);
+
   return (
     <>
       <Wrapper>
@@ -48,7 +53,7 @@ const AktuellesTemplate = () => {
           );
         })}
       </Wrapper>
-      {!!archiv && (
+      {!!archiv && !!aktuellesInArchiv && (
         <PaginationContainer>
           <PaginationButton
             isLeft
@@ -57,7 +62,7 @@ const AktuellesTemplate = () => {
           />
         </PaginationContainer>
       )}
-      {!archiv && !aktuelles && <FormattedMessage id="NO_NEWS" />
+      {!aktuelles[0] && !aktuellesInArchiv && <FormattedMessage id="NO_NEWS" />
 
       }
     </>

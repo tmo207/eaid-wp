@@ -27,7 +27,9 @@ import {
   MOBILE_TEXT,
   HANDHELD_MQ,
   VERANSTALTUNGEN_EN_ID,
-  AKTUELLES_EN_ID
+  AKTUELLES_EN_ID,
+  AKTUELLESARCHIV_EN_ID,
+  AKTUELLESARCHIV_ID
 } from '../_common/config';
 
 const StyledImg = styled(Img)`
@@ -87,7 +89,7 @@ const Startseite = () => {
   const aktuellstes = getMenuSubFields(
     data.allWordpressWpApiMenusMenusItems.edges,
     aktuellstesID, language
-  )[0];
+  ).filter(news => news.object_id !== (AKTUELLESARCHIV_EN_ID || AKTUELLESARCHIV_ID))[0];
 
   const rightLanguagePageContent = getRightLanguagePage(
     data.allWordpressPage.edges[0].node.polylang_translations,

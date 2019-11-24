@@ -197,3 +197,14 @@ export const getLanguage = () => {
   const language = shouldTranslate() ? browserLanguage : 'de';
   return language;
 };
+
+export const getMenuSubFieldsChildren = (menu, subFieldId, childrenId) => (
+  menu.items
+    .filter(
+      veranstaltung => veranstaltung.object_id === subFieldId
+    )[0]
+    .wordpress_children.filter(
+      archivVeranstaltung =>
+        archivVeranstaltung.object_id === childrenId
+    )[0].wordpress_children
+);

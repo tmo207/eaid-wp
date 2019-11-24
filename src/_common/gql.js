@@ -35,28 +35,3 @@ export const pageQuery = graphql`
     }
   }
 `;
-
-export const MenuItemsQuery = graphql`
-  query Veranstaltungen {
-    allWordpressWpApiMenusMenusItems {
-      edges {
-        node {
-          wordpress_id
-          items {
-            object_id
-            wordpress_children {
-              title
-              object_id
-              object_slug
-              wordpress_children {
-                title
-                object_id
-                object_slug
-            }
-            }
-          }
-        }
-      }
-    }
-  }
-`;

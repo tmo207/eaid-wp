@@ -52,6 +52,7 @@ const Page = ({ data }) => {
       <Template
         title={rightLanguagePage.title}
         content={rightLanguagePage.content}
+        menus={data}
       />
     </>
   );
@@ -73,6 +74,26 @@ export const pageQuery = graphql`
         title
         content
         wordpress_id
+      }
+    }
+    allWordpressWpApiMenusMenusItems {
+      edges {
+        node {
+          wordpress_id
+          items {
+            object_id
+            wordpress_children {
+              title
+              object_id
+              object_slug
+              wordpress_children {
+                title
+                object_id
+                object_slug
+            }
+            }
+          }
+        }
       }
     }
   }

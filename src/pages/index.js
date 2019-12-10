@@ -69,6 +69,8 @@ const Startseite = () => {
 
   const data = useStaticQuery(StartseitenQuery);
 
+  const rightLanguagePost = getRightLanguagePage(data.wordpressPost.polylang_translations, language);
+
   const {
     author: postAuthor,
     date: postDate,
@@ -76,7 +78,7 @@ const Startseite = () => {
     slug: postSlug,
     title: postTitle,
     featured_media: postMedia
-  } = data.wordpressPost;
+  } = rightLanguagePost;
 
   const veranstaltungenID = language === 'de' ? VERANSTALTUNGEN_ID : VERANSTALTUNGEN_EN_ID;
   const nextVeranstaltung = getMenuSubFields(
@@ -245,7 +247,10 @@ const Startseite = () => {
 const StartseitenQuery = graphql`
   query StartseitenQuery {
     wordpressPost {
+      polylang_current_lang
+      polylang_translations {
       ...PostListFields
+      }
     }
     allWordpressPage(filter: { path: { eq: "/" } }) {
       edges {
